@@ -33,11 +33,11 @@ const DockBtn: React.FC<{ item: typeof NAV[0]; active: boolean }> = ({ item, act
         {item.icon}
       </motion.div>
 
-      {/* Tooltip — LEFT side */}
+      {/* Tooltip — RIGHT side */}
       {hovered && (
         <motion.span
-          initial={{ opacity: 0, x: 4 }} animate={{ opacity: 1, x: 0 }}
-          className="absolute right-full mr-2.5 whitespace-nowrap px-2 py-1 rounded-lg text-[11px] font-medium bg-[#161b22] border border-[#30363d] text-white pointer-events-none z-50">
+          initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }}
+          className="absolute left-full ml-2.5 whitespace-nowrap px-2 py-1 rounded-lg text-[11px] font-medium bg-[#161b22] border border-[#30363d] text-white pointer-events-none z-50">
           {item.label}
         </motion.span>
       )}
@@ -65,9 +65,9 @@ export const FloatingDock: React.FC = () => {
 
   return (
     <>
-      {/* Desktop: right side, vertically centered, close to content */}
+      {/* Desktop: right side, close to content, tooltip appears to the right of icon */}
       <nav aria-label="Page navigation"
-        className="hidden md:flex fixed right-3 top-1/2 -translate-y-1/2 z-50
+        className="hidden md:flex fixed right-[max(0.75rem,calc((100vw-64rem)/2-3rem))] top-1/2 -translate-y-1/2 z-50
           flex-col gap-1 p-1.5 rounded-2xl
           bg-[#0d1117]/80 border border-[#30363d] backdrop-blur-xl
           shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
