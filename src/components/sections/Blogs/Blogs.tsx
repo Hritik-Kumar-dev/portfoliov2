@@ -12,8 +12,8 @@ const BlogCard: React.FC<{ blog: BlogPost; open: boolean; onToggle: () => void }
     onClick={onToggle}
     className={`cursor-pointer rounded-2xl border bg-surface/80 backdrop-blur-sm transition-all duration-300
       ${open
-        ? 'border-[#58a6ff]/40 shadow-[0_0_28px_rgba(88,166,255,0.08)]'
-        : 'border-surface hover:border-[#58a6ff]/30 hover:shadow-[0_0_20px_rgba(88,166,255,0.06)]'
+        ? 'border-accent shadow-[0_0_28px_rgba(255,255,255,0.06)]'
+        : 'border-surface hover-border-accent hover:shadow-[0_0_20px_rgba(255,255,255,0.04)]'
       }`}
   >
     {/* Header */}

@@ -21,14 +21,14 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   }).then(r => r.json());
 
   if (res.success) {
-    Swal.fire({ title: 'Message Sent!', text: 'I\'ll get back to you shortly.', icon: 'success', background: 'var(--surface)', color: 'var(--text-page)', confirmButtonColor: '#58a6ff' });
+    Swal.fire({ title: 'Message Sent!', text: 'I\'ll get back to you shortly.', icon: 'success', background: 'var(--surface)', color: 'var(--text-page)', confirmButtonColor: '#ffffff' });
     (e.target as HTMLFormElement).reset();
   } else {
     Swal.fire({ title: 'Error', text: 'Something went wrong. Try again.', icon: 'error', background: 'var(--surface)', color: 'var(--text-page)' });
   }
 };
 
-const inputCls = "bg-tag border border-surface rounded-lg px-3 py-2 text-sm text-title placeholder-gray-600 focus:outline-none focus:border-[#58a6ff] transition-colors w-full";
+const inputCls = "bg-tag border border-surface rounded-lg px-3 py-2 text-sm text-title placeholder-gray-600 focus:outline-none focus:border-[var(--accent-blue)] transition-colors w-full";
 const labelCls = "text-[11px] font-semibold tracking-widest uppercase text-dim mb-1";
 
 export const Contact: React.FC = () => (
@@ -57,7 +57,7 @@ export const Contact: React.FC = () => (
             <textarea required name="message" rows={4} placeholder="Your message..." className={`${inputCls} resize-none`} />
           </div>
           <button type="submit"
-            className="w-full py-2.5 rounded-xl text-sm font-semibold tracking-wide bg-[#58a6ff]/15 border border-[#58a6ff]/30 text-accent hover:bg-[#58a6ff]/25 hover:border-[#58a6ff] transition-all duration-200">
+            className="w-full py-2.5 rounded-xl text-sm font-semibold tracking-wide bg-accent-dim border border-surface text-accent hover:bg-accent-dim transition-all duration-200">
             Send Message
           </button>
         </form>
@@ -70,7 +70,7 @@ export const Contact: React.FC = () => (
           <div className="flex flex-col gap-2">
             {SOCIALS.map(s => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-tag border border-surface text-bright text-sm font-medium hover:border-[#58a6ff]/40 hover-text-title transition-all">
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-tag border border-surface text-bright text-sm font-medium hover-border-accent hover-text-title transition-all">
                 <span className="text-accent">{s.icon}</span>
                 {s.label}
               </a>
@@ -84,7 +84,7 @@ export const Contact: React.FC = () => (
             data-cal-namespace="30min"
             data-cal-link="hritik-kumar-dev77/30min"
             data-cal-config='{"layout":"month_view","theme":"auto"}'
-            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-300 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400 transition-all"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-accent-dim border border-surface text-accent text-sm font-medium hover:bg-accent-dim transition-all"
           >
             Book a Call
           </button>

@@ -22,7 +22,7 @@ export const AllBlogs: React.FC = () => {
             return (
               <div key={blog.id} onClick={() => setOpenId(open ? null : blog.id)}
                 className={`cursor-pointer rounded-2xl border bg-surface/80 transition-all duration-300
-                  ${open ? 'border-[#58a6ff]/40 shadow-[0_0_28px_rgba(88,166,255,0.08)]' : 'border-surface hover:border-[#58a6ff]/30'}`}>
+                  ${open ? 'border-accent shadow-[0_0_28px_rgba(255,255,255,0.06)]' : 'border-surface hover-border-accent'}`}>
                 <div className="flex items-center gap-3 p-5">
                   <div className="w-11 h-11 rounded-xl bg-tag border border-surface flex flex-col items-center justify-center shrink-0">
                     <Calendar size={14} className="text-accent mb-0.5" />

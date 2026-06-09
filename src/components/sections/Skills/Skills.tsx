@@ -1,32 +1,31 @@
 import React from 'react';
+import {
+  SiReact, SiTypescript, SiJavascript, SiHtml5, SiCss,
+  SiTailwindcss, SiNodedotjs, SiExpress, SiMongodb, SiPostgresql,
+  SiGit, SiVite, SiDocker, SiVercel, SiNextdotjs, SiFigma,
+} from 'react-icons/si';
+import { TbBrandVscode } from 'react-icons/tb';
+import { FaAws } from 'react-icons/fa';
 
-// Map skill names to devicons CDN slugs
-const ICON: Record<string, string> = {
-  'React':       'react',
-  'TypeScript':  'typescript',
-  'JavaScript':  'javascript',
-  'HTML':        'html5',
-  'CSS':         'css3',
-  'Tailwind CSS':'tailwindcss',
-  'Node.js':     'nodejs',
-  'Express':     'express',
-  'MongoDB':     'mongodb',
-  'PostgreSQL':  'postgresql',
-  'Git':         'git',
-  'VSCode':      'vscode',
-  'Vite':        'vitejs',
-  'Docker':      'docker',
-  'Vercel':      'vercel',
-  'Next.js':     'nextjs',
-  'AWS':         'amazonwebservices',
-  'Figma':       'figma',
-};
-
-const iconUrl = (name: string) => {
-  const slug = ICON[name];
-  if (!slug) return null;
-  // plain SVG variant (works for most; colored for brand icons)
-  return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${slug}/${slug}-original.svg`;
+const ICON: Record<string, React.ReactNode> = {
+  'React':       <SiReact />,
+  'TypeScript':  <SiTypescript />,
+  'JavaScript':  <SiJavascript />,
+  'HTML':        <SiHtml5 />,
+  'CSS':         <SiCss />,
+  'Tailwind CSS':<SiTailwindcss />,
+  'Node.js':     <SiNodedotjs />,
+  'Express':     <SiExpress />,
+  'MongoDB':     <SiMongodb />,
+  'PostgreSQL':  <SiPostgresql />,
+  'Git':         <SiGit />,
+  'VSCode':      <TbBrandVscode />,
+  'Vite':        <SiVite />,
+  'Docker':      <SiDocker />,
+  'Vercel':      <SiVercel />,
+  'Next.js':     <SiNextdotjs />,
+  'AWS':         <FaAws />,
+  'Figma':       <SiFigma />,
 };
 
 interface Skill { category: string; items: string[]; }
@@ -41,14 +40,17 @@ export const Skills: React.FC<SkillsProps> = ({ skills = [] }) => (
           <h3 className="text-xs font-semibold text-dim uppercase tracking-widest mb-3">{group.category}</h3>
           <div className="flex flex-wrap gap-2">
             {group.items.map((skill) => {
-              const url = iconUrl(skill);
+              const icon = ICON[skill];
               return (
                 <div key={skill}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-tag border border-surface text-bright text-xs hover:border-[#58a6ff]/40 transition-colors">
-                  {url
-                    ? <img src={url} alt={skill} className="w-3.5 h-3.5 object-contain" onError={(e) => (e.currentTarget.style.display = 'none')} />
-                    : <span className="w-3.5 h-3.5 rounded-full bg-gray-600 inline-block" />
-                  }
+                  className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-tag border border-surface text-bright text-xs hover-border-accent transition-colors">
+                  {icon ? (
+                    <span className="w-3.5 h-3.5 flex items-center justify-center text-current shrink-0">
+                      {icon}
+                    </span>
+                  ) : (
+                    <span className="w-3.5 h-3.5 rounded-full bg-gray-600 inline-block" />
+                  )}
                   {skill}
                 </div>
               );

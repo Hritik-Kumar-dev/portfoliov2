@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Home, Briefcase, FolderGit2, Layers, BookOpen, Mail, Sun, Moon } from 'lucide-react';
+import { Home, Briefcase, FolderGit2, Layers, BookOpen, Mail, Sun, Moon } from 'lucide-react';
 
 const NAV = [
   { label: 'Home',       href: '#home',       icon: <Home size={14} /> },
@@ -10,7 +10,7 @@ const NAV = [
   { label: 'Contact',    href: '#contact',    icon: <Mail size={14} /> },
 ];
 
-export const Header: React.FC<{ githubUsername: string }> = ({ githubUsername }) => {
+export const Header: React.FC<{ githubUsername: string }> = () => {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
@@ -47,7 +47,7 @@ export const Header: React.FC<{ githubUsername: string }> = ({ githubUsername })
       className="sticky top-0 z-40 border-b"
       style={{ background: 'var(--header-bg)', borderColor: 'var(--header-border)' }}
     >
-      <nav className="flex items-center justify-between px-6 py-3 max-w-[1100px] mx-auto">
+      <nav className="flex items-center justify-between px-6 py-3 max-w-[1000px] mx-auto">
         <span className="text-lg font-bold tracking-tight" style={{ color: 'var(--text)' }}>
           HritikKumar<span style={{ color: 'var(--accent)' }}>.</span>
         </span>
@@ -60,7 +60,7 @@ export const Header: React.FC<{ githubUsername: string }> = ({ githubUsername })
             style={{
               background: 'var(--card)',
               border: '1px solid var(--border)',
-              color: dark ? '#fbbf24' : '#6366f1',
+              color: dark ? 'var(--text)' : 'var(--text)',
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-h)'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; }}
@@ -71,7 +71,7 @@ export const Header: React.FC<{ githubUsername: string }> = ({ githubUsername })
 
           {/* Profile dropdown */}
           <div ref={ref} className="relative">
-            <button
+            {/* <button
               onClick={() => setOpen(!open)}
               className="flex items-center gap-2 p-1 pr-3 rounded-full transition-all duration-200"
               style={{
@@ -91,7 +91,7 @@ export const Header: React.FC<{ githubUsername: string }> = ({ githubUsername })
                 <span className="text-[10px]" style={{ color: 'var(--text3)' }}>@{githubUsername}</span>
               </div>
               <ChevronDown size={14} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} style={{ color: 'var(--text3)' }} />
-            </button>
+            </button> */}
 
             {/* Dropdown */}
             {open && (

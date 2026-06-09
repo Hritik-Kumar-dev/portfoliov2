@@ -28,8 +28,8 @@ const DockBtn: React.FC<{ item: typeof NAV[0]; active: boolean }> = ({ item, act
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
         className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors duration-200
           ${active
-            ? 'bg-[#58a6ff]/20 text-[#58a6ff] shadow-[0_0_10px_rgba(88,166,255,0.3)]'
-            : 'text-gray-500 hover:text-gray-200 hover:bg-white/5'}`}
+            ? 'bg-accent-dim text-accent'
+            : 'text-muted hover:text-title hover:bg-accent-dim'}`}
       >
         {item.icon}
       </motion.div>
@@ -93,7 +93,7 @@ export const FloatingDock: React.FC = () => {
               className="relative flex items-center justify-center">
               <motion.div whileHover={{ scale: 1.18 }} whileTap={{ scale: 0.9 }}
                 className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors duration-200
-                  ${active === item.href ? 'bg-[#58a6ff]/20 text-[#58a6ff]' : 'text-gray-500 hover:text-gray-200 hover:bg-white/5'}`}>
+                  ${active === item.href ? 'bg-accent-dim text-accent' : 'text-muted hover:text-title hover:bg-accent-dim'}`}>
                 {item.icon}
               </motion.div>
               {h && (

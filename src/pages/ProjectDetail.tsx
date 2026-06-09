@@ -17,7 +17,7 @@ export const ProjectDetail: React.FC = () => {
     </div>
   );
 
-  const statusMap = { live: { label: 'Live', cls: 'bg-green-500/20 text-green-400 border-green-500/30' }, building: { label: 'Building', cls: 'bg-amber-500/20 text-amber-400 border-amber-500/30' }, 'coming-soon': { label: 'Coming Soon', cls: 'bg-blue-500/20 text-blue-400 border-blue-500/30' } };
+  const statusMap = { live: { label: 'Live', cls: 'bg-accent-dim text-accent border-surface' }, building: { label: 'Building', cls: 'bg-accent-dim text-accent border-surface' }, 'coming-soon': { label: 'Coming Soon', cls: 'bg-accent-dim text-accent border-surface' } };
   const status = project.status ? statusMap[project.status] : null;
 
   return (
@@ -42,7 +42,7 @@ export const ProjectDetail: React.FC = () => {
           <div className="flex gap-2 shrink-0">
             {project.live && (
               <a href={project.live} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#58a6ff]/15 border border-[#58a6ff]/30 text-accent hover:bg-[#58a6ff]/25 transition-colors">
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-accent-dim border border-surface text-accent hover:bg-accent-dim transition-colors">
                 <ExternalLink size={14} /> Live Demo
               </a>
             )}

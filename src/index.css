@@ -6,61 +6,61 @@
 html { scroll-behavior: smooth; }
 
 :root {
-  --bg:        #050505;
-  --bg2:       #080808;
-  --card:      #0D0D0D;
-  --border:    rgba(255,255,255,0.07);
-  --border-h:  rgba(255,255,255,0.14);
+  --bg:        #000000;
+  --bg2:       #000000;
+  --card:      #0a0a0a;
+  --border:    rgba(255,255,255,0.06);
+  --border-h:  rgba(255,255,255,0.12);
   --text:      #FFFFFF;
-  --text2:     #A1A1AA;
-  --text3:     #52525B;
-  --accent:    #3B82F6;
-  --accent-dim: rgba(59,130,246,0.12);
-  --header-bg: #080808;
-  --header-border: #21262d;
-  --card-bg: #141920;
-  --dropdown-bg: #141920;
-  --dropdown-border: #21262d;
-  --hover-bg: #0f1117;
-  --surface: #0f1117;
-  --surface-border: #21262d;
-  --surface-hover: #30363d;
-  --surface-tag: #141920;
-  --text-page: #e6edf3;
-  --text-bright: #d1d5db;
-  --text-muted: #9ca3af;
-  --text-dim: #6b7280;
-  --accent-blue: #58a6ff;
-  --dock-bg: #0f1117;
+  --text2:     #A0A0A0;
+  --text3:     #505050;
+  --accent:    #FFFFFF;
+  --accent-dim: rgba(255,255,255,0.08);
+  --header-bg: #000000;
+  --header-border: rgba(255,255,255,0.08);
+  --card-bg: #0a0a0a;
+  --dropdown-bg: #0a0a0a;
+  --dropdown-border: rgba(255,255,255,0.08);
+  --hover-bg: #111111;
+  --surface: #0a0a0a;
+  --surface-border: rgba(255,255,255,0.08);
+  --surface-hover: #1a1a1a;
+  --surface-tag: #0a0a0a;
+  --text-page: #e0e0e0;
+  --text-bright: #d0d0d0;
+  --text-muted: #909090;
+  --text-dim: #606060;
+  --accent-blue: #FFFFFF;
+  --dock-bg: #0a0a0a;
 }
 
 .light {
-  --bg:        #fafafa;
+  --bg:        #ffffff;
   --bg2:       #ffffff;
-  --card:      #ffffff;
-  --border:    rgba(0,0,0,0.08);
-  --border-h:  rgba(0,0,0,0.15);
+  --card:      #f0f0f0;
+  --border:    rgba(0,0,0,0.12);
+  --border-h:  rgba(0,0,0,0.22);
   --text:      #111111;
-  --text2:     #52525B;
-  --text3:     #A1A1AA;
-  --accent:    #2563EB;
-  --accent-dim: rgba(37,99,235,0.1);
+  --text2:     #444444;
+  --text3:     #777777;
+  --accent:    #111111;
+  --accent-dim: rgba(0,0,0,0.08);
   --header-bg: #ffffff;
-  --header-border: #e5e7eb;
-  --card-bg: #f3f4f6;
+  --header-border: rgba(0,0,0,0.12);
+  --card-bg: #f0f0f0;
   --dropdown-bg: #ffffff;
-  --dropdown-border: #e5e7eb;
-  --hover-bg: #f3f4f6;
-  --surface: #f9fafb;
-  --surface-border: #e5e7eb;
-  --surface-hover: #e5e7eb;
-  --surface-tag: #f3f4f6;
-  --text-page: #374151;
-  --text-bright: #4b5563;
-  --text-muted: #6b7280;
-  --text-dim: #9ca3af;
-  --accent-blue: #2563eb;
-  --dock-bg: #ffffff;
+  --dropdown-border: rgba(0,0,0,0.12);
+  --hover-bg: #e8e8e8;
+  --surface: #f5f5f5;
+  --surface-border: rgba(0,0,0,0.12);
+  --surface-hover: #dcdcdc;
+  --surface-tag: #e8e8e8;
+  --text-page: #222222;
+  --text-bright: #333333;
+  --text-muted: #666666;
+  --text-dim: #888888;
+  --accent-blue: #111111;
+  --dock-bg: #fafafa;
 }
 
 body {
@@ -76,37 +76,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle grid texture (dark only) */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
-  background-size: 72px 72px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.light body::before {
-  display: none;
-}
-
-/* Radial glow behind sections */
-.section-glow::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 400px;
-  background: radial-gradient(ellipse at center, rgba(59,130,246,0.045) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
@@ -116,19 +85,19 @@ body::before {
 /* Use JetBrains Mono for all monospace */
 code, pre, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace !important; }
 
-/* Brighter GitHub contribution calendar */
-.react-activity-calendar__legend-colors li:nth-child(1) { background: #161b22 !important; }
-.react-activity-calendar__legend-colors li:nth-child(2) { background: #0e4429 !important; }
-.react-activity-calendar__legend-colors li:nth-child(3) { background: #006d32 !important; }
-.react-activity-calendar__legend-colors li:nth-child(4) { background: #26a641 !important; }
-.react-activity-calendar__legend-colors li:nth-child(5) { background: #39d353 !important; }
+/* GitHub contribution calendar - minimal grayscale */
+.react-activity-calendar__legend-colors li:nth-child(1) { background: #1a1a1a !important; }
+.react-activity-calendar__legend-colors li:nth-child(2) { background: #333333 !important; }
+.react-activity-calendar__legend-colors li:nth-child(3) { background: #555555 !important; }
+.react-activity-calendar__legend-colors li:nth-child(4) { background: #888888 !important; }
+.react-activity-calendar__legend-colors li:nth-child(5) { background: #cccccc !important; }
 
 /* Override cal block colors for max contrast */
-[data-level="0"] rect { fill: #161b22 !important; }
-[data-level="1"] rect { fill: #0e4429 !important; }
-[data-level="2"] rect { fill: #006d32 !important; }
-[data-level="3"] rect { fill: #26a641 !important; }
-[data-level="4"] rect { fill: #39d353 !important; }
+[data-level="0"] rect { fill: #1a1a1a !important; }
+[data-level="1"] rect { fill: #333333 !important; }
+[data-level="2"] rect { fill: #555555 !important; }
+[data-level="3"] rect { fill: #888888 !important; }
+[data-level="4"] rect { fill: #cccccc !important; }
 
 /* Theme-aware utility classes – override Tailwind arbitrary values */
 .bg-surface { background: var(--surface) !important; }
@@ -143,4 +112,7 @@ code, pre, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace !
 .hover-text-title:hover { color: var(--text) !important; }
 .hover-border-accent:hover { border-color: var(--accent-blue) !important; }
 .text-accent { color: var(--accent-blue) !important; }
+.border-accent { border-color: var(--accent-blue) !important; }
+.text-bg { color: var(--bg) !important; }
+.bg-accent-dim { background: var(--accent-dim) !important; }
 .dock-bg { background: var(--dock-bg) !important; }

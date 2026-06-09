@@ -35,8 +35,8 @@ export const DockItem: React.FC<DockItemProps> = ({ icon, label, href, active, h
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
         className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200
           ${active
-            ? 'bg-[#58a6ff]/20 text-[#58a6ff] shadow-[0_0_12px_rgba(88,166,255,0.35)]'
-            : 'text-gray-500 hover:text-gray-200 hover:bg-white/5'
+            ? 'bg-accent-dim text-accent'
+            : 'text-muted hover:text-title hover:bg-accent-dim'
           }`}
       >
         {icon}
@@ -49,7 +49,7 @@ export const DockItem: React.FC<DockItemProps> = ({ icon, label, href, active, h
           animate={{ opacity: 1, x: horizontal ? 0 : 0, y: horizontal ? -4 : 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className={`absolute z-50 whitespace-nowrap px-2 py-1 rounded-md text-xs font-medium bg-[#141920] border border-[#21262d] text-white pointer-events-none
+          className={`absolute z-50 whitespace-nowrap px-2 py-1 rounded-md text-xs font-medium bg-black/90 border border-white/10 text-title pointer-events-none
             ${horizontal ? 'bottom-full mb-2' : 'right-full mr-3'}`}
         >
           {label}

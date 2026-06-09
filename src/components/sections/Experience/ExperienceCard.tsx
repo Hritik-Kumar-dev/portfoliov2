@@ -4,11 +4,11 @@ import { ChevronDown, MapPin } from 'lucide-react';
 import type { Experience } from '../../../data/experience';
 
 const badgeColor: Record<string, string> = {
-  'Self-employed': 'bg-violet-500/15 text-violet-400 border-violet-500/30',
-  'Internship':    'bg-amber-500/15 text-amber-400 border-amber-500/30',
-  'Contributor':   'bg-sky-500/15 text-sky-400 border-sky-500/30',
-  'Full-time':     'bg-green-500/15 text-green-400 border-green-500/30',
-  'Freelance':     'bg-pink-500/15 text-pink-400 border-pink-500/30',
+  'Self-employed': 'bg-accent-dim text-accent border-surface',
+  'Internship':    'bg-accent-dim text-accent border-surface',
+  'Contributor':   'bg-accent-dim text-accent border-surface',
+  'Full-time':     'bg-accent-dim text-accent border-surface',
+  'Freelance':     'bg-accent-dim text-accent border-surface',
 };
 
 interface Props {
@@ -18,15 +18,15 @@ interface Props {
 }
 
 export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle }) => {
-  const badge = badgeColor[exp.employmentType] ?? 'bg-gray-500/15 text-gray-400 border-gray-500/30';
+  const badge = badgeColor[exp.employmentType] ?? 'bg-accent-dim text-accent border-surface';
 
   return (
     <div
       onClick={onToggle}
       className={`cursor-pointer rounded-2xl border bg-surface/80 backdrop-blur-sm transition-all duration-300
         ${open
-          ? 'border-[#58a6ff]/40 shadow-[0_0_28px_rgba(88,166,255,0.08)]'
-          : 'border-surface hover:border-[#58a6ff]/30 hover:shadow-[0_0_20px_rgba(88,166,255,0.06)]'
+          ? 'border-accent shadow-[0_0_28px_rgba(255,255,255,0.06)]'
+          : 'border-surface hover-border-accent hover:shadow-[0_0_20px_rgba(255,255,255,0.04)]'
         }`}
     >
       {/* Collapsed header */}
@@ -85,7 +85,7 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle }) => {
                     transition={{ delay: i * 0.06 }}
                     className="flex items-start gap-2 text-bright text-sm"
                   >
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#58a6ff] shrink-0" />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                     {a}
                   </motion.li>
                 ))}

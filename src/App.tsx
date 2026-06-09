@@ -17,7 +17,7 @@ import { projects, skills, blogPosts, experiences } from './data';
 const GITHUB_USERNAME = 'Hritik-Kumar-dev';
 
 const calTheme = {
-  dark: ['#1a1f2e', '#0e4429', '#006d32', '#26a641', '#39d353'],
+  dark: ['#1a1a1a', '#2a2a2a', '#444444', '#777777', '#aaaaaa'],
 };
 
 function HomePage() {

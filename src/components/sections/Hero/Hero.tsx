@@ -23,28 +23,28 @@ const ctaButtons = [
     icon: <Video size={15} />,
     href: null as string | null,
     cal: true,
-    cls: 'border-violet-500/40 bg-violet-500/10 text-violet-300 hover:bg-violet-500/25 hover:border-violet-400',
+    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
   },
   {
     label: 'Send Email',
     icon: <Mail size={15} />,
     href: '#contact',
     cal: false,
-    cls: 'border-sky-500/40 bg-sky-500/10 text-sky-300 hover:bg-sky-500/25 hover:border-sky-400',
+    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
   },
   {
     label: 'Hire Me',
     icon: <Briefcase size={15} />,
     href: '#contact',
     cal: false,
-    cls: 'border-green-500/40 bg-green-500/10 text-green-300 hover:bg-green-500/25 hover:border-green-400',
+    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
   },
   {
     label: 'Resume',
     icon: <Download size={15} />,
     href: '/resume.pdf',
     cal: false,
-    cls: 'border-amber-500/40 bg-amber-500/10 text-amber-300 hover:bg-amber-500/25 hover:border-amber-400',
+    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
   },
 ];
 
@@ -103,9 +103,9 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
             {/* Summary */}
             <p className="text-bright text-xs sm:text-sm leading-relaxed">
               Full-stack developer building fast, accessible web experiences with{' '}
-              <span className="text-green-400 font-medium">React</span>,{' '}
-              <span className="text-green-400 font-medium">TypeScript</span>, and{' '}
-              <span className="text-green-400 font-medium">Node.js</span>.
+              <span className="text-accent font-medium">React</span>,{' '}
+               <span className="text-accent font-medium">TypeScript</span>, and{' '}
+               <span className="text-accent font-medium">Node.js</span>.
               Open to freelance, collabs, and full-time roles.
             </p>
 

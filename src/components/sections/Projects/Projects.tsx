@@ -4,9 +4,9 @@ import { ExternalLink, GitBranch, ArrowRight } from 'lucide-react';
 import type { Project } from '../../../types';
 
 const statusConfig = {
-  live:          { label: 'Live',         cls: 'bg-green-500/20 text-green-400 border-green-500/30' },
-  building:      { label: 'Building',     cls: 'bg-amber-500/20 text-amber-400 border-amber-500/30' },
-  'coming-soon': { label: 'Coming Soon',  cls: 'bg-blue-500/20  text-blue-400  border-blue-500/30'  },
+  live:          { label: 'Live',         cls: 'bg-accent-dim text-accent border-surface' },
+  building:      { label: 'Building',     cls: 'bg-accent-dim text-accent border-surface' },
+  'coming-soon': { label: 'Coming Soon',  cls: 'bg-accent-dim text-accent border-surface'  },
 };
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -20,7 +20,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className="group relative bg-surface border border-surface rounded-xl overflow-hidden cursor-pointer
-        transition-all duration-300 hover:scale-[1.02] hover-border-accent hover:shadow-[0_0_24px_rgba(88,166,255,0.12)]"
+        transition-all duration-300 hover:scale-[1.02] hover-border-accent hover:shadow-[0_0_24px_rgba(255,255,255,0.08)]"
     >
       {/* 16:9 image */}
       <div className="relative w-full aspect-video overflow-hidden">
@@ -54,7 +54,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             <a href={project.live} target="_blank" rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-medium
-                bg-[#58a6ff]/15 border border-[#58a6ff]/30 text-accent hover:bg-[#58a6ff]/25 transition-colors">
+                bg-accent-dim border border-surface text-accent hover:bg-accent-dim transition-colors">
               <ExternalLink size={11} /> Live
             </a>
           )}
