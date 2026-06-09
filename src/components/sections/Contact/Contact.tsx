@@ -21,27 +21,27 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   }).then(r => r.json());
 
   if (res.success) {
-    Swal.fire({ title: 'Message Sent!', text: 'I\'ll get back to you shortly.', icon: 'success', background: '#0f1117', color: '#e6edf3', confirmButtonColor: '#58a6ff' });
+    Swal.fire({ title: 'Message Sent!', text: 'I\'ll get back to you shortly.', icon: 'success', background: 'var(--surface)', color: 'var(--text-page)', confirmButtonColor: '#58a6ff' });
     (e.target as HTMLFormElement).reset();
   } else {
-    Swal.fire({ title: 'Error', text: 'Something went wrong. Try again.', icon: 'error', background: '#0f1117', color: '#e6edf3' });
+    Swal.fire({ title: 'Error', text: 'Something went wrong. Try again.', icon: 'error', background: 'var(--surface)', color: 'var(--text-page)' });
   }
 };
 
-const inputCls = "bg-[#141920] border border-[#21262d] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#58a6ff] transition-colors w-full";
-const labelCls = "text-[11px] font-semibold tracking-widest uppercase text-gray-500 mb-1";
+const inputCls = "bg-tag border border-surface rounded-lg px-3 py-2 text-sm text-title placeholder-gray-600 focus:outline-none focus:border-[#58a6ff] transition-colors w-full";
+const labelCls = "text-[11px] font-semibold tracking-widest uppercase text-dim mb-1";
 
 export const Contact: React.FC = () => (
   <section id="contact" className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-    <h2 className="text-2xl font-bold text-white tracking-tight mb-1">Get In Touch</h2>
-    <p className="text-sm text-gray-500 mb-5">Have a project in mind or just want to say hi?</p>
+    <h2 className="text-2xl font-bold text-title tracking-tight mb-1">Get In Touch</h2>
+    <p className="text-sm text-dim mb-5">Have a project in mind or just want to say hi?</p>
 
     <div className="flex flex-col lg:flex-row gap-4">
       {/* Form */}
-      <div className="flex-1 bg-[#0f1117] border border-[#21262d] rounded-2xl p-6">
+      <div className="flex-1 bg-surface border border-surface rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-5">
-          <Mail size={16} className="text-[#58a6ff]" />
-          <span className="text-xs font-medium text-gray-400 tracking-wide">Send me a message</span>
+          <Mail size={16} className="text-accent" />
+          <span className="text-xs font-medium text-muted tracking-wide">Send me a message</span>
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
@@ -57,29 +57,29 @@ export const Contact: React.FC = () => (
             <textarea required name="message" rows={4} placeholder="Your message..." className={`${inputCls} resize-none`} />
           </div>
           <button type="submit"
-            className="w-full py-2.5 rounded-xl text-sm font-semibold tracking-wide bg-[#58a6ff]/15 border border-[#58a6ff]/30 text-[#58a6ff] hover:bg-[#58a6ff]/25 hover:border-[#58a6ff] transition-all duration-200">
+            className="w-full py-2.5 rounded-xl text-sm font-semibold tracking-wide bg-[#58a6ff]/15 border border-[#58a6ff]/30 text-accent hover:bg-[#58a6ff]/25 hover:border-[#58a6ff] transition-all duration-200">
             Send Message
           </button>
         </form>
       </div>
 
       {/* Sidebar */}
-      <div className="lg:w-52 bg-[#0f1117] border border-[#21262d] rounded-2xl p-6 flex flex-col gap-4">
+      <div className="lg:w-52 bg-surface border border-surface rounded-2xl p-6 flex flex-col gap-4">
         <div>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-3">Find me on</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-dim mb-3">Find me on</p>
           <div className="flex flex-col gap-2">
             {SOCIALS.map(s => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#141920] border border-[#21262d] text-gray-300 text-sm font-medium hover:border-[#58a6ff]/40 hover:text-white transition-all">
-                <span className="text-[#58a6ff]">{s.icon}</span>
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-tag border border-surface text-bright text-sm font-medium hover:border-[#58a6ff]/40 hover-text-title transition-all">
+                <span className="text-accent">{s.icon}</span>
                 {s.label}
               </a>
             ))}
           </div>
         </div>
 
-        <div className="border-t border-[#21262d] pt-4">
-          <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-3">Or schedule a call</p>
+        <div className="border-t border-surface pt-4">
+          <p className="text-xs font-semibold tracking-widest uppercase text-dim mb-3">Or schedule a call</p>
           <button
             data-cal-namespace="30min"
             data-cal-link="hritik-kumar-dev77/30min"

@@ -13,8 +13,8 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`bg-[#0f1117] border border-[#21262d] rounded-xl p-6 ${
-        hover ? 'hover:border-[#58a6ff] transition-colors' : ''
+      className={`bg-surface border border-surface rounded-xl p-6 ${
+        hover ? 'hover-border-accent transition-colors' : ''
       } ${className}`}
     >
       {children}

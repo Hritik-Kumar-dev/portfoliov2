@@ -74,14 +74,14 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
             <img
               src={`https://github.com/${githubUsername}.png`}
               alt="Profile"
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-[#21262d] object-cover shadow-2xl"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-surface object-cover shadow-2xl"
             />
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-white">Hritik Kumar</h1>
-              <p className="text-gray-400 text-xs sm:text-sm">@{githubUsername}</p>
-              <div className="flex items-center gap-2 mt-2 text-gray-400">
-                <Code size={16} className="hover:text-white cursor-pointer transition" />
-                <ExternalLink size={16} className="hover:text-white cursor-pointer transition" />
+              <h1 className="text-xl sm:text-2xl font-bold text-title">Hritik Kumar</h1>
+              <p className="text-muted text-xs sm:text-sm">@{githubUsername}</p>
+              <div className="flex items-center gap-2 mt-2 text-muted">
+                <Code size={16} className="hover-text-title cursor-pointer transition" />
+                <ExternalLink size={16} className="hover-text-title cursor-pointer transition" />
                 <div className="flex items-center gap-1 text-xs sm:text-sm">
                   <MapPin size={14} />
                   <span>Azamgarh, India</span>
@@ -94,14 +94,14 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
           <div className="flex-1 w-full flex flex-col gap-3">
             {/* Clock */}
             <div className="flex items-end gap-2 flex-wrap">
-              <span className="font-mono text-2xl sm:text-4xl font-bold text-white tracking-widest tabular-nums">
+              <span className="font-mono text-2xl sm:text-4xl font-bold text-title tracking-widest tabular-nums">
                 {clockStr}
               </span>
-              <span className="text-gray-500 text-xs sm:text-sm mb-0.5 font-mono">{dateStr}</span>
+              <span className="text-dim text-xs sm:text-sm mb-0.5 font-mono">{dateStr}</span>
             </div>
 
             {/* Summary */}
-            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+            <p className="text-bright text-xs sm:text-sm leading-relaxed">
               Full-stack developer building fast, accessible web experiences with{' '}
               <span className="text-green-400 font-medium">React</span>,{' '}
               <span className="text-green-400 font-medium">TypeScript</span>, and{' '}

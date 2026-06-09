@@ -38,7 +38,7 @@ const DockBtn: React.FC<{ item: typeof NAV[0]; active: boolean }> = ({ item, act
       {hovered && (
         <motion.span
           initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }}
-          className="absolute left-full ml-2.5 whitespace-nowrap px-2 py-1 rounded-lg text-[11px] font-medium bg-[#141920] border border-[#21262d] text-white pointer-events-none z-50">
+          className="absolute left-full ml-2.5 whitespace-nowrap px-2 py-1 rounded-lg text-[11px] font-medium bg-tag border border-surface text-title pointer-events-none z-50">
           {item.label}
         </motion.span>
       )}
@@ -70,7 +70,7 @@ export const FloatingDock: React.FC = () => {
       <nav aria-label="Page navigation"
         className="hidden md:flex fixed right-[max(0.75rem,calc((100vw-64rem)/2-3rem))] top-1/2 -translate-y-1/2 z-50
           flex-col gap-1 p-1.5 rounded-2xl
-          bg-[#0f1117]/80 border border-[#21262d] backdrop-blur-xl
+          dock-bg border border-surface backdrop-blur-xl
           shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
         {NAV.map((item) => <DockBtn key={item.href} item={item} active={active === item.href} />)}
       </nav>
@@ -79,7 +79,7 @@ export const FloatingDock: React.FC = () => {
       <nav aria-label="Page navigation"
         className="flex md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-50
           flex-row gap-1 p-1.5 rounded-2xl
-          bg-[#0f1117]/85 border border-[#21262d] backdrop-blur-xl
+          dock-bg border border-surface backdrop-blur-xl
           shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
         {NAV.map((item) => {
           const [h, setH] = useState(false);
@@ -98,7 +98,7 @@ export const FloatingDock: React.FC = () => {
               </motion.div>
               {h && (
                 <motion.span initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-                  className="absolute bottom-full mb-2 whitespace-nowrap px-2 py-1 rounded-lg text-[11px] font-medium bg-[#141920] border border-[#21262d] text-white pointer-events-none z-50">
+                  className="absolute bottom-full mb-2 whitespace-nowrap px-2 py-1 rounded-lg text-[11px] font-medium bg-tag border border-surface text-title pointer-events-none z-50">
                   {item.label}
                 </motion.span>
               )}

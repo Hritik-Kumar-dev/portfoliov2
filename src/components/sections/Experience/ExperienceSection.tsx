@@ -11,7 +11,7 @@ export const ExperienceSection: React.FC<{ experiences: Experience[] }> = ({ exp
 
   return (
     <section className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-      <h2 className="text-2xl font-bold text-white mb-3">Experience</h2>
+      <h2 className="text-2xl font-bold text-title mb-3">Experience</h2>
       <div className="flex flex-col gap-2">
         {experiences.slice(0, 3).map((exp, i) => (
           <motion.div key={exp.id}
@@ -27,7 +27,7 @@ export const ExperienceSection: React.FC<{ experiences: Experience[] }> = ({ exp
       </div>
       <div className="flex justify-center mt-6">
         <button onClick={() => navigate('/experience')}
-          className="flex items-center gap-1.5 text-sm text-[#58a6ff] hover:text-white transition-colors border border-[#21262d] hover:border-[#58a6ff]/50 px-4 py-1.5 rounded-full">
+          className="flex items-center gap-1.5 text-sm text-accent hover-text-title transition-colors border border-surface hover-border-accent px-4 py-1.5 rounded-full">
           See all experience <ArrowRight size={14} />
         </button>
       </div>

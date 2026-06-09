@@ -22,7 +22,7 @@ const calTheme = {
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-[#080808] text-[#e6edf3]">
+    <div className="min-h-screen bg-page text-page">
       <Header githubUsername={GITHUB_USERNAME} />
       <FloatingDock />
       <main className="flex flex-col gap-0">
@@ -41,7 +41,7 @@ function HomePage() {
           <p className="text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-3">
             Contributions in the last year
           </p>
-          <div className="bg-[#0f1117] border border-[#21262d] rounded-xl p-5 overflow-x-auto">
+          <div className="bg-surface border border-surface rounded-xl p-5 overflow-x-auto">
             <GitHubCalendar
               username={GITHUB_USERNAME}
               theme={calTheme}
