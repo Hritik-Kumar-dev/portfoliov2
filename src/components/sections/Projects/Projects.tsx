@@ -19,7 +19,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       onClick={() => navigate(`/projects/${project.id}`)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="group relative bg-[#0d1117] border border-[#30363d] rounded-xl overflow-hidden cursor-pointer
+      className="group relative bg-[#0f1117] border border-[#21262d] rounded-xl overflow-hidden cursor-pointer
         transition-all duration-300 hover:scale-[1.02] hover:border-[#58a6ff] hover:shadow-[0_0_24px_rgba(88,166,255,0.12)]"
     >
       {/* 16:9 image */}
@@ -41,7 +41,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         {/* Tags (hidden on hover) */}
         <div className={`flex flex-wrap gap-1.5 transition-all duration-200 ${hovered ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           {project.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="text-[10px] px-2 py-px rounded-full bg-[#161b22] border border-[#30363d] text-gray-500">
+            <span key={tag} className="text-[10px] px-2 py-px rounded-full bg-[#141920] border border-[#21262d] text-gray-500">
               {tag}
             </span>
           ))}
@@ -62,7 +62,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             <a href={project.github} target="_blank" rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-medium
-                bg-[#30363d]/60 border border-[#30363d] text-gray-300 hover:bg-[#30363d] transition-colors">
+                bg-[#30363d]/60 border border-[#21262d] text-gray-300 hover:bg-[#30363d] transition-colors">
               <GitBranch size={11} /> GitHub
             </a>
           )}
@@ -75,16 +75,16 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 export const Projects: React.FC<{ projects?: Project[] }> = ({ projects = [] }) => {
   const navigate = useNavigate();
   return (
-    <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="text-2xl font-bold text-white">Featured Projects</h2>
-        <button onClick={() => navigate('/projects')}
-          className="flex items-center gap-1 text-xs text-[#58a6ff] hover:text-white transition-colors">
-          See all <ArrowRight size={13} />
-        </button>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
+    <section className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
+      <h2 className="text-2xl font-bold text-white mb-5">Featured Projects</h2>
+      <div className="grid grid-cols-2 gap-3">
         {projects.slice(0, 4).map((p) => <ProjectCard key={p.id} project={p} />)}
+      </div>
+      <div className="flex justify-center mt-6">
+        <button onClick={() => navigate('/projects')}
+          className="flex items-center gap-1.5 text-sm text-[#58a6ff] hover:text-white transition-colors border border-[#21262d] hover:border-[#58a6ff]/50 px-4 py-1.5 rounded-full">
+          See all projects <ArrowRight size={14} />
+        </button>
       </div>
     </section>
   );

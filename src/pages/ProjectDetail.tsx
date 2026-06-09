@@ -9,7 +9,7 @@ export const ProjectDetail: React.FC = () => {
   const project = projects.find(p => p.id === id);
 
   if (!project) return (
-    <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center">
+    <div className="min-h-screen bg-[#080808] text-white flex items-center justify-center">
       <div className="text-center">
         <p className="text-gray-400 mb-4">Project not found.</p>
         <button onClick={() => navigate(-1)} className="text-[#58a6ff] hover:text-white text-sm">← Go back</button>
@@ -21,25 +21,25 @@ export const ProjectDetail: React.FC = () => {
   const status = project.status ? statusMap[project.status] : null;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-400 hover:text-white text-sm mb-8 transition-colors">
+    <div className="min-h-screen bg-[#080808] text-white">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-5">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-400 hover:text-white text-sm mb-4 transition-colors">
           <ArrowLeft size={16} /> Back
         </button>
 
         {/* Hero image */}
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-8 border border-[#30363d]">
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-4 border border-[#21262d]">
           <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
           {status && <span className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full border backdrop-blur-sm ${status.cls}`}>{status.label}</span>}
         </div>
 
         {/* Title + actions */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
           <div>
             <h1 className="text-2xl font-bold text-white">{project.title}</h1>
             <p className="text-gray-400 text-sm mt-1">{project.description}</p>
           </div>
-          <div className="flex gap-3 shrink-0">
+          <div className="flex gap-2 shrink-0">
             {project.live && (
               <a href={project.live} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#58a6ff]/15 border border-[#58a6ff]/30 text-[#58a6ff] hover:bg-[#58a6ff]/25 transition-colors">
@@ -48,7 +48,7 @@ export const ProjectDetail: React.FC = () => {
             )}
             {project.github && (
               <a href={project.github} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#30363d]/60 border border-[#30363d] text-gray-300 hover:bg-[#30363d] transition-colors">
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#30363d]/60 border border-[#21262d] text-gray-300 hover:bg-[#30363d] transition-colors">
                 <GitBranch size={14} /> GitHub
               </a>
             )}
@@ -56,11 +56,11 @@ export const ProjectDetail: React.FC = () => {
         </div>
 
         {/* Tech stack */}
-        <div className="bg-[#0d1117] border border-[#30363d] rounded-xl p-5">
+        <div className="bg-[#0f1117] border border-[#21262d] rounded-xl p-5">
           <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">Tech Stack</h2>
           <div className="flex flex-wrap gap-2">
             {project.tags.map(tag => (
-              <span key={tag} className="text-xs px-3 py-1 rounded-full bg-[#161b22] border border-[#30363d] text-gray-300">
+              <span key={tag} className="text-xs px-3 py-1 rounded-full bg-[#141920] border border-[#21262d] text-gray-300">
                 {tag}
               </span>
             ))}

@@ -28,14 +28,14 @@ const PortfolioHero: React.FC = () => {
   }, [githubUsername, repoName]);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-green-500/30">
+    <div className="min-h-screen bg-[#080808] text-white font-sans selection:bg-green-500/30">
       {/* Top Navigation Bar */}
       <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
         <div className="text-2xl font-bold tracking-tight">algora</div>
         
         <div className="flex items-center gap-6">
           {/* GitHub Star Button */}
-          <div className="flex items-center gap-2 bg-[#161b22] border border-[#30363d] px-3 py-1.5 rounded-md hover:bg-[#1c2128] cursor-pointer transition">
+          <div className="flex items-center gap-2 bg-[#141920] border border-[#21262d] px-3 py-1.5 rounded-md hover:bg-[#1c2128] cursor-pointer transition">
             <Code size={18} />
             <span className="text-sm font-medium">Star</span>
             <span className="bg-[#30363d] px-2 py-0.5 rounded text-xs">
@@ -45,7 +45,7 @@ const PortfolioHero: React.FC = () => {
           </div>
 
           {/* Mini Profile Switcher */}
-          <div className="flex items-center gap-3 bg-[#161b22] p-1 pr-3 rounded-full border border-[#30363d] cursor-pointer">
+          <div className="flex items-center gap-2 bg-[#141920] p-1 pr-3 rounded-full border border-[#21262d] cursor-pointer">
             <img 
               src="https://avatars.githubusercontent.com/u/215129051?v=4" 
               alt="Profile" 
@@ -62,7 +62,7 @@ const PortfolioHero: React.FC = () => {
 
       {/* Main Hero Card Container */}
       <main className="max-w-7xl mx-auto px-6 mt-12">
-        <div className="bg-[#0d1117] border border-[#30363d] rounded-xl p-8 relative overflow-hidden">
+        <div className="bg-[#0f1117] border border-[#21262d] rounded-xl p-8 relative overflow-hidden">
           
           <div className="flex flex-col md:flex-row gap-12 items-start">
             
@@ -72,14 +72,14 @@ const PortfolioHero: React.FC = () => {
                 <img 
                   src="https://github.com/Hritik-Kumar-dev.png" 
                   alt="Hritik Kumar" 
-                  className="w-24 h-24 rounded-full border-2 border-[#30363d] object-cover shadow-2xl"
+                  className="w-24 h-24 rounded-full border-2 border-[#21262d] object-cover shadow-2xl"
                 />
               </div>
               <div>
                 <h1 className="text-2xl font-bold">Hritik Kumar</h1>
                 <p className="text-gray-400 text-sm">@{githubUsername}</p>
                 
-                <div className="flex items-center gap-4 mt-3 text-gray-400">
+                <div className="flex items-center gap-3 mt-3 text-gray-400">
                   <Code size={18} className="hover:text-white cursor-pointer transition" />
                   <ExternalLink size={18} className="hover:text-white cursor-pointer transition" />
                   <div className="flex items-center gap-1 text-sm">
@@ -115,7 +115,7 @@ const PortfolioHero: React.FC = () => {
           </div>
 
           {/* Privacy Footer inside Card */}
-          <div className="mt-12 pt-6 border-t border-[#30363d] flex items-center gap-2 text-gray-500 text-sm">
+          <div className="mt-12 pt-6 border-t border-[#21262d] flex items-center gap-2 text-gray-500 text-sm">
             <Shield size={18} className="text-green-600" />
             <span>Your personal details and preferences are not publicly visible.</span>
           </div>

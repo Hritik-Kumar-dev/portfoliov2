@@ -10,16 +10,16 @@ interface BlogsProps { blogs?: BlogPost[]; }
 const BlogCard: React.FC<{ blog: BlogPost; open: boolean; onToggle: () => void }> = ({ blog, open, onToggle }) => (
   <div
     onClick={onToggle}
-    className={`cursor-pointer rounded-2xl border bg-[#0d1117]/80 backdrop-blur-sm transition-all duration-300
+    className={`cursor-pointer rounded-2xl border bg-[#0f1117]/80 backdrop-blur-sm transition-all duration-300
       ${open
         ? 'border-[#58a6ff]/40 shadow-[0_0_28px_rgba(88,166,255,0.08)]'
-        : 'border-[#30363d] hover:border-[#58a6ff]/30 hover:shadow-[0_0_20px_rgba(88,166,255,0.06)]'
+        : 'border-[#21262d] hover:border-[#58a6ff]/30 hover:shadow-[0_0_20px_rgba(88,166,255,0.06)]'
       }`}
   >
     {/* Header */}
-    <div className="flex items-center gap-4 p-4 sm:p-5">
+    <div className="flex items-center gap-3 p-4 sm:p-5">
       {/* Date badge */}
-      <div className="w-11 h-11 rounded-xl bg-[#161b22] border border-[#30363d] flex flex-col items-center justify-center shrink-0">
+      <div className="w-11 h-11 rounded-xl bg-[#141920] border border-[#21262d] flex flex-col items-center justify-center shrink-0">
         <Calendar size={14} className="text-[#58a6ff] mb-0.5" />
         <span className="text-[9px] text-gray-400 font-mono leading-none">
           {new Date(blog.date).getFullYear()}
@@ -56,7 +56,7 @@ const BlogCard: React.FC<{ blog: BlogPost; open: boolean; onToggle: () => void }
           transition={{ duration: 0.28, ease: 'easeInOut' }}
           className="overflow-hidden"
         >
-          <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-[#30363d]">
+          <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-[#21262d]">
             <p className="text-gray-300 text-sm leading-relaxed mt-3">{blog.excerpt}</p>
             <a
               href={blog.link}
@@ -78,15 +78,9 @@ export const Blogs: React.FC<BlogsProps> = ({ blogs = [] }) => {
   const [openId, setOpenId] = useState<string | null>(null);
   const navigate = useNavigate();
   return (
-    <section id="blogs" className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="text-2xl font-bold text-white">Latest Blog Posts</h2>
-        <button onClick={() => navigate('/blogs')}
-          className="flex items-center gap-1 text-xs text-[#58a6ff] hover:text-white transition-colors">
-          See all <ArrowRight size={13} />
-        </button>
-      </div>
-      <div className="flex flex-col gap-3">
+    <section id="blogs" className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
+      <h2 className="text-2xl font-bold text-white mb-5">Latest Blog Posts</h2>
+      <div className="flex flex-col gap-2">
         {blogs.slice(0, 3).map((blog, i) => (
           <motion.div key={blog.id}
             initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
@@ -98,6 +92,12 @@ export const Blogs: React.FC<BlogsProps> = ({ blogs = [] }) => {
             />
           </motion.div>
         ))}
+      </div>
+      <div className="flex justify-center mt-6">
+        <button onClick={() => navigate('/blogs')}
+          className="flex items-center gap-1.5 text-sm text-[#58a6ff] hover:text-white transition-colors border border-[#21262d] hover:border-[#58a6ff]/50 px-4 py-1.5 rounded-full">
+          See all posts <ArrowRight size={14} />
+        </button>
       </div>
     </section>
   );

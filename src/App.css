@@ -1,8 +1,0 @@
-@import "tailwindcss";
-body,html{
-  box-sizing: border-box;
-  background: black;
-}
-body{
-  padding: 5px; 
-}

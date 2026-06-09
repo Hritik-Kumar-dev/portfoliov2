@@ -1,0 +1,34 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #080808;
+  color: #e6edf3;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Use JetBrains Mono for all monospace */
+code, pre, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace !important; }
+
+/* Brighter GitHub contribution calendar */
+.react-activity-calendar__legend-colors li:nth-child(1) { background: #161b22 !important; }
+.react-activity-calendar__legend-colors li:nth-child(2) { background: #0e4429 !important; }
+.react-activity-calendar__legend-colors li:nth-child(3) { background: #006d32 !important; }
+.react-activity-calendar__legend-colors li:nth-child(4) { background: #26a641 !important; }
+.react-activity-calendar__legend-colors li:nth-child(5) { background: #39d353 !important; }
+
+/* Override cal block colors for max contrast */
+[data-level="0"] rect { fill: #161b22 !important; }
+[data-level="1"] rect { fill: #0e4429 !important; }
+[data-level="2"] rect { fill: #006d32 !important; }
+[data-level="3"] rect { fill: #26a641 !important; }
+[data-level="4"] rect { fill: #39d353 !important; }

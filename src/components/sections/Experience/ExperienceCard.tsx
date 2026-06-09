@@ -23,16 +23,16 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle }) => {
   return (
     <div
       onClick={onToggle}
-      className={`cursor-pointer rounded-2xl border bg-[#0d1117]/80 backdrop-blur-sm transition-all duration-300
+      className={`cursor-pointer rounded-2xl border bg-[#0f1117]/80 backdrop-blur-sm transition-all duration-300
         ${open
           ? 'border-[#58a6ff]/40 shadow-[0_0_28px_rgba(88,166,255,0.08)]'
-          : 'border-[#30363d] hover:border-[#58a6ff]/30 hover:shadow-[0_0_20px_rgba(88,166,255,0.06)]'
+          : 'border-[#21262d] hover:border-[#58a6ff]/30 hover:shadow-[0_0_20px_rgba(88,166,255,0.06)]'
         }`}
     >
       {/* Collapsed header */}
-      <div className="flex items-center gap-4 p-4 sm:p-5">
+      <div className="flex items-center gap-3 p-4 sm:p-5">
         {/* Logo / initials */}
-        <div className="w-11 h-11 rounded-xl bg-[#161b22] border border-[#30363d] flex items-center justify-center shrink-0 overflow-hidden">
+        <div className="w-11 h-11 rounded-xl bg-[#141920] border border-[#21262d] flex items-center justify-center shrink-0 overflow-hidden">
           {exp.logo
             ? <img src={exp.logo} alt={exp.company} className="w-8 h-8 object-contain" />
             : <span className="text-sm font-bold text-gray-300">{exp.company.slice(0, 2).toUpperCase()}</span>
@@ -74,7 +74,7 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle }) => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-[#30363d]">
+            <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-[#21262d]">
               {/* Achievements */}
               <ul className="mt-3 space-y-2">
                 {exp.achievements.map((a, i) => (
@@ -94,7 +94,7 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle }) => {
               {/* Tech pills */}
               <div className="flex flex-wrap gap-1.5 mt-4">
                 {exp.technologies.map((t) => (
-                  <span key={t} className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#161b22] border border-[#30363d] text-gray-400">
+                  <span key={t} className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#141920] border border-[#21262d] text-gray-400">
                     {t}
                   </span>
                 ))}

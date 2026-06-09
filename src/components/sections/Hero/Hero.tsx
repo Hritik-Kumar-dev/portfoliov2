@@ -21,25 +21,29 @@ const ctaButtons = [
   {
     label: 'Book a Call',
     icon: <Video size={15} />,
-    href: 'https://calendly.com',
+    href: null as string | null,
+    cal: true,
     cls: 'border-violet-500/40 bg-violet-500/10 text-violet-300 hover:bg-violet-500/25 hover:border-violet-400',
   },
   {
     label: 'Send Email',
     icon: <Mail size={15} />,
-    href: 'mailto:hritik@example.com',
+    href: '#contact',
+    cal: false,
     cls: 'border-sky-500/40 bg-sky-500/10 text-sky-300 hover:bg-sky-500/25 hover:border-sky-400',
   },
   {
     label: 'Hire Me',
     icon: <Briefcase size={15} />,
-    href: 'mailto:hritik@example.com?subject=Hiring',
+    href: '#contact',
+    cal: false,
     cls: 'border-green-500/40 bg-green-500/10 text-green-300 hover:bg-green-500/25 hover:border-green-400',
   },
   {
     label: 'Resume',
     icon: <Download size={15} />,
     href: '/resume.pdf',
+    cal: false,
     cls: 'border-amber-500/40 bg-amber-500/10 text-amber-300 hover:bg-amber-500/25 hover:border-amber-400',
   },
 ];
@@ -61,21 +65,21 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
   });
 
   return (
-    <main className="max-w-5xl mx-auto px-4 sm:px-6 mt-8">
-      <Card className="p-5 sm:p-8 relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 items-start">
+    <main className="max-w-5xl mx-auto px-4 sm:px-6 mt-4">
+      <Card className="p-4 sm:p-5 relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-7 items-start">
 
           {/* Left: User Info */}
-          <div className="flex items-center gap-4 shrink-0">
+          <div className="flex items-center gap-3 shrink-0">
             <img
               src={`https://github.com/${githubUsername}.png`}
               alt="Profile"
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-[#30363d] object-cover shadow-2xl"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-[#21262d] object-cover shadow-2xl"
             />
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-white">Hritik Kumar</h1>
               <p className="text-gray-400 text-xs sm:text-sm">@{githubUsername}</p>
-              <div className="flex items-center gap-3 mt-2 text-gray-400">
+              <div className="flex items-center gap-2 mt-2 text-gray-400">
                 <Code size={16} className="hover:text-white cursor-pointer transition" />
                 <ExternalLink size={16} className="hover:text-white cursor-pointer transition" />
                 <div className="flex items-center gap-1 text-xs sm:text-sm">
@@ -87,7 +91,7 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
           </div>
 
           {/* Right: Summary + Clock + CTA */}
-          <div className="flex-1 w-full flex flex-col gap-4">
+          <div className="flex-1 w-full flex flex-col gap-3">
             {/* Clock */}
             <div className="flex items-end gap-2 flex-wrap">
               <span className="font-mono text-2xl sm:text-4xl font-bold text-white tracking-widest tabular-nums">
@@ -105,28 +109,26 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
               Open to freelance, collabs, and full-time roles.
             </p>
 
-            {/* CTA Buttons */}
             <div className="flex flex-wrap gap-2">
-              {ctaButtons.map((btn) =>
-                btn.label === 'Book a Call' ? (
-                  <button
-                    key="Book a Call"
-                    data-cal-namespace="30min"
-                    data-cal-link="hritik-kumar-dev77/30min"
-                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border backdrop-blur-md transition-all duration-200 ${btn.cls}`}
-                  >
-                    {btn.icon}
-                    {btn.label}
+              {ctaButtons.map((btn) => {
+                const cls = `flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border backdrop-blur-md transition-all duration-200 ${btn.cls}`;
+                if (btn.cal) return (
+                  <button key={btn.label} data-cal-namespace="30min" data-cal-link="hritik-kumar-dev77/30min"
+                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}' className={cls}>
+                    {btn.icon}{btn.label}
                   </button>
-                ) : (
-                  <a key={btn.label} href={btn.href} target="_blank" rel="noopener noreferrer"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border backdrop-blur-md transition-all duration-200 ${btn.cls}`}>
-                    {btn.icon}
-                    {btn.label}
+                );
+                if (btn.href?.startsWith('#')) return (
+                  <button key={btn.label} onClick={() => document.querySelector(btn.href!)?.scrollIntoView({ behavior: 'smooth' })} className={cls}>
+                    {btn.icon}{btn.label}
+                  </button>
+                );
+                return (
+                  <a key={btn.label} href={btn.href!} target="_blank" rel="noopener noreferrer" className={cls}>
+                    {btn.icon}{btn.label}
                   </a>
-                )
-              )}
+                );
+              })}
             </div>
           </div>
         </div>

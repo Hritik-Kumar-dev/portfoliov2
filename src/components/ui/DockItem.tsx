@@ -49,7 +49,7 @@ export const DockItem: React.FC<DockItemProps> = ({ icon, label, href, active, h
           animate={{ opacity: 1, x: horizontal ? 0 : 0, y: horizontal ? -4 : 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className={`absolute z-50 whitespace-nowrap px-2 py-1 rounded-md text-xs font-medium bg-[#161b22] border border-[#30363d] text-white pointer-events-none
+          className={`absolute z-50 whitespace-nowrap px-2 py-1 rounded-md text-xs font-medium bg-[#141920] border border-[#21262d] text-white pointer-events-none
             ${horizontal ? 'bottom-full mb-2' : 'right-full mr-3'}`}
         >
           {label}
