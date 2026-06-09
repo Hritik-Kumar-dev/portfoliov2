@@ -8,7 +8,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ githubUsername }) => {
   return (
     <header className="border-b border-[#30363d] bg-[#050505]">
-      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+      <nav className="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto">
         <div className="text-2xl font-bold tracking-tight text-white">algora</div>
 
         <div className="flex items-center gap-3 bg-[#161b22] p-1 pr-3 rounded-full border border-[#30363d] cursor-pointer hover:border-[#58a6ff] transition-colors">

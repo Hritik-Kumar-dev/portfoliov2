@@ -1,45 +1,103 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ExternalLink, Clock, Calendar, ArrowRight } from 'lucide-react';
 import type { BlogPost } from '../../../types';
-import { Card } from '../../ui';
 import { formatDate } from '../../../utils';
 
-interface BlogsProps {
-  blogs?: BlogPost[];
-}
+interface BlogsProps { blogs?: BlogPost[]; }
 
-export const Blogs: React.FC<BlogsProps> = ({ blogs = [] }) => {
-  return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold text-white mb-8">Latest Blog Posts</h2>
+const BlogCard: React.FC<{ blog: BlogPost; open: boolean; onToggle: () => void }> = ({ blog, open, onToggle }) => (
+  <div
+    onClick={onToggle}
+    className={`cursor-pointer rounded-2xl border bg-[#0d1117]/80 backdrop-blur-sm transition-all duration-300
+      ${open
+        ? 'border-[#58a6ff]/40 shadow-[0_0_28px_rgba(88,166,255,0.08)]'
+        : 'border-[#30363d] hover:border-[#58a6ff]/30 hover:shadow-[0_0_20px_rgba(88,166,255,0.06)]'
+      }`}
+  >
+    {/* Header */}
+    <div className="flex items-center gap-4 p-4 sm:p-5">
+      {/* Date badge */}
+      <div className="w-11 h-11 rounded-xl bg-[#161b22] border border-[#30363d] flex flex-col items-center justify-center shrink-0">
+        <Calendar size={14} className="text-[#58a6ff] mb-0.5" />
+        <span className="text-[9px] text-gray-400 font-mono leading-none">
+          {new Date(blog.date).getFullYear()}
+        </span>
+      </div>
 
-      <div className="space-y-4">
-        {blogs.length > 0 ? (
-          blogs.map((blog) => (
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-bold text-white leading-tight truncate">{blog.title}</p>
+        <p className="text-gray-500 text-[11px] mt-0.5 truncate">{blog.excerpt}</p>
+      </div>
+
+      <div className="flex flex-col items-end gap-1 shrink-0 ml-2">
+        <span className="text-[11px] text-gray-400">{formatDate(blog.date)}</span>
+        {blog.readingTime && (
+          <span className="flex items-center gap-1 text-[10px] text-gray-500">
+            <Clock size={10} />{blog.readingTime} min
+          </span>
+        )}
+      </div>
+
+      <motion.div animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.25 }} className="ml-2 shrink-0 text-gray-500">
+        <ChevronDown size={18} />
+      </motion.div>
+    </div>
+
+    {/* Expanded */}
+    <AnimatePresence initial={false}>
+      {open && (
+        <motion.div
+          key="body"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.28, ease: 'easeInOut' }}
+          className="overflow-hidden"
+        >
+          <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-[#30363d]">
+            <p className="text-gray-300 text-sm leading-relaxed mt-3">{blog.excerpt}</p>
             <a
-              key={blog.id}
               href={blog.link}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 mt-4 text-xs font-medium text-[#58a6ff] hover:text-white transition-colors"
             >
-              <Card hover className="hover:bg-[#161b22]">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
-                      {blog.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-3">{blog.excerpt}</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <span>{formatDate(blog.date)}</span>
-                  {blog.readingTime && <span>{blog.readingTime} min read</span>}
-                </div>
-              </Card>
+              <ExternalLink size={12} /> Read on Medium
             </a>
-          ))
-        ) : (
-          <p className="text-gray-400">No blog posts to display yet.</p>
-        )}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+);
+
+export const Blogs: React.FC<BlogsProps> = ({ blogs = [] }) => {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const navigate = useNavigate();
+  return (
+    <section id="blogs" className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-2xl font-bold text-white">Latest Blog Posts</h2>
+        <button onClick={() => navigate('/blogs')}
+          className="flex items-center gap-1 text-xs text-[#58a6ff] hover:text-white transition-colors">
+          See all <ArrowRight size={13} />
+        </button>
+      </div>
+      <div className="flex flex-col gap-3">
+        {blogs.slice(0, 3).map((blog, i) => (
+          <motion.div key={blog.id}
+            initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.3 }}>
+            <BlogCard
+              blog={blog}
+              open={openId === blog.id}
+              onToggle={() => setOpenId(openId === blog.id ? null : blog.id)}
+            />
+          </motion.div>
+        ))}
       </div>
     </section>
   );
