@@ -1,0 +1,47 @@
+import type { Project } from '../types';
+
+export const projects: Project[] = [
+  {
+    id: '1',
+    title: 'Portfolio Website',
+    description: 'A modern portfolio website showcasing projects and skills',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZVKyo0jwMT-dbNu9Z-EqyWL7kPKjd9Htptg&s',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    github: 'https://github.com/Hritik-Kumar-dev/portfolio',
+    live: 'https://portfolio.example.com',
+    featured: true,
+    status: 'live',
+  },
+  {
+    id: '2',
+    title: 'Cook AI',
+    description: 'AI-powered recipe generator that suggests meals based on your ingredients.',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZVKyo0jwMT-dbNu9Z-EqyWL7kPKjd9Htptg&s',
+    tags: ['React', 'TypeScript', 'OpenAI', 'Node.js'],
+    github: 'https://github.com/Hritik-Kumar-dev/cook-ai',
+    live: 'https://cook-ai.example.com',
+    featured: true,
+    status: 'building',
+  },
+  {
+    id: '3',
+    title: 'Dev Tools Hub',
+    description: 'A collection of handy developer utilities in one place.',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-9MGe4ANkEzNVUROzeAbjOG8oaPsNv02RKg&s',
+    tags: ['React', 'TypeScript', 'Tailwind CSS'],
+    github: 'https://github.com/Hritik-Kumar-dev/dev-tools',
+    featured: true,
+    status: 'coming-soon',
+  },
+  {
+    id: '4',
+    title: 'Link Shortener',
+    description: 'Fast and minimal URL shortener with analytics dashboard.',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-9MGe4ANkEzNVUROzeAbjOG8oaPsNv02RKg&s',
+    tags: ['Node.js', 'Express', 'PostgreSQL', 'React'],
+    github: 'https://github.com/Hritik-Kumar-dev/link-shortener',
+    live: 'https://links.example.com',
+    featured: true,
+    status: 'live',
+  },
+];
