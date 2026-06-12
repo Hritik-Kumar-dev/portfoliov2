@@ -5,6 +5,12 @@ export interface Project {
   title: string;
   description: string;
   image: string;
+  images?: {
+    light: string;
+    dark: string;
+  };
+  video?: string;
+  details?: string;
   tags: string[];
   github?: string;
   live?: string;

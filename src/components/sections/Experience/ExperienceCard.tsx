@@ -15,9 +15,10 @@ interface Props {
   exp: Experience;
   open: boolean;
   onToggle: () => void;
+  detailView?: boolean;
 }
 
-export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle }) => {
+export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle, detailView = false }) => {
   const badge = badgeColor[exp.employmentType] ?? 'bg-accent-dim text-accent border-surface';
 
   return (
@@ -75,30 +76,79 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle }) => {
             className="overflow-hidden"
           >
             <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-surface">
-              {/* Achievements */}
-              <ul className="mt-3 space-y-2">
-                {exp.achievements.map((a, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.06 }}
-                    className="flex items-start gap-2 text-bright text-sm"
-                  >
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-                    {a}
-                  </motion.li>
-                ))}
-              </ul>
+              {detailView ? (
+                /* Detail view: content stacked, image on separate line */
+                <>
+                  <div className="mt-3 space-y-2">
+                    {exp.achievements.map((a, i) => (
+                      <motion.li
+                        key={i}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.06 }}
+                        className="flex items-start gap-2 text-bright text-sm list-none"
+                      >
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                        {a}
+                      </motion.li>
+                    ))}
+                  </div>
 
-              {/* Tech pills */}
-              <div className="flex flex-wrap gap-1.5 mt-4">
-                {exp.technologies.map((t) => (
-                  <span key={t} className="text-[11px] px-2.5 py-0.5 rounded-full bg-tag border border-surface text-muted">
-                    {t}
-                  </span>
-                ))}
-              </div>
+                  {exp.technologies.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mt-4">
+                      {exp.technologies.map((t) => (
+                        <span key={t} className="text-[11px] px-2.5 py-0.5 rounded-full bg-tag border border-surface text-muted">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {exp.image && (
+                    <div className="mt-4 rounded-xl overflow-hidden"
+                      style={{ border: '1px solid var(--border)' }}>
+                      <img src={exp.image} alt={exp.company}
+                        className="w-full h-56 object-cover" />
+                    </div>
+                  )}
+                </>
+              ) : (
+                /* Section view: achievements on left, image on right */
+                <div className="flex gap-4 items-start mt-3">
+                  <div className="flex-1 min-w-0 space-y-2">
+                    {exp.achievements.map((a, i) => (
+                      <motion.li
+                        key={i}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.06 }}
+                        className="flex items-start gap-2 text-bright text-sm list-none"
+                      >
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                        {a}
+                      </motion.li>
+                    ))}
+
+                    {exp.technologies.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-4">
+                        {exp.technologies.map((t) => (
+                          <span key={t} className="text-[11px] px-2.5 py-0.5 rounded-full bg-tag border border-surface text-muted">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {exp.image && (
+                    <div className="w-36 shrink-0 rounded-xl overflow-hidden hidden sm:block"
+                      style={{ border: '1px solid var(--border)' }}>
+                      <img src={exp.image} alt={exp.company}
+                        className="w-full h-28 object-cover" />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </motion.div>
         )}

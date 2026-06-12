@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getCalApi } from '@calcom/embed-react';
-import { Code, ExternalLink, MapPin, Video, Mail, Briefcase, Download } from 'lucide-react';
+import { MapPin, Video, Mail, Briefcase, Download } from 'lucide-react';
+import { FiGithub} from 'react-icons/fi';
 import { Card } from '../../ui';
-
+import { BsTwitterX } from 'react-icons/bs';
 interface HeroProps {
   githubUsername: string;
   repoName: string;
@@ -80,8 +81,14 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
               <h1 className="text-xl sm:text-2xl font-bold text-title">Hritik Kumar</h1>
               <p className="text-muted text-xs sm:text-sm">@{githubUsername}</p>
               <div className="flex items-center gap-2 mt-2 text-muted">
-                <Code size={16} className="hover-text-title cursor-pointer transition" />
-                <ExternalLink size={16} className="hover-text-title cursor-pointer transition" />
+                <a href={`https://github.com/${githubUsername}`} target="_blank" rel="noopener noreferrer"
+                  className="hover-text-title transition-colors">
+                  <FiGithub size={16} />
+                </a>
+                <a href={`https://twitter.com/${githubUsername}`} target="_blank" rel="noopener noreferrer"
+                  className="hover-text-title transition-colors">
+                  <BsTwitterX size={16} />
+                </a>
                 <div className="flex items-center gap-1 text-xs sm:text-sm">
                   <MapPin size={14} />
                   <span>Azamgarh, India</span>

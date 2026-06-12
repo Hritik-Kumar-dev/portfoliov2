@@ -1,1 +1,1 @@
-export { useGitHubStars } from './useGitHubStars';
+// hooks barrel

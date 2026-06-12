@@ -2,6 +2,7 @@ export interface Experience {
   id: string;
   company: string;
   logo?: string;
+  image?: string;
   employmentType: string;
   role: string;
   duration: string;
@@ -23,6 +24,7 @@ export const experiences: Experience[] = [
     location: 'India · Remote',
     period: '2024 – Present',
     description: 'Building modern web apps with React, TypeScript, and Tailwind CSS.',
+    // image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop',
     achievements: [
       'Delivered 5+ production web apps for international clients using React & Node.js.',
       'Reduced client load times by 40% through code splitting and lazy loading.',
@@ -39,6 +41,7 @@ export const experiences: Experience[] = [
     location: 'Remote · Global',
     period: '2023 – Present',
     description: 'Contributing to open-source projects and building personal tools.',
+    // image: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=400&h=300&fit=crop',
     achievements: [
       'Contributed bug fixes and features to popular React component libraries.',
       'Maintained personal CLI tools with 200+ GitHub stars.',
@@ -55,6 +58,7 @@ export const experiences: Experience[] = [
     location: 'Lucknow, India',
     period: '2023',
     description: 'Developed responsive UIs and REST API integrations.',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop',
     achievements: [
       'Built and shipped 3 responsive dashboards used by 1,000+ users.',
       'Integrated REST APIs and handled state with React Query.',

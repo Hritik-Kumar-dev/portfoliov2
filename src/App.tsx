@@ -22,61 +22,65 @@ const calTheme = {
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-page text-page">
-      <Header githubUsername={GITHUB_USERNAME} />
+    <>
       <FloatingDock />
       <main className="flex flex-col gap-0">
         <section id="home">
-          <Hero githubUsername={GITHUB_USERNAME} repoName="portfolio" />
-        </section>
-        <section id="experience">
-          <ExperienceSection experiences={experiences} />
-        </section>
-        <section id="projects">
-          <Projects projects={projects} />
-        </section>
+        <Hero githubUsername={GITHUB_USERNAME} repoName="portfolio" />
+      </section>
+      <section id="experience">
+        <ExperienceSection experiences={experiences} />
+      </section>
+      <section id="projects">
+        <Projects projects={projects} />
+      </section>
 
-        {/* GitHub Contributions */}
-        <section className="max-w-5xl mx-auto w-full px-4 sm:px-6 py-5">
-          <p className="text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-3">
-            Contributions in the last year
-          </p>
-          <div className="bg-surface border border-surface rounded-xl p-5 overflow-x-auto">
-            <GitHubCalendar
-              username={GITHUB_USERNAME}
-              theme={calTheme}
-              blockSize={13}
-              blockMargin={4}
-              fontSize={12}
-              colorScheme="dark"
-            />
-          </div>
-        </section>
+      {/* GitHub Contributions */}
+      <section className="max-w-5xl mx-auto w-full px-4 sm:px-6 py-5">
+        <p className="text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-3">
+          Contributions in the last year
+        </p>
+        <div className="bg-surface border border-surface rounded-xl p-5 overflow-x-auto">
+          <GitHubCalendar
+            username={GITHUB_USERNAME}
+            theme={calTheme}
+            blockSize={13}
+            blockMargin={4}
+            fontSize={12}
+            colorScheme="dark"
+          />
+        </div>
+      </section>
 
-        <section id="skills">
-          <Skills skills={skills} />
-        </section>
-        <section id="blogs">
-          <Blogs blogs={blogPosts} />
-        </section>
-        <section id="contact">
-          <Contact />
-        </section>
-      </main>
-      <Footer />
-    </div>
+      <section id="skills">
+        <Skills skills={skills} />
+      </section>
+      <section id="blogs">
+        <Blogs blogs={blogPosts} />
+      </section>
+      <section id="contact">
+        <Contact />
+      </section>
+    </main>
+    </>
   );
 }
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/projects" element={<AllProjects />} />
-      <Route path="/projects/:id" element={<ProjectDetail />} />
-      <Route path="/experience" element={<AllExperiences />} />
-      <Route path="/blogs" element={<AllBlogs />} />
-    </Routes>
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg2)' }}>
+      <Header />
+      <div className="flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/projects" element={<AllProjects />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
+          <Route path="/experience" element={<AllExperiences />} />
+          <Route path="/blogs" element={<AllBlogs />} />
+        </Routes>
+      </div>
+      <Footer />
+    </div>
   );
 }
 
