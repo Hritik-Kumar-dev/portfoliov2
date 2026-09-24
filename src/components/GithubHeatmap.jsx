@@ -8,7 +8,8 @@ const CACHE_KEY = 'gh-contrib-cache'
 const CACHE_TTL = 6 * 60 * 60 * 1000 // 6 hours
 
 // Only the most recent weeks are drawn, which is what lets each day cell be
-// large enough to read at a glance (~4.5 months).
+// large enough to read at a glance (~4.5 months). The headline total still
+// covers the whole year the API returns, not just the weeks on screen.
 const VISIBLE_WEEKS = 20
 const VISIBLE_MONTHS = Math.round(VISIBLE_WEEKS / 4.345) // weeks per average month
 
@@ -118,8 +119,10 @@ export default function GithubHeatmap({ username }) {
   const allWeeks = days ? toWeeks(days) : null
   const weeks = allWeeks ? allWeeks.slice(-VISIBLE_WEEKS) : null
   const columns = weeks ?? Array.from({ length: VISIBLE_WEEKS }, () => new Array(7).fill(null))
-  // Total only the days actually on screen, so the label matches the graph.
-  const total = weeks ? weeks.flat().reduce((sum, day) => sum + (day?.count ?? 0), 0) : null
+  // The label is the full year the API returned (all 12 months), which is the
+  // same figure GitHub itself reports — so it won't shrink as the graph's
+  // window is narrowed.
+  const yearTotal = days ? days.reduce((sum, day) => sum + (day?.count ?? 0), 0) : null
 
   // Cells are laid out inside .gh-heatmap (position: relative), so their offset*
   // values are already measured against it — no measuring pass needed.
@@ -139,11 +142,11 @@ export default function GithubHeatmap({ username }) {
     <div className="gh">
       {/* The headline number, so the total is readable without hovering. */}
       <p className="gh-total">
-        {total === null ? (
+        {yearTotal === null ? (
           'Reading recent activity…'
         ) : (
           <>
-            <b>{total.toLocaleString()}</b> contributions in the last {VISIBLE_MONTHS} months
+            <b>{yearTotal.toLocaleString()}</b> contributions in the last year
           </>
         )}
       </p>
@@ -153,10 +156,12 @@ export default function GithubHeatmap({ username }) {
         className={`gh-heatmap${weeks ? '' : ' gh-heatmap--loading'}`}
         role="img"
         aria-busy={weeks ? undefined : true}
+        // Describes the chart itself; the yearly figure is in the label above,
+        // which assistive tech reads as ordinary text.
         aria-label={
-          total === null
-            ? 'Loading recent GitHub contributions'
-            : `GitHub contributions per day over the last ${VISIBLE_MONTHS} months`
+          weeks
+            ? `GitHub contributions per day, most recent ${VISIBLE_MONTHS} months shown`
+            : 'Loading recent GitHub contributions'
         }
         onMouseLeave={() => setTip(null)}
       >
