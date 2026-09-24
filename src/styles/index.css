@@ -1,12 +1,76 @@
+/* Design tokens. Every colour the chrome paints comes from here, so the light
+   theme below only has to restate this block. Values that sit *on top of a
+   screenshot* (card captions, chips) deliberately stay literal white — those
+   are images, not chrome, and the scrim behind them is always dark. */
 :root {
+  color-scheme: dark;
   --bg: #000;
   --surface: #262525;
   --card: #353333;
   --line: #dccfcf;
   --accent: #00f2ff;
+  /* Text that sits on an accent-filled button. */
+  --accent-ink: #04212a;
+  --accent-wash: rgb(0 242 255 / 0.12);
   --text: #fff;
+  /* Softened text, darkest first: muted -> dim -> faint -> ghost. */
+  --text-muted: rgb(255 255 255 / 0.7);
+  --text-dim: rgb(255 255 255 / 0.6);
+  --text-faint: rgb(255 255 255 / 0.55);
+  --text-ghost: rgb(255 255 255 / 0.32);
+  /* Raised surfaces (hover states) and the inverted "primary" pill. */
+  --raise: #302f2f;
+  --raise-2: #343232;
+  --invert-bg: #e9e9e9;
+  --invert-bg-hover: #fff;
+  --invert-text: #0b0b0b;
+  --guide: rgb(255 255 255 / 0.1);
+  /* Contribution-graph levels (GitHub's dark scale). */
+  --gh-1: #0e4429;
+  --gh-2: #006d32;
+  --gh-3: #26a641;
+  --gh-4: #39d353;
+  /* Dialog chrome. */
+  --panel: #141313;
+  --panel-line: rgb(255 255 255 / 0.12);
+  --field: #1e1d1d;
+  --field-line: rgb(255 255 255 / 0.14);
+  --overlay: rgb(0 0 0 / 0.72);
   font-family: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  color-scheme: dark;
+}
+
+/* Opt-in light theme, applied by src/components/ThemeToggle.jsx (and set before
+   first paint by the inline script in index.html). */
+html[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f5f3f3;
+  --surface: #e9e5e5;
+  --card: #ded9d9;
+  --line: rgb(0 0 0 / 0.14);
+  --accent: #0a8f9c;
+  --accent-ink: #fff;
+  --accent-wash: rgb(10 143 156 / 0.1);
+  --text: #14120f;
+  --text-muted: rgb(20 18 15 / 0.74);
+  --text-dim: rgb(20 18 15 / 0.64);
+  --text-faint: rgb(20 18 15 / 0.6);
+  --text-ghost: rgb(20 18 15 / 0.42);
+  --raise: #ded9d9;
+  --raise-2: #d6d1d1;
+  --invert-bg: #14120f;
+  --invert-bg-hover: #2b2622;
+  --invert-text: #f7f5f5;
+  --guide: rgb(0 0 0 / 0.14);
+  /* GitHub's light-theme contribution scale, so the graph stays readable. */
+  --gh-1: #9be9a8;
+  --gh-2: #40c463;
+  --gh-3: #30a14e;
+  --gh-4: #216e39;
+  --panel: #fbfafa;
+  --panel-line: rgb(0 0 0 / 0.14);
+  --field: #f2efef;
+  --field-line: rgb(0 0 0 / 0.18);
+  --overlay: rgb(20 18 15 / 0.55);
 }
 
 *,
@@ -58,6 +122,29 @@ a {
   outline-offset: 2px;
 }
 
+/* Pinned to the very top corner, in the gutter the page layout already leaves
+   free (sidebar border on the left, right column padding on the right). */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 22px;
+  z-index: 40;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.theme-toggle:hover {
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--accent);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .btn,
   .card,
@@ -66,7 +153,9 @@ a {
   .detailed,
   .chip,
   .bento-split,
+  .theme-toggle,
   .pager button {
-    transition: background-color 0.15s, color 0.15s, box-shadow 0.15s, opacity 0.15s;
+    transition: background-color 0.15s, color 0.15s, box-shadow 0.15s, opacity 0.15s,
+      border-color 0.15s;
   }
 }

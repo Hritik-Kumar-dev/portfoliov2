@@ -57,12 +57,28 @@ export default function Sidebar({ onContact }) {
               <img src={downloadIcon} alt="" width="18" height="15" />
               Download Resume
             </a>
-            {/* Concept: the paid instant-contact action. The label and icon read as
-                a contact action, but the href still needs wiring up (see profile.js). */}
-            <a className="btn btn-download btn-download-accent" href={links.resume} download>
-              <img src={mailIcon} alt="" width="12" height="9" />
-              Instant Contact ₹10
-            </a>
+            {/* The paid instant-contact action. Shares its target with the
+                dialog's instant block; inert until links.instantContact is set. */}
+            {links.instantContact ? (
+              <a
+                className="btn btn-download btn-download-accent"
+                href={links.instantContact}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={mailIcon} alt="" width="12" height="9" />
+                Instant Contact ₹10
+              </a>
+            ) : (
+              <span
+                className="btn btn-download btn-download-accent is-pending"
+                aria-disabled="true"
+                title="Add links.instantContact in src/data/profile.js"
+              >
+                <img src={mailIcon} alt="" width="12" height="9" />
+                Instant Contact ₹10
+              </span>
+            )}
           </div>
         </div>
       </div>

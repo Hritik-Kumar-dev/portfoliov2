@@ -140,6 +140,38 @@ export default function ContactModal({ open, onClose }) {
               ×
             </button>
 
+            {/* Top billing: the paid fast lane is deliberately the loudest thing
+                in the dialog, ahead of the slower form below it. */}
+            <div className="contact-instant">
+              <div className="contact-instant-top">
+                <h3>Instant contact</h3>
+                <span className="contact-instant-price">{contact.instant.price} one-time</span>
+              </div>
+              <p className="contact-instant-note">
+                Skip the queue — a direct ping straight to me, answered today.
+              </p>
+              {contact.instant.url ? (
+                <a
+                  className="contact-instant-btn"
+                  href={contact.instant.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Get an instant reply
+                </a>
+              ) : (
+                <span
+                  className="contact-instant-btn is-disabled"
+                  aria-disabled="true"
+                  title="Add contact.instant.url in src/data/profile.js"
+                >
+                  Get an instant reply
+                </span>
+              )}
+            </div>
+
+            <p className="contact-or">or send a message</p>
+
             <form className="contact-form" onSubmit={onSubmit}>
               <label className="field">
                 <span>Your email</span>

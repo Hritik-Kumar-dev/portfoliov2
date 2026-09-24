@@ -15,6 +15,9 @@ export const profile = {
     twitter: 'https://x.com/',
     email: `mailto:${EMAIL}`,
     resume: '/resume.pdf',
+    // TODO: the paid instant-contact target (payment/booking link). While it is
+    // null the "Instant Contact ₹10" buttons stay visible but inert everywhere.
+    instantContact: null,
   },
   // Powers the compact form behind the sidebar's "Contact" button.
   //   to          where messages are addressed
@@ -23,6 +26,8 @@ export const profile = {
   //               submissions (Formspree, Web3Forms, …) to POST instead — those
   //               use a public form id, so no secret is exposed in the bundle.
   //   scheduleUrl shows the "Schedule a call" action; null renders it inert
+  //   instant     the paid fast lane, given top billing in the dialog.
+  //               `url` is where the button points; null renders it inert.
   //   cal         optional Cal.com element-click embed: when set, the button
   //               opens the booking popup in place instead of navigating to
   //               scheduleUrl (which then becomes the no-JS fallback href)
@@ -30,6 +35,10 @@ export const profile = {
     to: EMAIL,
     endpoint: null,
     scheduleUrl: 'https://cal.com/hritik-kumar-hifi0r/15min',
+    instant: {
+      url: null,
+      price: '₹10',
+    },
     cal: {
       link: 'hritik-kumar-hifi0r/15min',
       namespace: '15min',

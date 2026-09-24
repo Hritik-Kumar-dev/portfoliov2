@@ -70,7 +70,15 @@
   gap: 5px;
 }
 .btn:hover {
-  background: #302f2f;
+  background: var(--raise);
+}
+/* Same shape, but inert until the URL is set in src/data/profile.js. */
+.btn.is-pending {
+  opacity: 0.45;
+  cursor: default;
+}
+.btn.is-pending:hover {
+  background: var(--surface);
 }
 .btn-download {
   grid-column: 1 / -1;
@@ -167,16 +175,16 @@
   background: var(--card);
 }
 .gh-cell--1 {
-  background: #0e4429;
+  background: var(--gh-1);
 }
 .gh-cell--2 {
-  background: #006d32;
+  background: var(--gh-2);
 }
 .gh-cell--3 {
-  background: #26a641;
+  background: var(--gh-3);
 }
 .gh-cell--4 {
-  background: #39d353;
+  background: var(--gh-4);
 }
 
 .tech {
@@ -297,16 +305,16 @@
   border-radius: 10px;
   font-size: 11px;
   line-height: 20px;
-  color: rgb(255 255 255 / 0.7);
+  color: var(--text-muted);
 }
 .filter-btn:hover {
-  background: #343232;
-  color: #fff;
+  background: var(--raise-2);
+  color: var(--text);
 }
-/* Solid pill, so the active filter is unmistakable against the dark surface. */
+/* Solid pill, so the active filter is unmistakable against the surface. */
 .filter-btn[aria-pressed='true'] {
-  background: #e9e9e9;
-  color: #0b0b0b;
+  background: var(--invert-bg);
+  color: var(--invert-text);
   font-weight: 600;
 }
 
@@ -416,10 +424,13 @@
   min-height: 0;
   overflow: hidden;
 }
+/* Caption text lives over the screenshot, so it stays white in both themes —
+   the scrim behind it is always the same dark gradient. */
 .card-title {
   font-size: 15px;
   line-height: 1.2;
   font-weight: 700;
+  color: #fff;
 }
 .card-desc {
   margin-top: 5px;
@@ -465,6 +476,7 @@
 }
 .chip--solid {
   background: var(--surface);
+  color: var(--text);
   backdrop-filter: none;
 }
 .chip--solid:hover {
@@ -504,7 +516,7 @@
 /* Faint guides while the pointer is anywhere over the grid, so the handles are
    discoverable without hunting for them. */
 .bento:hover .bento-split {
-  background: rgb(255 255 255 / 0.1);
+  background: var(--guide);
 }
 /* Same specificity as the guide rule, declared after it, so these win. */
 .bento .bento-split:hover,
@@ -591,11 +603,11 @@
   display: grid;
   place-items: center;
   background: var(--surface);
-  color: rgb(255 255 255 / 0.6);
+  color: var(--text-dim);
 }
 .pager-btn:hover:not(:disabled) {
   background: var(--card);
-  color: #fff;
+  color: var(--text);
 }
 .pager-btn:disabled {
   opacity: 0.3;
@@ -606,11 +618,11 @@
   text-align: center;
   font-size: 15px;
   font-weight: 700;
-  color: rgb(255 255 255 / 0.55);
+  color: var(--text-faint);
   font-variant-numeric: tabular-nums;
 }
 .pager-count b {
-  color: #fff;
+  color: var(--text);
 }
 .pager-sep {
   margin: 0 4px;
@@ -621,8 +633,8 @@
   width: 186px;
   height: 51px;
   border-radius: 25.5px;
-  background: #e9e9e9;
-  color: #0b0b0b;
+  background: var(--invert-bg);
+  color: var(--invert-text);
   font-size: 18px;
   font-weight: 700;
   display: inline-flex;
@@ -631,11 +643,11 @@
   gap: 8px;
 }
 .detailed:hover {
-  background: #fff;
+  background: var(--invert-bg-hover);
 }
 
 .empty {
   padding: 40px 0 0 60px;
-  color: rgb(255 255 255 / 0.6);
+  color: var(--text-dim);
   font-size: 14px;
 }

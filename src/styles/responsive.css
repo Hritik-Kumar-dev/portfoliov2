@@ -1,4 +1,75 @@
-/* Not in the Figma frames — sensible stacking for narrow screens. */
+/* Not in the Figma frames — sensible layouts for smaller screens.
+   Three ranges, in cascade order: tablet keeps the two-column sheet but gives
+   the grid more room, <=1000px stacks it, <=640px goes single-column. */
+
+/* ---------- Tablet (iPad portrait through small laptops) ---------- */
+@media (min-width: 1001px) and (max-width: 1280px) {
+  /* The fixed 560px sidebar would starve the bento grid at this width. */
+  .sidebar {
+    width: 430px;
+    padding: 26px 28px 34px 36px;
+  }
+  .profile-top {
+    gap: 18px;
+  }
+  .photo {
+    width: 156px;
+    height: 156px;
+  }
+  .name {
+    font-size: 30px;
+    line-height: 32px;
+  }
+  .links {
+    margin-top: 11px;
+  }
+  .experience {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    margin-left: 0;
+  }
+  .gh-heatmap,
+  .heatmap {
+    margin-top: 38px;
+  }
+  .tech {
+    margin-top: 46px;
+  }
+  .right {
+    padding: 0 34px 17px 0;
+  }
+  .projects-header {
+    padding-left: 20px;
+    gap: 28px;
+  }
+  .bento {
+    margin-left: 24px;
+  }
+  .detailed {
+    width: 150px;
+    font-size: 15px;
+  }
+
+  .detail {
+    grid-template-columns: 300px minmax(0, 1fr);
+    column-gap: 48px;
+    padding: 0 34px 0 36px;
+  }
+  .back {
+    left: 36px;
+  }
+  /* Keeps the pane header clear of the fixed theme toggle, same as <=1000px. */
+  .pane .projects-header {
+    padding-right: 46px;
+  }
+  /* The 660px-wide offset margin no longer centres the portrait frame. */
+  .preview.portrait {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ---------- Stacked (one column, sidebar on top) ---------- */
 @media (max-width: 1000px) {
   .home {
     flex-direction: column;
@@ -35,8 +106,9 @@
     min-height: 0;
     padding: 0 20px 32px;
   }
+  /* padding-right clears the fixed theme toggle in the top corner. */
   .projects-header {
-    padding-left: 0;
+    padding-right: 46px;
     height: 64px;
   }
   .bento {
@@ -75,6 +147,10 @@
     grid-template-columns: 1fr;
     padding: 56px 20px 32px;
   }
+  /* The rail is no longer flush with the sheet's left edge. */
+  .back {
+    left: 20px;
+  }
   .thumbs {
     position: static;
     height: auto;
@@ -94,6 +170,7 @@
   .pane .projects-header {
     height: 64px;
     padding-left: 0;
+    padding-right: 46px;
   }
   .preview,
   .preview.landscape {
@@ -106,5 +183,169 @@
   .info,
   .dots {
     margin-left: 0;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+  }
+  .sidebar {
+    padding: 20px 16px 28px;
+  }
+  .profile-top {
+    gap: 16px;
+  }
+  .photo {
+    width: 132px;
+    height: 132px;
+    border-radius: 14px;
+  }
+  .name {
+    font-size: 28px;
+    line-height: 30px;
+    /* No nowrap: a long name would otherwise run off a 320px screen. */
+    white-space: normal;
+  }
+  /* Pills grow to a comfortable tap target for thumbs. */
+  .btn {
+    height: 34px;
+    font-size: 11px;
+  }
+  .btn-download {
+    height: 38px;
+    gap: 10px;
+  }
+  .bio {
+    margin-top: 20px;
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .bio p + p {
+    margin-top: 12px;
+  }
+  .experience {
+    margin-top: 22px;
+  }
+  .gh-heatmap,
+  .heatmap {
+    margin-top: 28px;
+  }
+  .tech {
+    margin-top: 32px;
+  }
+  .tech-row {
+    height: 46px;
+  }
+
+  .right {
+    padding: 0 16px 28px;
+  }
+  /* Same padding-right trick as the stacked layout, at the smaller gutter. */
+  .projects-header,
+  .pane .projects-header {
+    height: auto;
+    padding: 8px 46px 8px 0;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 10px;
+  }
+  .projects-title {
+    margin-top: 0;
+  }
+  .filter {
+    height: auto;
+    margin-top: 0;
+    padding: 3px;
+    border-radius: 15px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    height: 24px;
+    line-height: 24px;
+  }
+  /* One card per row: two-up leaves each caption too cramped to read. */
+  .bento-top,
+  .bento-bottom {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 188px;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    margin: 4px 0 0;
+    padding: 0;
+    row-gap: 12px;
+  }
+  .pager {
+    justify-content: center;
+  }
+  .detailed {
+    width: 100%;
+    height: 46px;
+    font-size: 16px;
+  }
+  .card-desc {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .detail {
+    padding: 52px 16px 28px;
+  }
+  .back {
+    left: 16px;
+  }
+  .thumbs {
+    gap: 12px;
+  }
+  .thumb {
+    width: 150px;
+  }
+  .preview,
+  .preview.landscape,
+  .preview.portrait {
+    margin-top: 12px;
+  }
+  .preview.portrait {
+    width: 100%;
+  }
+  .dots {
+    margin-top: 18px;
+  }
+  .info {
+    margin-top: 20px;
+  }
+  .info h3 {
+    font-size: 22px;
+    line-height: 26px;
+  }
+  .info p {
+    margin: 14px 0 0;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  /* Top-aligned and scrollable, so a tall dialog never gets cut off. */
+  .contact-overlay {
+    place-items: start center;
+    padding: 12px;
+  }
+  .contact-panel {
+    padding: 18px 16px 16px;
+    border-radius: 14px;
+  }
+  .contact-actions {
+    flex-direction: column;
+  }
+  .contact-submit,
+  .contact-schedule {
+    flex: 1 1 auto;
+    width: 100%;
   }
 }

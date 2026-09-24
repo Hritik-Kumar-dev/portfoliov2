@@ -1,10 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
     <title>Hritik Kumar — Portfolio</title>
+    <script>
+      // Resolve the theme before first paint so the light theme never flashes
+      // dark. ThemeToggle.jsx reads the same attribute and keeps it in sync.
+      ;(function () {
+        try {
+          var stored = window.localStorage.getItem('theme')
+          if (stored !== 'light' && stored !== 'dark') {
+            stored = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+          }
+          document.documentElement.dataset.theme = stored
+        } catch (error) {
+          // localStorage can be unavailable (private mode) — the default stands.
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

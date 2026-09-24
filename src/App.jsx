@@ -5,6 +5,7 @@ import ProjectsHeader from './components/ProjectsHeader'
 import ProjectGrid from './components/ProjectGrid'
 import ProjectDetail from './components/ProjectDetail'
 import ContactModal from './components/ContactModal'
+import ThemeToggle from './components/ThemeToggle'
 import { projects } from './data/projects'
 import { FADE } from './lib/transitions'
 
@@ -86,6 +87,9 @@ export default function App() {
       {/* Outside AnimatePresence: the sidebar animates with a transform, which
           would otherwise become the containing block for a fixed overlay. */}
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+
+      {/* Fixed to the viewport corner, so it survives the home <-> detail swap. */}
+      <ThemeToggle />
     </MotionConfig>
   )
 }
