@@ -10,7 +10,8 @@ export const profile = {
   githubUsername: 'Hritik-Kumar-dev',
   // TODO: replace with your real links. Put resume.pdf in /public.
   links: {
-    github: 'https://github.com/',
+    // Derived from the GitHub username the contribution graph already uses.
+    github: 'https://github.com/Hritik-Kumar-dev',
     linkedin: 'https://www.linkedin.com/',
     twitter: 'https://x.com/',
     email: `mailto:${EMAIL}`,

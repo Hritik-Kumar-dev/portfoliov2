@@ -86,7 +86,8 @@
 }
 .field input::placeholder,
 .field textarea::placeholder {
-  color: var(--text-ghost);
+  /* --text-ghost is a hair too faint to read once the field has a background. */
+  color: var(--text-faint);
 }
 .field textarea {
   min-height: 92px;
@@ -154,7 +155,7 @@
   color: var(--text-dim);
 }
 .contact-note a {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: underline;
 }
 .contact-note--error {
@@ -197,7 +198,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .contact-instant-note {
   font-size: 11px;
@@ -235,7 +236,7 @@
   font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-ghost);
+  color: var(--text-faint);
 }
 .contact-or::before,
 .contact-or::after {

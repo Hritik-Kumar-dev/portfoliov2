@@ -9,6 +9,10 @@
   --card: #353333;
   --line: #dccfcf;
   --accent: #00f2ff;
+  /* Accent for *text*, which needs more contrast than a border or a fill does.
+     In the light theme --accent has to be dark enough to read, so the two
+     diverge there; here the bright cyan reads fine either way. */
+  --accent-text: #00f2ff;
   /* Text that sits on an accent-filled button. */
   --accent-ink: #04212a;
   --accent-wash: rgb(0 242 255 / 0.12);
@@ -49,6 +53,7 @@ html[data-theme='light'] {
   --card: #ded9d9;
   --line: rgb(0 0 0 / 0.14);
   --accent: #0a8f9c;
+  --accent-text: #06707c;
   --accent-ink: #fff;
   --accent-wash: rgb(10 143 156 / 0.1);
   --danger: #b3261e;
@@ -135,6 +140,14 @@ html[data-theme='light'] .tech-track img,
 html[data-theme='light'] .chip--solid img,
 html[data-theme='light'] .contact-schedule img {
   filter: invert(1);
+}
+
+/* The contribution graph's fallback is a screenshot of the dark graph (96% of
+   its pixels are near-black), so it would read as a black slab on the light
+   page. Inverting flips it to a light graph; the hue rotation puts the cells
+   back to green, since inverting on its own turns them magenta. */
+html[data-theme='light'] .heatmap {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 /* Pinned to the very top corner, in the gutter the page layout already leaves
