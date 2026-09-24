@@ -1,0 +1,118 @@
+/* ---------- Detailed view (Frames 6 & 7) ---------- */
+.detail {
+  position: relative;
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  column-gap: 115px;
+  padding: 0 59px 0 60px;
+  min-height: 100vh;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.back {
+  position: absolute;
+  top: 10px;
+  left: 60px;
+  z-index: 1;
+  width: 121px;
+  height: 29px;
+  border-radius: 14.5px;
+  background: var(--surface);
+  font-size: 10px;
+}
+.back:hover {
+  background: #302f2f;
+}
+
+.thumbs {
+  position: sticky;
+  top: 60px;
+  align-self: start;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  padding: 53px 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--card) transparent;
+}
+.thumb {
+  display: block;
+  width: 100%;
+}
+.thumb[aria-current='true'] {
+  box-shadow: inset 0 0 0 1.25px var(--accent);
+}
+
+.pane {
+  min-width: 0;
+  padding-bottom: 60px;
+}
+.pane .projects-header {
+  padding-left: 1px;
+  height: 100px;
+}
+
+/* Preview */
+.preview {
+  margin-top: 32px; /* header (100) + 32 = 132, top of the portrait frame */
+}
+.preview.landscape {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-top: 39px;
+}
+.preview.portrait {
+  width: 424px;
+  max-width: 100%;
+  aspect-ratio: 424 / 650;
+  margin-left: calc(24px + (660px - 424px) / 2);
+}
+.preview:focus-visible {
+  outline-offset: 3px;
+}
+
+.dots {
+  width: 660px;
+  max-width: 100%;
+  height: 20px;
+  margin: 37px auto 0;
+  display: flex;
+  justify-content: center;
+}
+.dot {
+  width: 17.86px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+}
+.dot::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+.dot[aria-current='true']::before {
+  width: 12px;
+  height: 12px;
+}
+
+.info {
+  width: 660px;
+  max-width: 100%;
+  margin: 28px auto 0;
+}
+.info h3 {
+  text-align: center;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 700;
+}
+.info p {
+  margin: 25px 0 0 4px;
+  font-size: 15px;
+  line-height: 18px;
+}

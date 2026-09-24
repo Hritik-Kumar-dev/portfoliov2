@@ -1,0 +1,113 @@
+/* Not in the Figma frames — sensible stacking for narrow screens. */
+@media (max-width: 1000px) {
+  .home {
+    flex-direction: column;
+  }
+  .sidebar {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 24px 20px 32px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .profile-top {
+    flex-direction: column;
+  }
+  .identity {
+    height: auto;
+    gap: 16px;
+  }
+  .name {
+    margin-top: 0;
+  }
+  .experience {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    margin-left: 0;
+  }
+  .tech-row {
+    width: auto;
+    margin-left: 0;
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 16px 24px;
+  }
+  .tech {
+    margin-top: 40px;
+  }
+  .right {
+    height: auto;
+    min-height: 0;
+    padding: 0 20px 32px;
+  }
+  .projects-header {
+    padding-left: 0;
+    height: 64px;
+  }
+  .bento {
+    padding-left: 0;
+    display: block;
+  }
+  .bento-top,
+  .bento-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: 180px;
+    grid-template-areas: none;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .bento-top > .card,
+  .bento-bottom > .card {
+    grid-area: auto !important;
+  }
+  .controls {
+    grid-column: 1 / -1;
+    padding: 0;
+    align-self: center;
+    margin: 0;
+  }
+  .empty {
+    padding-left: 0;
+  }
+
+  .detail {
+    grid-template-columns: 1fr;
+    padding: 56px 20px 32px;
+  }
+  .thumbs {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0 0 12px;
+  }
+  .thumb {
+    width: 220px;
+  }
+  .thumbs li {
+    flex: none;
+  }
+  .pane {
+    padding-top: 12px;
+  }
+  .pane .projects-header {
+    height: 64px;
+    padding-left: 0;
+  }
+  .preview,
+  .preview.landscape {
+    margin-top: 16px;
+  }
+  .preview.portrait {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .info,
+  .dots {
+    margin-left: 0;
+  }
+}
