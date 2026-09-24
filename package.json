@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@fontsource-variable/inter": "^5.1.0",
     "framer-motion": "^13.4.3",
     "react": "^18.3.1",

@@ -23,10 +23,17 @@ export const profile = {
   //               submissions (Formspree, Web3Forms, …) to POST instead — those
   //               use a public form id, so no secret is exposed in the bundle.
   //   scheduleUrl shows the "Schedule a call" action; null renders it inert
+  //   cal         optional Cal.com element-click embed: when set, the button
+  //               opens the booking popup in place instead of navigating to
+  //               scheduleUrl (which then becomes the no-JS fallback href)
   contact: {
     to: EMAIL,
     endpoint: null,
-    scheduleUrl: null,
+    scheduleUrl: 'https://cal.com/hritik-kumar-hifi0r/15min',
+    cal: {
+      link: 'hritik-kumar-hifi0r/15min',
+      namespace: '15min',
+    },
   },
   bio: [
     'I’m a passionate developer who loves coding, problem-solving, and building things with unique ideas. I work with modern web technologies and explore Web3, AI/ML, and full-stack development, always looking to learn, experiment, and turn ideas into real-world solutions.',

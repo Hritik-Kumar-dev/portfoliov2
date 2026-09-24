@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { getCalApi } from '@calcom/embed-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { profile } from '../data/profile'
 import { SPRING } from '../lib/transitions'
@@ -12,6 +13,23 @@ export default function ContactModal({ open, onClose }) {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const panelRef = useRef(null)
   const reduced = useReducedMotion()
+
+  // Wires up the Cal.com element-click embed. Loaded lazily on first open so
+  // embed.js is never fetched for visitors who never touch the calendar.
+  useEffect(() => {
+    if (!open || !contact.cal) return undefined
+
+    let cancelled = false
+    ;(async () => {
+      const cal = await getCalApi({ namespace: contact.cal.namespace })
+      if (cancelled) return
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' })
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [open])
 
   // Esc closes, Tab stays inside, and focus returns to whatever opened it.
   useEffect(() => {
@@ -153,7 +171,19 @@ export default function ContactModal({ open, onClose }) {
                   {status === 'sending' ? 'Sending…' : 'Send message'}
                 </button>
 
-                {contact.scheduleUrl ? (
+                {contact.cal ? (
+                  // data-cal-* is read by the embed script: clicking opens the
+                  // booking popup without leaving the page.
+                  <button
+                    type="button"
+                    className="contact-schedule"
+                    data-cal-namespace={contact.cal.namespace}
+                    data-cal-link={contact.cal.link}
+                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                  >
+                    Schedule a call
+                  </button>
+                ) : contact.scheduleUrl ? (
                   <a
                     className="contact-schedule"
                     href={contact.scheduleUrl}
