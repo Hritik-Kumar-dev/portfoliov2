@@ -19,22 +19,25 @@ export const profile = {
     // null the "Instant Contact ₹10" buttons stay visible but inert everywhere.
     instantContact: null,
   },
-  // Powers the compact form behind the sidebar's "Contact" button.
-  //   to         where messages are addressed
-  //   emailjs    fills in the three ids from https://dashboard.emailjs.com and
-  //              the form sends through EmailJS — no backend, and nothing secret
-  //              in the bundle, because the public key only works for the
-  //              service it belongs to.
-  //   endpoint   full URL of any other browser-safe form endpoint, instead of
-  //              EmailJS — e.g. https://formspree.io/f/<form-id>, or
-  //              https://api.web3forms.com/submit/<access-key> (Web3Forms takes
-  //              its key in the path, so a single URL is the whole setup).
+  // Powers the compact form behind the sidebar's "Contact" button, plus the
+  // "Schedule a call" and instant-contact actions.
+  //
+  // A sender is picked from the three below in this order — the first one that is
+  // set wins. All of them are browser-safe: the credential each one uses is
+  // public by design and can only post to the inbox it was issued for.
+  //
+  //   endpoint      any other browser-safe form endpoint, e.g.
+  //                 https://formspree.io/f/<form-id>, or
+  //                 https://api.web3forms.com/submit/<access-key>
+  //   web3formsKey  an access key from https://web3forms.com (active below)
+  //   emailjs       three ids from https://dashboard.emailjs.com
   //
   // A transactional email API key (Resend, SendGrid, …) is NOT public, so those
-  // still need a backend to keep the secret off the client.
+  // would need a backend to keep the secret off the client.
   //
-  // While EmailJS is incomplete and endpoint is null, the form hands the message
-  // to the visitor's mail app.
+  // With all three empty the form hands the message to the visitor's mail app.
+  //
+  //   to          where the mail-app fallback addresses its message
   //   scheduleUrl shows the "Schedule a call" action; null renders it inert
   //   instant     the paid fast lane, given top billing in the dialog.
   //               `url` is where the button points; null renders it inert.
@@ -43,16 +46,20 @@ export const profile = {
   //               scheduleUrl (which then becomes the no-JS fallback href)
   contact: {
     to: EMAIL,
+    endpoint: null,
+    // The active sender. Safe to commit: the key can only post to the inbox it
+    // was issued for, and Web3Forms tell you to treat it as public.
+    web3formsKey: 'a8a6bdf9-059c-4a8b-bcbe-1afcd399c7a2',
     emailjs: {
-      // Safe to commit: a public key can only post through your own service.
+      // Inactive until both ids below are filled in — EmailJS cannot send with a
+      // public key alone. Also safe to commit.
       publicKey: 'VWkyLE9wVjLKdCL29',
-      // TODO: the two ids left to fill in, both on the EmailJS dashboard.
-      //   serviceId   Email Services -> your service        'service_xxxxxxx'
-      //   templateId  Email Templates -> your template      'template_xxxxxxx'
+      // TODO: both live on the EmailJS dashboard.
+      //   serviceId   Email Services -> your service       'service_xxxxxxx'
+      //   templateId  Email Templates -> your template     'template_xxxxxxx'
       serviceId: null,
       templateId: null,
     },
-    endpoint: null,
     scheduleUrl: 'https://cal.com/hritik-kumar-hifi0r/15min',
     instant: {
       url: null,

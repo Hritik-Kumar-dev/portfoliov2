@@ -7,19 +7,87 @@ import externalIcon from '../assets/icons/external.svg'
 
 const { contact } = profile
 
-// Two ways to send, tried in this order. Neither needs a server, because the
-// identifier each one uses is public by design and can only post to the inbox it
-// was issued for. (A transactional-email key — Resend, SendGrid, … — is NOT
-// public, so those would need a backend to keep the secret off the client.)
-//
-//   1. EmailJS    three ids from the dashboard, message sent for you
-//   2. endpoint   any browser-safe form endpoint, e.g.
-//                 'https://api.web3forms.com/submit/<access-key>'
-//   3. neither    the message goes to the visitor's mail app instead
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
+
 const emailjsIds = contact.emailjs ?? {}
 const emailjsReady = Boolean(
   emailjsIds.publicKey && emailjsIds.serviceId && emailjsIds.templateId,
 )
+
+// One sender is chosen from the config, in this order. All of them are
+// browser-safe: the credential each uses is public by design and can only post
+// to the inbox it was issued for. (A transactional-email key — Resend, SendGrid,
+// … — is NOT public, so those would need a backend to keep it off the client.)
+//
+//   endpoint    explicit override, for any other browser-safe form endpoint
+//   web3forms   one access key; the message lands in your inbox
+//   emailjs     three ids from the EmailJS dashboard
+//   (nothing)   the message is handed to the visitor's mail app instead
+const SENDER = contact.endpoint
+  ? { kind: 'endpoint', url: contact.endpoint }
+  : contact.web3formsKey
+    ? { kind: 'web3forms', key: contact.web3formsKey }
+    : emailjsReady
+      ? { kind: 'emailjs', ids: emailjsIds }
+      : { kind: 'mailto' }
+
+// Both Web3Forms and Formspree answer 200 with { success: false } when the key
+// or the domain is rejected, so response.ok alone is not enough.
+async function assertSent(response) {
+  const payload = await response.json().catch(() => null)
+  if (!response.ok || payload?.success === false) {
+    throw new Error(payload?.message ?? `Request failed: ${response.status}`)
+  }
+}
+
+// Posts the message with whichever sender the config selected. Throws on failure.
+async function deliver({ email, message }) {
+  const subject = `Portfolio enquiry from ${email}`
+
+  if (SENDER.kind === 'emailjs') {
+    // Imported on the first send, so the SDK stays out of the initial bundle.
+    const { send } = await import('@emailjs/browser')
+    return send(
+      SENDER.ids.serviceId,
+      SENDER.ids.templateId,
+      {
+        // These names have to match the {{variables}} in your EmailJS template.
+        from_name: 'Portfolio contact form',
+        from_email: email,
+        reply_to: email,
+        subject,
+        message,
+      },
+      { publicKey: SENDER.ids.publicKey },
+    )
+  }
+
+  if (SENDER.kind === 'web3forms') {
+    // FormData with no Content-Type header, the shape the Web3Forms docs use:
+    // multipart is a CORS-safelisted type, so this skips the preflight.
+    const body = new FormData()
+    body.append('access_key', SENDER.key)
+    body.append('subject', subject)
+    body.append('from_name', 'Portfolio contact form')
+    // `email` is what Web3Forms uses as the reply-to, so replies reach them.
+    body.append('email', email)
+    body.append('message', message)
+
+    const response = await fetch(WEB3FORMS_ENDPOINT, {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body,
+    })
+    return assertSent(response)
+  }
+
+  const response = await fetch(SENDER.url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({ email, subject, message }),
+  })
+  return assertSent(response)
+}
 
 // Fallback used both when nothing is configured and when a send fails, so a
 // visitor never dead-ends on the form.
@@ -108,9 +176,9 @@ export default function ContactModal({ open, onClose }) {
       return
     }
 
-    // Nothing configured: hand the message to the visitor's mail client. Keeps
-    // the form working on static hosting with no keys and no backend.
-    if (!emailjsReady && !contact.endpoint) {
+    // No sender configured: hand the message to the visitor's mail client, so
+    // the form still works on static hosting with no keys and no backend.
+    if (SENDER.kind === 'mailto') {
       window.location.href = mailtoHref(email, text)
       setStatus('sent')
       return
@@ -118,57 +186,20 @@ export default function ContactModal({ open, onClose }) {
 
     setStatus('sending')
     try {
-      if (emailjsReady) {
-        // Imported on the first send, so the SDK stays out of the initial bundle.
-        const { send } = await import('@emailjs/browser')
-        await send(
-          emailjsIds.serviceId,
-          emailjsIds.templateId,
-          {
-            // These names have to match the {{variables}} in your EmailJS template.
-            from_name: 'Portfolio contact form',
-            from_email: email,
-            reply_to: email,
-            subject: `Portfolio enquiry from ${email}`,
-            message: text,
-          },
-          { publicKey: emailjsIds.publicKey },
-        )
-      } else {
-        const response = await fetch(contact.endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            // `email` doubles as Web3Forms' reply-to, so replies reach the visitor.
-            email,
-            subject: `Portfolio enquiry from ${email}`,
-            message: text,
-            botcheck: false,
-          }),
-        })
-        const payload = await response.json().catch(() => null)
-        // Web3Forms answers 200 with { success: false } for a rejected key or an
-        // unverified domain, so response.ok alone is not enough.
-        if (!response.ok || payload?.success === false) {
-          throw new Error(payload?.message ?? `Request failed: ${response.status}`)
-        }
-      }
-
+      await deliver({ email, message: text })
       setEmail('')
       setMessage('')
       setStatus('sent')
     } catch (error) {
-      // EmailJS explains itself in the thrown response (bad service id, domain
-      // not verified, …) — exactly what you need while setting the account up.
+      // The provider explains itself here (bad key, unverified domain, …) —
+      // exactly what you need while setting the account up.
       console.error('[contact] send failed:', error?.text ?? error)
       setStatus('error')
     }
   }
 
   const sentNote =
-    emailjsReady || contact.endpoint
-      ? "Thanks — I'll get back to you shortly."
-      : 'Opening your mail app…'
+    SENDER.kind === 'mailto' ? 'Opening your mail app…' : "Thanks — I'll get back to you shortly."
 
   return (
     <AnimatePresence>
