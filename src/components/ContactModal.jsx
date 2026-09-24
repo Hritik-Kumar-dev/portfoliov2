@@ -7,9 +7,32 @@ import externalIcon from '../assets/icons/external.svg'
 
 const { contact } = profile
 
+// Two ways to send, tried in this order. Neither needs a server, because the
+// identifier each one uses is public by design and can only post to the inbox it
+// was issued for. (A transactional-email key — Resend, SendGrid, … — is NOT
+// public, so those would need a backend to keep the secret off the client.)
+//
+//   1. EmailJS    three ids from the dashboard, message sent for you
+//   2. endpoint   any browser-safe form endpoint, e.g.
+//                 'https://api.web3forms.com/submit/<access-key>'
+//   3. neither    the message goes to the visitor's mail app instead
+const emailjsIds = contact.emailjs ?? {}
+const emailjsReady = Boolean(
+  emailjsIds.publicKey && emailjsIds.serviceId && emailjsIds.templateId,
+)
+
+// Fallback used both when nothing is configured and when a send fails, so a
+// visitor never dead-ends on the form.
+function mailtoHref(email, text) {
+  const subject = encodeURIComponent(`Portfolio enquiry from ${email}`)
+  const body = encodeURIComponent(`${text}\n\n— ${email}`)
+  return `mailto:${contact.to}?subject=${subject}&body=${body}`
+}
+
 export default function ContactModal({ open, onClose }) {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const panelRef = useRef(null)
   const reduced = useReducedMotion()
@@ -44,8 +67,9 @@ export default function ContactModal({ open, onClose }) {
       }
       if (event.key !== 'Tab') return
 
+      // The honeypot is excluded, or Tab would land on an off-screen field.
       const focusable = panelRef.current?.querySelectorAll(
-        'a[href], button:not([disabled]), input, textarea',
+        'a[href], button:not([disabled]), input:not([data-trap]), textarea',
       )
       if (!focusable?.length) return
 
@@ -77,36 +101,74 @@ export default function ContactModal({ open, onClose }) {
     event.preventDefault()
     const text = message.trim()
 
-    // No endpoint configured: hand the message to the visitor's mail client.
-    // Keeps the form working on static hosting with no keys or backend.
-    if (!contact.endpoint) {
-      const subject = encodeURIComponent(`Portfolio enquiry from ${email}`)
-      const body = encodeURIComponent(`${text}\n\n— ${email}`)
-      window.location.href = `mailto:${contact.to}?subject=${subject}&body=${body}`
+    // A person never sees this field, so anything in it came from a bot. Report
+    // success and drop the message rather than teaching the bot what failed.
+    if (honeypot) {
+      setStatus('sent')
+      return
+    }
+
+    // Nothing configured: hand the message to the visitor's mail client. Keeps
+    // the form working on static hosting with no keys and no backend.
+    if (!emailjsReady && !contact.endpoint) {
+      window.location.href = mailtoHref(email, text)
       setStatus('sent')
       return
     }
 
     setStatus('sending')
     try {
-      const response = await fetch(contact.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ email, message: text }),
-      })
-      if (!response.ok) throw new Error(`Request failed: ${response.status}`)
+      if (emailjsReady) {
+        // Imported on the first send, so the SDK stays out of the initial bundle.
+        const { send } = await import('@emailjs/browser')
+        await send(
+          emailjsIds.serviceId,
+          emailjsIds.templateId,
+          {
+            // These names have to match the {{variables}} in your EmailJS template.
+            from_name: 'Portfolio contact form',
+            from_email: email,
+            reply_to: email,
+            subject: `Portfolio enquiry from ${email}`,
+            message: text,
+          },
+          { publicKey: emailjsIds.publicKey },
+        )
+      } else {
+        const response = await fetch(contact.endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            // `email` doubles as Web3Forms' reply-to, so replies reach the visitor.
+            email,
+            subject: `Portfolio enquiry from ${email}`,
+            message: text,
+            botcheck: false,
+          }),
+        })
+        const payload = await response.json().catch(() => null)
+        // Web3Forms answers 200 with { success: false } for a rejected key or an
+        // unverified domain, so response.ok alone is not enough.
+        if (!response.ok || payload?.success === false) {
+          throw new Error(payload?.message ?? `Request failed: ${response.status}`)
+        }
+      }
+
       setEmail('')
       setMessage('')
       setStatus('sent')
-    } catch {
+    } catch (error) {
+      // EmailJS explains itself in the thrown response (bad service id, domain
+      // not verified, …) — exactly what you need while setting the account up.
+      console.error('[contact] send failed:', error?.text ?? error)
       setStatus('error')
     }
   }
 
-  const notes = {
-    sent: contact.endpoint ? "Thanks — I'll get back to you shortly." : 'Opening your mail app…',
-    error: 'That did not send. Please email me directly.',
-  }
+  const sentNote =
+    emailjsReady || contact.endpoint
+      ? "Thanks — I'll get back to you shortly."
+      : 'Opening your mail app…'
 
   return (
     <AnimatePresence>
@@ -173,6 +235,20 @@ export default function ContactModal({ open, onClose }) {
             <p className="contact-or">or send a message</p>
 
             <form className="contact-form" onSubmit={onSubmit}>
+              {/* Honeypot: kept off-screen rather than display:none, so a bot
+                  still fills it in while a person never notices it. */}
+              <input
+                className="field-trap"
+                data-trap=""
+                type="text"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={honeypot}
+                onChange={(event) => setHoneypot(event.target.value)}
+              />
+
               <label className="field">
                 <span>Your email</span>
                 <input
@@ -238,8 +314,15 @@ export default function ContactModal({ open, onClose }) {
               </div>
 
               {(status === 'sent' || status === 'error') && (
-                <p className="contact-note" role="status">
-                  {notes[status]}
+                <p className={`contact-note${status === 'error' ? ' contact-note--error' : ''}`} role="status">
+                  {status === 'sent' ? (
+                    sentNote
+                  ) : (
+                    <>
+                      That didn’t send.{' '}
+                      <a href={mailtoHref(email, message.trim())}>Email me directly</a> instead.
+                    </>
+                  )}
                 </p>
               )}
             </form>

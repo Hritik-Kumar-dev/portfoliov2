@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { SPRING } from '../lib/transitions'
 import Splitter from './Splitter'
 import ProjectLinks from './ProjectLinks'
+import ProjectMedia from './ProjectMedia'
 
 // Track shares taken from the 1440x1024 frame, so double-click resets to the design.
 const DEFAULT_SIZES = {
@@ -119,7 +120,11 @@ export default function ProjectGrid({ items, page, pageCount, onPage, onOpen, on
   const card = (project, i) => {
     // The media carries the shared layoutId, so the screenshot — not the card's
     // text — is what grows into the detailed view.
-    const mediaProps = { className: 'card-media', layoutId: `project-${project.id}`, transition: cardTransition }
+    const mediaProps = {
+      className: 'card-media',
+      layoutId: `project-${project.id}`,
+      transition: cardTransition,
+    }
 
     return (
       <motion.article
@@ -129,13 +134,8 @@ export default function ProjectGrid({ items, page, pageCount, onPage, onOpen, on
         layout
         transition={cardTransition}
       >
-        {project.cardVideo ? (
-          <motion.video {...mediaProps} src={project.cardVideo} autoPlay muted loop playsInline />
-        ) : project.thumb ? (
-          <motion.img {...mediaProps} src={project.thumb} alt="" loading="lazy" />
-        ) : (
-          <motion.div {...mediaProps} />
-        )}
+        {/* Handles a still, a CDN video file, or a YouTube/Vimeo link alike. */}
+        <ProjectMedia item={project.cardMedia} motionProps={mediaProps} controls={false} />
 
         <div className="card-scrim" aria-hidden="true" />
 

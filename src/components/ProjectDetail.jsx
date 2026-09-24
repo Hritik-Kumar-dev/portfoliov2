@@ -2,6 +2,7 @@ import { forwardRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import ProjectsHeader from './ProjectsHeader'
 import ProjectLinks from './ProjectLinks'
+import ProjectMedia from './ProjectMedia'
 import { SPRING } from '../lib/transitions'
 
 function Gallery({ project }) {
@@ -31,12 +32,10 @@ function Gallery({ project }) {
         aria-label={`${project.title} media`}
         onKeyDown={onKeyDown}
       >
-        {item.src &&
-          (item.type === 'video' ? (
-            <video src={item.src} autoPlay muted loop playsInline />
-          ) : (
-            <img src={item.src} alt={item.alt ?? `${project.title} screenshot ${index + 1}`} />
-          ))}
+        <ProjectMedia
+          item={item}
+          alt={item.alt ?? `${project.title} screenshot ${index + 1}`}
+        />
       </motion.div>
 
       {/* Row is always rendered so the title sits in the same place for single-image projects. */}

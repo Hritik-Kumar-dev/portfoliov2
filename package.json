@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
+    "@emailjs/browser": "^4.4.1",
     "@fontsource-variable/inter": "^5.1.0",
     "framer-motion": "^13.4.3",
     "react": "^18.3.1",

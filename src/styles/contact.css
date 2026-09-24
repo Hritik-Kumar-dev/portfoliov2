@@ -153,6 +153,23 @@
   line-height: 1.45;
   color: var(--text-dim);
 }
+.contact-note a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.contact-note--error {
+  color: var(--danger);
+}
+
+/* Honeypot: pushed off-screen instead of display:none, so bots still fill it. */
+.field-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* ---------- Instant contact (the paid shortcut, given top billing) ---------- */
 .contact-instant {

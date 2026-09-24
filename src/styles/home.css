@@ -375,14 +375,26 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* The whole card is one big open button; media never owns a click, and an
+     embedded video must not swallow the scroll gesture either. */
+  pointer-events: none;
 }
 .thumb img,
 .preview img,
-.preview video {
+.preview video,
+.preview iframe {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* A YouTube/Vimeo item, whether it sits in a card wrapper or straight in the
+   preview. Fills whatever box its parent sets, like the images do. */
+.media-embed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 /* outline (not an inset box-shadow) so the hover ring paints above the caption. */
 .card:hover {

@@ -12,6 +12,7 @@
   /* Text that sits on an accent-filled button. */
   --accent-ink: #04212a;
   --accent-wash: rgb(0 242 255 / 0.12);
+  --danger: #ff9a8b;
   --text: #fff;
   /* Softened text, darkest first: muted -> dim -> faint -> ghost. */
   --text-muted: rgb(255 255 255 / 0.7);
@@ -50,6 +51,7 @@ html[data-theme='light'] {
   --accent: #0a8f9c;
   --accent-ink: #fff;
   --accent-wash: rgb(10 143 156 / 0.1);
+  --danger: #b3261e;
   --text: #14120f;
   --text-muted: rgb(20 18 15 / 0.74);
   --text-dim: rgb(20 18 15 / 0.64);
