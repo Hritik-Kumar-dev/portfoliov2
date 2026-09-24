@@ -41,7 +41,29 @@
   --field: #1e1d1d;
   --field-line: rgb(255 255 255 / 0.14);
   --overlay: rgb(0 0 0 / 0.72);
-  font-family: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Body/UI face: everything read at 10-13px, which is most of the UI. Inter is
+     built for exactly that — a tall x-height and unambiguous glyphs at size. */
+  --font-body: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Display face: names and headings only. Space Grotesk is the same grotesque
+     skeleton as Inter — so the swap is not jarring — but with enough character
+     (the single-storey 'a', the clipped 'r') to stop the page reading as a
+     default-Inter site. Changing the portfolio's whole personality is a
+     one-line change to these two tokens. */
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', Inter, system-ui, sans-serif;
+  font-family: var(--font-body);
+}
+
+/* Names and headings take the display face; body copy, labels and buttons stay
+   on the body face, which is what stays legible at their size. */
+.name,
+.projects-title,
+.card-title,
+.info h3,
+.experience h2,
+.contact-head h2,
+.contact-instant h3,
+.detailed {
+  font-family: var(--font-display);
 }
 
 /* Opt-in light theme, applied by src/components/ThemeToggle.jsx (and set before
