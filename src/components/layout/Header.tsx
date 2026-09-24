@@ -71,7 +71,7 @@ export const Header: React.FC = () => {
           {/* Music toggle */}
           <button
             onClick={toggleMusic}
-            className="p-2 rounded-xl transition-all duration-200"
+            className="p-2 rounded-md transition-all duration-200"
             style={{
               background: 'var(--card)',
               border: '1px solid var(--border)',
@@ -87,7 +87,7 @@ export const Header: React.FC = () => {
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl transition-all duration-200"
+            className="p-2 rounded-md transition-all duration-200"
             style={{
               background: 'var(--card)',
               border: '1px solid var(--border)',

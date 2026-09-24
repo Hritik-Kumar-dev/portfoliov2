@@ -26,10 +26,10 @@ const DockBtn: React.FC<{ item: typeof NAV[0]; active: boolean }> = ({ item, act
       <motion.div
         whileHover={{ scale: 1.18 }} whileTap={{ scale: 0.9 }}
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-        className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors duration-200
+        className={`w-8 h-8 rounded-md flex items-center justify-center border transition-colors duration-200
           ${active
-            ? 'bg-accent-dim text-accent'
-            : 'text-muted hover:text-title hover:bg-accent-dim'}`}
+            ? 'bg-accent-dim border-[var(--border-h)] text-accent'
+            : 'border-transparent text-muted hover:text-title hover:bg-accent-dim hover:border-[var(--border)]'}`}
       >
         {item.icon}
       </motion.div>
@@ -69,7 +69,7 @@ export const FloatingDock: React.FC = () => {
       {/* Desktop: right side, close to content, tooltip appears to the right of icon */}
       <nav aria-label="Page navigation"
         className="hidden md:flex fixed right-[max(0.75rem,calc((100vw-64rem)/2-3rem))] top-1/2 -translate-y-1/2 z-50
-          flex-col gap-1 p-1.5 rounded-2xl
+          flex-col gap-1 p-1.5 rounded-md
           dock-bg border border-surface backdrop-blur-xl
           shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
         {NAV.map((item) => <DockBtn key={item.href} item={item} active={active === item.href} />)}
@@ -78,7 +78,7 @@ export const FloatingDock: React.FC = () => {
       {/* Mobile: bottom center horizontal */}
       <nav aria-label="Page navigation"
         className="flex md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-50
-          flex-row gap-1 p-1.5 rounded-2xl
+          flex-row gap-1 p-1.5 rounded-md
           dock-bg border border-surface backdrop-blur-xl
           shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
         {NAV.map((item) => {
@@ -92,8 +92,8 @@ export const FloatingDock: React.FC = () => {
               onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
               className="relative flex items-center justify-center">
               <motion.div whileHover={{ scale: 1.18 }} whileTap={{ scale: 0.9 }}
-                className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors duration-200
-                  ${active === item.href ? 'bg-accent-dim text-accent' : 'text-muted hover:text-title hover:bg-accent-dim'}`}>
+                className={`w-8 h-8 rounded-md flex items-center justify-center border transition-colors duration-200
+                  ${active === item.href ? 'bg-accent-dim border-[var(--border-h)] text-accent' : 'border-transparent text-muted hover:text-title hover:bg-accent-dim hover:border-[var(--border)]'}`}>
                 {item.icon}
               </motion.div>
               {h && (

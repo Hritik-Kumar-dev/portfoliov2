@@ -31,13 +31,10 @@ const Card: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <div
       onClick={() => navigate(`/projects/${project.id}`)}
-      className="group relative w-full rounded-3xl border p-5 text-title transition-all duration-500 cursor-pointer hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+      className="group relative w-full rounded-md border p-5 text-title transition-all duration-500 cursor-pointer border-[var(--border)] hover:border-[var(--border-h)]"
       style={{
         background: 'var(--card)',
-        borderColor: 'var(--border)',
       }}
-      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-h)'; }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; }}
     >
       {/* Top Bar */}
       <div className="mb-6 flex items-center justify-between">
@@ -68,9 +65,9 @@ const Card: React.FC<{ project: Project }> = ({ project }) => {
       </div>
 
       {/* Preview Image */}
-      <div className="mt-6 overflow-hidden rounded-2xl" style={{ border: '1px solid var(--border)' }}>
+      <div className="mt-6 overflow-hidden rounded-md border border-[var(--border)] transition-colors duration-500 group-hover:border-[var(--border-h)]">
         <div className="aspect-video">
-          <img src={imgSrc} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <img src={imgSrc} alt={project.title} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
         </div>
       </div>
 
@@ -82,8 +79,8 @@ const Card: React.FC<{ project: Project }> = ({ project }) => {
         {project.tags.slice(0, 3).map((tag) => (
           <span
             key={tag}
-            className="rounded-xl px-4 py-2 text-xs font-medium"
-            style={{ background: 'var(--accent-dim)', color: 'var(--text-muted)' }}
+            className="font-mono text-[11px] px-2.5 py-1 rounded-sm border transition-colors duration-300 group-hover:opacity-0"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-muted)', background: 'transparent' }}
           >
             {tag}
           </span>
@@ -98,8 +95,8 @@ const Card: React.FC<{ project: Project }> = ({ project }) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex flex-1 items-center justify-center gap-2 rounded-2xl border py-3 text-sm font-semibold transition hover:bg-white hover:text-black"
-            style={{ borderColor: 'var(--border)' }}
+            className="flex flex-1 items-center justify-center gap-2 rounded-md border py-3 text-sm font-semibold transition-colors text-title hover:bg-white/10"
+            style={{ borderColor: 'var(--border-h)', background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(8px)' }}
           >
             <FiExternalLink /> Live Demo
           </a>
@@ -110,8 +107,8 @@ const Card: React.FC<{ project: Project }> = ({ project }) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex flex-1 items-center justify-center gap-2 rounded-2xl py-3 text-sm font-semibold text-black transition hover:scale-[1.02]"
-            style={{ background: 'white' }}
+            className="flex flex-1 items-center justify-center gap-2 rounded-md border py-3 text-sm font-semibold text-title transition-colors hover:bg-white/10"
+            style={{ borderColor: 'var(--border-h)', background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(8px)' }}
           >
             <FiGithub /> GitHub
           </a>
@@ -132,7 +129,7 @@ export const AllProjects: React.FC = () => {
           onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; }}>
           <ArrowLeft size={16} /> Back
         </button>
-        <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--text)' }}>All Projects</h1>
+        <h1 className="text-3xl font-extrabold uppercase tracking-tight mb-4" style={{ color: 'var(--text)' }}>All Projects</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {projects.map(p => <Card key={p.id} project={p} />)}
         </div>

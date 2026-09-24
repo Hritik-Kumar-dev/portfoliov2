@@ -4,11 +4,11 @@ import { ChevronDown, MapPin } from 'lucide-react';
 import type { Experience } from '../../../data/experience';
 
 const badgeColor: Record<string, string> = {
-  'Self-employed': 'bg-accent-dim text-accent border-surface',
-  'Internship':    'bg-accent-dim text-accent border-surface',
-  'Contributor':   'bg-accent-dim text-accent border-surface',
-  'Full-time':     'bg-accent-dim text-accent border-surface',
-  'Freelance':     'bg-accent-dim text-accent border-surface',
+  'Self-employed': 'bg-transparent text-accent border-surface',
+  'Internship':    'bg-transparent text-accent border-surface',
+  'Contributor':   'bg-transparent text-accent border-surface',
+  'Full-time':     'bg-transparent text-accent border-surface',
+  'Freelance':     'bg-transparent text-accent border-surface',
 };
 
 interface Props {
@@ -19,21 +19,21 @@ interface Props {
 }
 
 export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle, detailView = false }) => {
-  const badge = badgeColor[exp.employmentType] ?? 'bg-accent-dim text-accent border-surface';
+  const badge = badgeColor[exp.employmentType] ?? 'bg-transparent text-accent border-surface';
 
   return (
     <div
       onClick={onToggle}
-      className={`cursor-pointer rounded-2xl border bg-surface/80 backdrop-blur-sm transition-all duration-300
+      className={`cursor-pointer rounded-md border bg-surface/80 backdrop-blur-sm transition-all duration-300
         ${open
-          ? 'border-accent shadow-[0_0_28px_rgba(255,255,255,0.06)]'
-          : 'border-surface hover-border-accent hover:shadow-[0_0_20px_rgba(255,255,255,0.04)]'
+          ? 'border-accent'
+          : 'border-surface hover:border-[var(--border-h)]'
         }`}
     >
       {/* Collapsed header */}
       <div className="flex items-center gap-3 p-4 sm:p-5">
         {/* Logo / initials */}
-        <div className="w-11 h-11 rounded-xl bg-tag border border-surface flex items-center justify-center shrink-0 overflow-hidden">
+        <div className="w-11 h-11 rounded-md bg-tag border border-surface flex items-center justify-center shrink-0 overflow-hidden">
           {exp.logo
             ? <img src={exp.logo} alt={exp.company} className="w-8 h-8 object-contain" />
             : <span className="text-sm font-bold text-bright">{exp.company.slice(0, 2).toUpperCase()}</span>
@@ -97,7 +97,7 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle, detailVie
                   {exp.technologies.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-4">
                       {exp.technologies.map((t) => (
-                        <span key={t} className="text-[11px] px-2.5 py-0.5 rounded-full bg-tag border border-surface text-muted">
+                        <span key={t} className="font-mono text-[11px] px-2 py-0.5 rounded-sm bg-tag border border-surface text-muted">
                           {t}
                         </span>
                       ))}
@@ -105,7 +105,7 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle, detailVie
                   )}
 
                   {exp.image && (
-                    <div className="mt-4 rounded-xl overflow-hidden"
+                    <div className="mt-4 rounded-md overflow-hidden"
                       style={{ border: '1px solid var(--border)' }}>
                       <img src={exp.image} alt={exp.company}
                         className="w-full h-56 object-cover" />
@@ -132,7 +132,7 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle, detailVie
                     {exp.technologies.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mt-4">
                         {exp.technologies.map((t) => (
-                          <span key={t} className="text-[11px] px-2.5 py-0.5 rounded-full bg-tag border border-surface text-muted">
+                          <span key={t} className="font-mono text-[11px] px-2 py-0.5 rounded-sm bg-tag border border-surface text-muted">
                             {t}
                           </span>
                         ))}
@@ -141,7 +141,7 @@ export const ExperienceCard: React.FC<Props> = ({ exp, open, onToggle, detailVie
                   </div>
 
                   {exp.image && (
-                    <div className="w-36 shrink-0 rounded-xl overflow-hidden hidden sm:block"
+                    <div className="w-36 shrink-0 rounded-md overflow-hidden hidden sm:block"
                       style={{ border: '1px solid var(--border)' }}>
                       <img src={exp.image} alt={exp.company}
                         className="w-full h-28 object-cover" />

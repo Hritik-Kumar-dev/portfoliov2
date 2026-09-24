@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ExternalLink, Clock, Calendar, ArrowRight } from 'lucide-react';
+import { SectionHeading } from '../../ui';
 import type { BlogPost } from '../../../types';
 import { formatDate } from '../../../utils';
 
@@ -10,16 +11,16 @@ interface BlogsProps { blogs?: BlogPost[]; }
 const BlogCard: React.FC<{ blog: BlogPost; open: boolean; onToggle: () => void }> = ({ blog, open, onToggle }) => (
   <div
     onClick={onToggle}
-    className={`cursor-pointer rounded-2xl border bg-surface/80 backdrop-blur-sm transition-all duration-300
+    className={`cursor-pointer rounded-md border bg-surface/80 backdrop-blur-sm transition-all duration-300
       ${open
-        ? 'border-accent shadow-[0_0_28px_rgba(255,255,255,0.06)]'
-        : 'border-surface hover-border-accent hover:shadow-[0_0_20px_rgba(255,255,255,0.04)]'
+        ? 'border-accent'
+        : 'border-surface hover:border-[var(--border-h)]'
       }`}
   >
     {/* Header */}
     <div className="flex items-center gap-3 p-4 sm:p-5">
       {/* Date badge */}
-      <div className="w-11 h-11 rounded-xl bg-tag border border-surface flex flex-col items-center justify-center shrink-0">
+      <div className="w-11 h-11 rounded-md bg-tag border border-surface flex flex-col items-center justify-center shrink-0">
         <Calendar size={14} className="text-accent mb-0.5" />
         <span className="text-[9px] text-muted font-mono leading-none">
           {new Date(blog.date).getFullYear()}
@@ -79,7 +80,7 @@ export const Blogs: React.FC<BlogsProps> = ({ blogs = [] }) => {
   const navigate = useNavigate();
   return (
     <section id="blogs" className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-      <h2 className="text-2xl font-bold text-title mb-5">Latest Blog Posts</h2>
+      <SectionHeading eyebrow="WRITING" title="Latest Blog Posts" />
       <div className="flex flex-col gap-2">
         {blogs.slice(0, 3).map((blog, i) => (
           <motion.div key={blog.id}
@@ -95,7 +96,7 @@ export const Blogs: React.FC<BlogsProps> = ({ blogs = [] }) => {
       </div>
       <div className="flex justify-center mt-6">
         <button onClick={() => navigate('/blogs')}
-          className="flex items-center gap-1.5 text-sm text-accent hover-text-title transition-colors border border-surface hover-border-accent px-4 py-1.5 rounded-full">
+          className="flex items-center gap-1.5 text-sm text-accent hover-text-title transition-colors border border-[var(--border)] hover:border-[var(--border-h)] px-4 py-1.5 rounded-md">
           See all posts <ArrowRight size={14} />
         </button>
       </div>

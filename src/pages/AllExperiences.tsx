@@ -16,7 +16,7 @@ export const AllExperiences: React.FC = () => {
           onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; }}>
           <ArrowLeft size={16} /> Back
         </button>
-        <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--text)' }}>All Experience</h1>
+        <h1 className="text-3xl font-extrabold uppercase tracking-tight mb-4" style={{ color: 'var(--text)' }}>All Experience</h1>
         <div className="flex flex-col gap-2">
           {experiences.map(exp => (
             <ExperienceCard key={exp.id} exp={exp}

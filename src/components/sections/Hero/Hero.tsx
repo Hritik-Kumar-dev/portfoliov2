@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCalApi } from '@calcom/embed-react';
-import { MapPin, Video, Mail, Briefcase, Download } from 'lucide-react';
+import { MapPin, Video, Mail, Briefcase, Download, BadgeCheck } from 'lucide-react';
 import { FiGithub} from 'react-icons/fi';
 import { Card } from '../../ui';
 import { BsTwitterX } from 'react-icons/bs';
@@ -24,28 +24,28 @@ const ctaButtons = [
     icon: <Video size={15} />,
     href: null as string | null,
     cal: true,
-    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
+    cls: 'bg-transparent text-accent hover:bg-accent-dim hover:border-[var(--border-h)]',
   },
   {
     label: 'Send Email',
     icon: <Mail size={15} />,
     href: '#contact',
     cal: false,
-    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
+    cls: 'bg-transparent text-accent hover:bg-accent-dim hover:border-[var(--border-h)]',
   },
   {
     label: 'Hire Me',
     icon: <Briefcase size={15} />,
     href: '#contact',
     cal: false,
-    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
+    cls: 'bg-transparent text-accent hover:bg-accent-dim hover:border-[var(--border-h)]',
   },
   {
     label: 'Resume',
     icon: <Download size={15} />,
     href: '/resume.pdf',
     cal: false,
-    cls: 'border-surface bg-accent-dim text-accent hover:bg-accent-dim',
+    cls: 'bg-transparent text-accent hover:bg-accent-dim hover:border-[var(--border-h)]',
   },
 ];
 
@@ -72,11 +72,16 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
 
           {/* Left: User Info */}
           <div className="flex items-center gap-3 shrink-0">
-            <img
-              src={`https://github.com/${githubUsername}.png`}
-              alt="Profile"
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-surface object-cover shadow-2xl"
-            />
+            <div className="relative shrink-0">
+              <img
+                src={`https://github.com/${githubUsername}.png`}
+                alt="Profile"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-surface object-cover"
+              />
+              <span className="absolute -bottom-1 -right-1 flex items-center justify-center w-5 h-5 rounded-full bg-white border border-black/10 shadow-md">
+                <BadgeCheck size={13} className="text-black" />
+              </span>
+            </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-title">Hritik Kumar</h1>
               <p className="text-muted text-xs sm:text-sm">@{githubUsername}</p>
@@ -118,7 +123,7 @@ export const Hero: React.FC<HeroProps> = ({ githubUsername }) => {
 
             <div className="flex flex-wrap gap-2">
               {ctaButtons.map((btn) => {
-                const cls = `flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border backdrop-blur-md transition-all duration-200 ${btn.cls}`;
+                const cls = `flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border backdrop-blur-md transition-all duration-200 [&>svg]:shrink-0 ${btn.cls}`;
                 if (btn.cal) return (
                   <button key={btn.label} data-cal-namespace="30min" data-cal-link="hritik-kumar-dev77/30min"
                     data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}' className={cls}>

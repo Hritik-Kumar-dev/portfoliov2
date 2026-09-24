@@ -33,10 +33,10 @@ export const DockItem: React.FC<DockItemProps> = ({ icon, label, href, active, h
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.92 }}
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-        className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200
+        className={`w-9 h-9 rounded-md flex items-center justify-center border transition-colors duration-200
           ${active
-            ? 'bg-accent-dim text-accent'
-            : 'text-muted hover:text-title hover:bg-accent-dim'
+            ? 'bg-accent-dim border-[var(--border-h)] text-accent'
+            : 'border-transparent text-muted hover:text-title hover:bg-accent-dim hover:border-[var(--border)]'
           }`}
       >
         {icon}

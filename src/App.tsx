@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { GitHubCalendar } from 'react-github-calendar';
 import { Header, Footer } from './components/layout';
+import { SectionHeading } from './components/ui/SectionHeading';
 import { Hero } from './components/sections/Hero';
 import { ExperienceSection } from './components/sections/Experience';
 import { Projects } from './components/sections/Projects';
@@ -37,10 +38,8 @@ function HomePage() {
 
       {/* GitHub Contributions */}
       <section className="max-w-5xl mx-auto w-full px-4 sm:px-6 py-5">
-        <p className="text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-3">
-          Contributions in the last year
-        </p>
-        <div className="bg-surface border border-surface rounded-xl p-5 overflow-x-auto">
+        <SectionHeading eyebrow="GITHUB" title="Contributions in the last year" />
+        <div className="bg-surface border border-surface rounded-md p-5 overflow-x-auto">
           <GitHubCalendar
             username={GITHUB_USERNAME}
             theme={calTheme}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { ExperienceCard } from './ExperienceCard';
+import { SectionHeading } from '../../ui';
 import type { Experience } from '../../../data/experience';
 
 export const ExperienceSection: React.FC<{ experiences: Experience[] }> = ({ experiences }) => {
@@ -11,7 +12,7 @@ export const ExperienceSection: React.FC<{ experiences: Experience[] }> = ({ exp
 
   return (
     <section className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-      <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>Experience</h2>
+      <SectionHeading eyebrow="EXPERIENCE" title="Experience" />
       <div className="flex flex-col gap-2">
         {experiences.slice(0, 3).map((exp, i) => (
           <motion.div key={exp.id}
@@ -28,10 +29,10 @@ export const ExperienceSection: React.FC<{ experiences: Experience[] }> = ({ exp
       </div>
       <div className="flex justify-center mt-6">
         <button onClick={() => navigate('/experience')}
-          className="flex items-center gap-1.5 text-sm transition-colors border px-4 py-1.5 rounded-full"
-          style={{ color: 'var(--accent)', borderColor: 'var(--surface-border)' }}
-          onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.borderColor = 'var(--accent)'; }}
-          onMouseLeave={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--surface-border)'; }}>
+          className="flex items-center gap-1.5 text-sm transition-colors border px-4 py-1.5 rounded-md"
+          style={{ color: 'var(--accent)', borderColor: 'var(--border)' }}
+          onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.borderColor = 'var(--border-h)'; }}
+          onMouseLeave={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--border)'; }}>
           See all experience <ArrowRight size={14} />
         </button>
       </div>

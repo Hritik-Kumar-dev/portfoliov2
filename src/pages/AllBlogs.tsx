@@ -15,16 +15,16 @@ export const AllBlogs: React.FC = () => {
         <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-muted hover-text-title text-sm mb-4 transition-colors">
           <ArrowLeft size={16} /> Back
         </button>
-        <h1 className="text-3xl font-bold text-title mb-4">All Blog Posts</h1>
+        <h1 className="text-3xl font-extrabold uppercase tracking-tight text-title mb-4">All Blog Posts</h1>
         <div className="flex flex-col gap-2">
           {blogPosts.map(blog => {
             const open = openId === blog.id;
             return (
               <div key={blog.id} onClick={() => setOpenId(open ? null : blog.id)}
-                className={`cursor-pointer rounded-2xl border bg-surface/80 transition-all duration-300
-                  ${open ? 'border-accent shadow-[0_0_28px_rgba(255,255,255,0.06)]' : 'border-surface hover-border-accent'}`}>
+                className={`cursor-pointer rounded-md border bg-surface/80 transition-all duration-300
+                  ${open ? 'border-accent' : 'border-surface hover:border-[var(--border-h)]'}`}>
                 <div className="flex items-center gap-3 p-5">
-                  <div className="w-11 h-11 rounded-xl bg-tag border border-surface flex flex-col items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-md bg-tag border border-surface flex flex-col items-center justify-center shrink-0">
                     <Calendar size={14} className="text-accent mb-0.5" />
                     <span className="text-[9px] text-muted font-mono">{new Date(blog.date).getFullYear()}</span>
                   </div>

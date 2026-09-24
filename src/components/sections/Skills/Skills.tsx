@@ -6,6 +6,7 @@ import {
 } from 'react-icons/si';
 import { TbBrandVscode } from 'react-icons/tb';
 import { FaAws } from 'react-icons/fa';
+import { SectionHeading } from '../../ui';
 
 const ICON: Record<string, React.ReactNode> = {
   'React':       <SiReact />,
@@ -33,19 +34,19 @@ interface SkillsProps { skills?: Skill[]; }
 
 export const Skills: React.FC<SkillsProps> = ({ skills = [] }) => (
   <section id="skills" className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-    <h2 className="text-2xl font-bold text-title mb-5">Skills &amp; Tech Stack</h2>
+    <SectionHeading eyebrow="TOOLKIT" title="Skills &amp; Tech Stack" />
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
       {skills.map((group) => (
-        <div key={group.category} className="bg-surface border border-surface rounded-xl p-4">
+        <div key={group.category} className="bg-surface border border-surface rounded-md p-4">
           <h3 className="text-xs font-semibold text-dim uppercase tracking-widest mb-3">{group.category}</h3>
           <div className="flex flex-wrap gap-2">
             {group.items.map((skill) => {
               const icon = ICON[skill];
               return (
                 <div key={skill}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-tag border border-surface text-bright text-xs hover-border-accent transition-colors">
+                  className="flex items-center gap-2 px-2.5 py-2 rounded-md border border-surface bg-transparent text-bright text-xs hover:border-[var(--border-h)] transition-colors">
                   {icon ? (
-                    <span className="w-3.5 h-3.5 flex items-center justify-center text-current shrink-0">
+                    <span className="w-4 h-4 flex items-center justify-center text-muted shrink-0">
                       {icon}
                     </span>
                   ) : (

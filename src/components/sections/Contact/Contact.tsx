@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { BsTwitterX } from 'react-icons/bs';
+import { SectionHeading } from '../../ui';
 
 const SOCIALS = [
   { label: 'GitHub',   href: 'https://github.com/Hritik-Kumar-dev',     icon: <FaGithub size={18} /> },
@@ -28,17 +29,17 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   }
 };
 
-const inputCls = "bg-tag border border-surface rounded-lg px-3 py-2 text-sm text-title placeholder-gray-600 focus:outline-none focus:border-[var(--accent-blue)] transition-colors w-full";
+const inputCls = "bg-transparent border border-surface rounded-md px-3 py-2 text-sm text-title placeholder-gray-500 focus:outline-none focus:border-[var(--border-h)] transition-colors w-full";
 const labelCls = "text-[11px] font-semibold tracking-widest uppercase text-dim mb-1";
 
 export const Contact: React.FC = () => (
   <section id="contact" className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-    <h2 className="text-2xl font-bold text-title tracking-tight mb-1">Get In Touch</h2>
+    <SectionHeading eyebrow="CONTACT" title="Get In Touch" />
     <p className="text-sm text-dim mb-5">Have a project in mind or just want to say hi?</p>
 
     <div className="flex flex-col lg:flex-row gap-4">
       {/* Form */}
-      <div className="flex-1 bg-surface border border-surface rounded-2xl p-6">
+      <div className="flex-1 bg-surface border border-surface rounded-md p-6">
         <div className="flex items-center gap-2 mb-5">
           <Mail size={16} className="text-accent" />
           <span className="text-xs font-medium text-muted tracking-wide">Send me a message</span>
@@ -57,21 +58,21 @@ export const Contact: React.FC = () => (
             <textarea required name="message" rows={4} placeholder="Your message..." className={`${inputCls} resize-none`} />
           </div>
           <button type="submit"
-            className="w-full py-2.5 rounded-xl text-sm font-semibold tracking-wide bg-accent-dim border border-surface text-accent hover:bg-accent-dim transition-all duration-200">
+            className="w-full py-2.5 rounded-md text-sm font-semibold tracking-wide bg-transparent border border-surface text-accent hover:bg-accent-dim hover:border-[var(--border-h)] transition-all duration-200">
             Send Message
           </button>
         </form>
       </div>
 
       {/* Sidebar */}
-      <div className="lg:w-52 bg-surface border border-surface rounded-2xl p-6 flex flex-col gap-4">
+      <div className="lg:w-52 bg-surface border border-surface rounded-md p-6 flex flex-col gap-4">
         <div>
           <p className="text-xs font-semibold tracking-widest uppercase text-dim mb-3">Find me on</p>
           <div className="flex flex-col gap-2">
             {SOCIALS.map(s => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-tag border border-surface text-bright text-sm font-medium hover-border-accent hover-text-title transition-all">
-                <span className="text-accent">{s.icon}</span>
+                className="flex items-center justify-center gap-3 px-3 py-2.5 rounded-md bg-transparent border border-surface text-bright text-sm font-medium hover:border-[var(--border-h)] hover-text-title transition-all">
+                <span className="text-accent shrink-0">{s.icon}</span>
                 {s.label}
               </a>
             ))}
@@ -84,7 +85,7 @@ export const Contact: React.FC = () => (
             data-cal-namespace="30min"
             data-cal-link="hritik-kumar-dev77/30min"
             data-cal-config='{"layout":"month_view","theme":"auto"}'
-            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-accent-dim border border-surface text-accent text-sm font-medium hover:bg-accent-dim transition-all"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-md bg-transparent border border-surface text-accent text-sm font-medium hover:bg-accent-dim hover:border-[var(--border-h)] transition-all"
           >
             Book a Call
           </button>
