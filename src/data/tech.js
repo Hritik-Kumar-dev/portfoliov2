@@ -22,11 +22,19 @@ import solana from '../assets/tech/solana.svg'
 // w/h = intrinsic size of each exported icon (px).
 const t = (label, src, w, h) => ({ label, src, w, h })
 
-// Rows mirror the Figma layout. offset/width position each row's icons,
-// mt is the gap above the row.
+// Rows mirror the Figma layout order. Every row is now an infinite marquee, so
+// the old per-row offset/width centering no longer applies — `mt` is still the
+// vertical gap above the row.
+export const TECH_GAP = 24 // px between icons; must match --gap in home.css
+const SPEED = 18 // px per second, so every row travels at the same pace
+
+// One pass of the track is the icon widths plus one gap per item, because each
+// <li> carries the gap as a right margin (needed for a seamless -50% loop).
+const passWidth = (items) => items.reduce((sum, item) => sum + item.w, 0) + TECH_GAP * items.length
+
 export const techRows = [
   {
-    offset: 5, width: 432, mt: 0,
+    mt: 0,
     items: [
       t('React', react, 57, 51),
       t('TypeScript', typescript, 57, 57),
@@ -37,7 +45,7 @@ export const techRows = [
     ],
   },
   {
-    offset: 8, width: 373, mt: 23,
+    mt: 23,
     items: [
       t('MongoDB', mongodb, 55, 54),
       t('PostgreSQL', postgresql, 53, 53),
@@ -47,7 +55,7 @@ export const techRows = [
     ],
   },
   {
-    offset: 19, width: 389, mt: 15,
+    mt: 15,
     items: [
       t('Next.js', nextjs, 48, 48),
       t('Vercel', vercel, 165, 35),
@@ -56,7 +64,7 @@ export const techRows = [
     ],
   },
   {
-    offset: 26, width: 375, mt: 7,
+    mt: 7,
     items: [
       t('HTML5', html5, 44, 57),
       t('CSS3', css3, 44, 57),
@@ -65,4 +73,4 @@ export const techRows = [
       t('Solana', solana, 48, 38),
     ],
   },
-]
+].map((row) => ({ ...row, duration: Math.round((passWidth(row.items) / SPEED) * 10) / 10 }))

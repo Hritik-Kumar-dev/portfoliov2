@@ -124,31 +124,134 @@
   text-decoration: underline;
 }
 
+/* Static screenshot, kept only as the fallback when the API is unreachable.
+   Same box as the live graph below, so a failed fetch doesn't shift the page. */
 .heatmap {
   display: block;
   width: 469px;
   max-width: 100%;
-  height: 132px;
+  aspect-ratio: 449 / 183;
   margin: 55px 0 0 1px;
   object-fit: cover;
   object-position: right center;
 }
 
-.tech {
-  margin-top: 69px;
-}
-.tech-row {
+/* Live contribution graph — only the most recent weeks, so the day cells are big. */
+.gh-heatmap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 54px;
-  width: var(--width);
+  gap: 3px;
+  width: 469px;
   max-width: 100%;
-  margin: var(--mt) 0 0 var(--offset);
+  margin: 55px 0 0 1px;
 }
-.tech-row li {
+.gh-week {
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: repeat(7, auto);
+  gap: 3px;
+}
+.gh-cell {
+  /* Square cells: the height follows the flexed column width, and the box now
+     grows with the cells instead of being cropped to a fixed 132px. */
+  aspect-ratio: 1;
+  align-self: start;
+  border-radius: 3px;
+  background: var(--card);
+}
+.gh-cell--blank {
+  background: none;
+}
+.gh-cell--0 {
+  background: var(--card);
+}
+.gh-cell--1 {
+  background: #0e4429;
+}
+.gh-cell--2 {
+  background: #006d32;
+}
+.gh-cell--3 {
+  background: #26a641;
+}
+.gh-cell--4 {
+  background: #39d353;
+}
+
+.tech {
+  margin-top: 69px;
+  /* Icons fade into the background at both edges instead of clipping abruptly. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.tech-row {
+  height: 54px;
+  margin-top: var(--mt);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.tech-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+}
+.tech-track li {
   flex: none;
   display: flex;
+  align-items: center;
+  margin-right: var(--gap);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes gh-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tech-track {
+    animation: marquee var(--duration) linear infinite;
+  }
+  /* Rows 1 & 3 run the animation backwards, so they travel left -> right. */
+  .tech-row--reverse .tech-track {
+    animation-direction: reverse;
+  }
+  .tech-row:hover .tech-track {
+    animation-play-state: paused;
+  }
+  .gh-heatmap--loading .gh-cell {
+    animation: gh-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+/* No motion at all: show a single static, wrapped row of icons. */
+@media (prefers-reduced-motion: reduce) {
+  .tech-row {
+    height: auto;
+    overflow: visible;
+  }
+  .tech-track {
+    flex-wrap: wrap;
+    width: auto;
+    row-gap: 16px;
+  }
+  .tech-track li[aria-hidden='true'] {
+    display: none;
+  }
 }
 
 /* Right column */
@@ -178,42 +281,53 @@
 }
 
 .filter {
-  margin-top: 35px;
-  height: 18px;
-  padding: 0 7px;
-  gap: 4px;
-  border-radius: 9px;
+  /* Centres the pill on the Projects title's optical centre (29 + 26/2 = 42). */
+  margin-top: 29px;
+  height: 26px;
+  padding: 0 3px;
+  gap: 2px;
+  border-radius: 13px;
   background: var(--surface);
   display: flex;
   align-items: center;
 }
 .filter-btn {
-  height: 18px;
-  padding: 0 6px;
-  border-radius: 9px;
-  font-size: 10px;
-  line-height: 18px;
+  height: 20px;
+  padding: 0 11px;
+  border-radius: 10px;
+  font-size: 11px;
+  line-height: 20px;
+  color: rgb(255 255 255 / 0.7);
 }
 .filter-btn:hover {
   background: #343232;
+  color: #fff;
 }
+/* Solid pill, so the active filter is unmistakable against the dark surface. */
 .filter-btn[aria-pressed='true'] {
-  background: var(--card);
+  background: #e9e9e9;
+  color: #0b0b0b;
+  font-weight: 600;
 }
 
-/* Bento grid — track ratios come from the 1440×1024 frame */
+/* Bento grid — the track lists come from ProjectGrid as custom properties (the
+   user can drag them), with the 1440×1024 frame shares as the fallback. Only
+   areas and gutters live here. margin (not padding) keeps each wrapper's box
+   equal to its grid content box, which is what the splitter maths measures. */
 .bento {
   flex: 1;
   min-height: 0;
-  padding-left: 60px;
+  margin-left: 60px;
+  position: relative;
   display: grid;
-  grid-template-rows: 490fr 427fr;
+  grid-template-rows: var(--bento-rows, 0.534fr 0.466fr);
   row-gap: 16px;
 }
 .bento-top {
+  position: relative;
   display: grid;
-  grid-template-columns: 424fr 316fr;
-  grid-template-rows: 214fr 257fr;
+  grid-template-columns: var(--top-cols, 0.573fr 0.427fr);
+  grid-template-rows: var(--top-rows, 0.454fr 0.546fr);
   grid-template-areas:
     'a e'
     'b e';
@@ -221,9 +335,10 @@
   min-height: 0;
 }
 .bento-bottom {
+  position: relative;
   display: grid;
-  grid-template-columns: 312fr 429fr;
-  grid-template-rows: 320fr 107fr;
+  grid-template-columns: var(--bottom-cols, 0.421fr 0.579fr);
+  grid-template-rows: var(--bottom-rows, 0.749fr 0.251fr);
   grid-template-areas:
     'd c'
     'd ctrl';
@@ -240,17 +355,216 @@
   min-width: 0;
   min-height: 0;
 }
-.card img,
+.card {
+  position: relative;
+  display: grid;
+  align-items: end;
+}
+/* Full-bleed screenshot (or muted card video) behind the caption. */
+.card-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .thumb img,
-.preview img {
+.preview img,
+.preview video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.card:hover,
+/* outline (not an inset box-shadow) so the hover ring paints above the caption. */
+.card:hover {
+  outline: 1.25px solid var(--accent);
+  outline-offset: -1.25px;
+}
 .thumb:hover {
   box-shadow: inset 0 0 0 1.25px var(--accent);
+}
+
+/* Caption over the screenshot. The text row can shrink and clip, so a small
+   card still keeps its title and links readable. */
+.card-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgb(0 0 0 / 0.85) 0%,
+    rgb(0 0 0 / 0.6) 34%,
+    rgb(0 0 0 / 0) 76%
+  );
+}
+.card-meta {
+  position: relative;
+  /* Above .card-open so the chips stay clickable; the caption itself opts out
+     of pointer events, so clicks elsewhere still reach the open button. */
+  z-index: 2;
+  max-height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 14px 16px;
+  /* Clicks fall through to the card-wide open button; the chips opt back in. */
+  pointer-events: none;
+}
+.card-text {
+  min-height: 0;
+  overflow: hidden;
+}
+.card-title {
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+.card-desc {
+  margin-top: 5px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: rgb(255 255 255 / 0.78);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+/* Invisible full-card target, so no interactive element nests inside another. */
+.card-open {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 16px;
+}
+
+.chip {
+  pointer-events: auto;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: #fff;
+  background: rgb(255 255 255 / 0.16);
+  backdrop-filter: blur(6px);
+}
+.chip:hover {
+  background: rgb(255 255 255 / 0.3);
+}
+.chip--solid {
+  background: var(--surface);
+  backdrop-filter: none;
+}
+.chip--solid:hover {
+  background: var(--card);
+}
+/* Link not configured yet — inert rather than a dead link. */
+.chip--pending {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Drag handles in the bento gutters: one per resizable card edge, plus a corner
+   wherever two meet. Each rides the gutter it controls using the same track
+   share as the grid, so the placement maths stays in CSS. */
+.bento-split {
+  position: absolute;
+  z-index: 3;
+  border-radius: 6px;
+  background: transparent;
+  touch-action: none;
+}
+.bento-split--vertical {
+  width: 12px;
+  cursor: col-resize;
+}
+.bento-split--horizontal {
+  height: 12px;
+  cursor: row-resize;
+}
+.bento-split--corner {
+  width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  cursor: nwse-resize;
+}
+
+/* Faint guides while the pointer is anywhere over the grid, so the handles are
+   discoverable without hunting for them. */
+.bento:hover .bento-split {
+  background: rgb(255 255 255 / 0.1);
+}
+/* Same specificity as the guide rule, declared after it, so these win. */
+.bento .bento-split:hover,
+.bento .bento-split:focus-visible,
+.bento .bento-split.is-dragging {
+  background: var(--accent);
+  outline: none;
+}
+
+/* Sections */
+.bento-split--halves {
+  left: 0;
+  right: 0;
+  top: calc(var(--halves) * (100% - 16px) + 8px);
+  transform: translateY(-50%);
+}
+
+/* Top grid: the column gutter is split at the row gutter so the card above and
+   the card below each get their own grab target. */
+.bento-split--a-right {
+  top: 0;
+  height: calc(var(--top-row) * (100% - 19px));
+  left: calc(var(--top-col) * (100% - 18px) + 9px);
+  transform: translateX(-50%);
+}
+.bento-split--b-right {
+  top: calc(var(--top-row) * (100% - 19px) + 19px);
+  bottom: 0;
+  left: calc(var(--top-col) * (100% - 18px) + 9px);
+  transform: translateX(-50%);
+}
+.bento-split--a-bottom {
+  left: 0;
+  width: calc(var(--top-col) * (100% - 18px));
+  top: calc(var(--top-row) * (100% - 19px) + 9.5px);
+  transform: translateY(-50%);
+}
+.bento-split--top-corner {
+  left: calc(var(--top-col) * (100% - 18px) + 9px);
+  top: calc(var(--top-row) * (100% - 19px) + 9.5px);
+  transform: translate(-50%, -50%);
+}
+
+/* Bottom grid: no row gutter between the projects row and the controls row. */
+.bento-split--d-right {
+  top: 0;
+  bottom: 0;
+  left: calc(var(--bottom-col) * (100% - 17px) + 8.5px);
+  transform: translateX(-50%);
+}
+.bento-split--c-bottom {
+  left: calc(var(--bottom-col) * (100% - 17px) + 17px);
+  right: 0;
+  top: calc(var(--bottom-row) * 100%);
+  transform: translateY(-50%);
+}
+.bento-split--bottom-corner {
+  left: calc(var(--bottom-col) * (100% - 17px) + 8.5px);
+  top: calc(var(--bottom-row) * 100%);
+  transform: translate(-50%, -50%);
 }
 
 .controls {
@@ -258,7 +572,7 @@
   align-self: end;
   margin-bottom: 14px;
   height: 51px;
-  padding: 0 13px 0 38px;
+  padding: 0 13px 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -267,33 +581,57 @@
 .pager {
   display: flex;
   align-items: center;
-  gap: 0.28em;
-  margin-top: 8px;
-  font-size: 32px;
-  line-height: 1;
-  font-weight: 700;
-  color: rgb(255 255 255 / 0.43);
+  gap: 8px;
   white-space: nowrap;
 }
-.pager button:hover:not(:disabled) {
+.pager-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: rgb(255 255 255 / 0.6);
+}
+.pager-btn:hover:not(:disabled) {
+  background: var(--card);
   color: #fff;
 }
-.pager button:disabled {
-  opacity: 0.35;
+.pager-btn:disabled {
+  opacity: 0.3;
   cursor: default;
+}
+.pager-count {
+  min-width: 44px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: rgb(255 255 255 / 0.55);
+  font-variant-numeric: tabular-nums;
+}
+.pager-count b {
+  color: #fff;
+}
+.pager-sep {
+  margin: 0 4px;
+  opacity: 0.45;
 }
 
 .detailed {
-  width: 170px;
+  width: 186px;
   height: 51px;
   border-radius: 25.5px;
-  background: rgb(217 217 217 / 0.55);
-  color: #000;
-  font-size: 19px;
+  background: #e9e9e9;
+  color: #0b0b0b;
+  font-size: 18px;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 .detailed:hover {
-  background: rgb(217 217 217 / 0.75);
+  background: #fff;
 }
 
 .empty {

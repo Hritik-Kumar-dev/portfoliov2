@@ -1,5 +1,8 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
+import { motion } from 'framer-motion'
 import ProjectsHeader from './ProjectsHeader'
+import ProjectLinks from './ProjectLinks'
+import { SPRING } from '../lib/transitions'
 
 function Gallery({ project }) {
   const media = project.media?.length ? project.media : [{ orientation: 'landscape' }]
@@ -16,62 +19,113 @@ function Gallery({ project }) {
 
   return (
     <>
-      <div
+      {/* Shares its layoutId with the matching grid card, so clicking a card
+          grows it into this frame (and shrinks it back on Back). */}
+      <motion.div
         className={`preview ${item.orientation === 'portrait' ? 'portrait' : 'landscape'}`}
+        layoutId={`project-${project.id}`}
+        transition={SPRING}
         tabIndex={many ? 0 : -1}
         role="group"
         aria-roledescription="carousel"
-        aria-label={`${project.title} screenshots`}
+        aria-label={`${project.title} media`}
         onKeyDown={onKeyDown}
       >
-        {item.src && <img src={item.src} alt={item.alt ?? `${project.title} screenshot ${index + 1}`} />}
-      </div>
+        {item.src &&
+          (item.type === 'video' ? (
+            <video src={item.src} autoPlay muted loop playsInline />
+          ) : (
+            <img src={item.src} alt={item.alt ?? `${project.title} screenshot ${index + 1}`} />
+          ))}
+      </motion.div>
 
       {/* Row is always rendered so the title sits in the same place for single-image projects. */}
-      <div className="dots" style={many ? undefined : { visibility: 'hidden' }}>
+      <motion.div
+        className="dots"
+        style={many ? undefined : { visibility: 'hidden' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={SPRING}
+      >
         {many &&
           media.map((_, i) => (
             <button
               key={i}
               type="button"
               className="dot"
-              aria-label={`Show image ${i + 1} of ${media.length}`}
+              aria-label={`Show item ${i + 1} of ${media.length}`}
               aria-current={i === index}
               onClick={() => setIndex(i)}
             />
           ))}
-      </div>
+      </motion.div>
 
-      <div className="info">
+      <motion.div
+        className="info"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={SPRING}
+      >
         <h3>{project.title}</h3>
         <p>{project.description}</p>
-      </div>
+        <ProjectLinks project={project} solid className="info-links" />
+      </motion.div>
     </>
   )
 }
 
-export default function ProjectDetail({ projects, selected, onSelect, onBack, filter, onFilter }) {
+// forwardRef so AnimatePresence's popLayout mode can measure the root element
+// and hold the outgoing view in place while the incoming one animates in.
+const ProjectDetail = forwardRef(function ProjectDetail(
+  { projects, selected, onSelect, onBack, filter, onFilter },
+  ref,
+) {
   return (
-    <div className="detail">
-      <button type="button" className="back" onClick={onBack}>
+    <motion.div className="detail" ref={ref} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+      <motion.button
+        type="button"
+        className="back"
+        onClick={onBack}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={SPRING}
+      >
         Back
-      </button>
+      </motion.button>
 
       <ul className="thumbs" aria-label="Projects">
-        {projects.map((project) => (
-          <li key={project.id}>
-            <button
-              type="button"
-              className="thumb"
-              style={{ aspectRatio: project.thumbAspect }}
-              aria-label={project.title}
-              aria-current={selected?.id === project.id}
-              onClick={() => onSelect(project.id)}
+        {projects.map((project) => {
+          const isSelected = selected?.id === project.id
+          return (
+            <motion.li
+              key={project.id}
+              layout
+              transition={SPRING}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
-              {project.thumb && <img src={project.thumb} alt="" loading="lazy" />}
-            </button>
-          </li>
-        ))}
+              <motion.button
+                type="button"
+                className="thumb"
+                style={{ aspectRatio: project.thumbAspect }}
+                aria-label={project.title}
+                aria-current={isSelected}
+                onClick={() => onSelect(project.id)}
+                // The selected project already owns `project-<id>` on the big
+                // preview, so only the other thumbs morph into the rail.
+                layout
+                layoutId={isSelected ? undefined : `project-${project.id}`}
+                transition={SPRING}
+              >
+                {project.thumb && <img src={project.thumb} alt="" loading="lazy" />}
+              </motion.button>
+            </motion.li>
+          )
+        })}
       </ul>
 
       <section className="pane">
@@ -82,6 +136,8 @@ export default function ProjectDetail({ projects, selected, onSelect, onBack, fi
           <p className="empty">No projects in this category yet.</p>
         )}
       </section>
-    </div>
+    </motion.div>
   )
-}
+})
+
+export default ProjectDetail

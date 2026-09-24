@@ -26,14 +26,7 @@
     row-gap: 8px;
     margin-left: 0;
   }
-  .tech-row {
-    width: auto;
-    margin-left: 0;
-    height: auto;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 16px 24px;
-  }
+  /* The marquee track is width:max-content, so it just overflows and clips. */
   .tech {
     margin-top: 40px;
   }
@@ -47,8 +40,12 @@
     height: 64px;
   }
   .bento {
-    padding-left: 0;
+    margin-left: 0;
     display: block;
+  }
+  /* The stacked layout has no aligned tracks to drag. */
+  .bento-split {
+    display: none;
   }
   .bento-top,
   .bento-bottom {

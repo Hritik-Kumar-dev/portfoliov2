@@ -64,7 +64,9 @@ a {
   .thumb,
   .filter-btn,
   .detailed,
+  .chip,
+  .bento-split,
   .pager button {
-    transition: background-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+    transition: background-color 0.15s, color 0.15s, box-shadow 0.15s, opacity 0.15s;
   }
 }

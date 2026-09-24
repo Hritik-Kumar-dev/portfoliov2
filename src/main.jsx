@@ -4,6 +4,7 @@ import '@fontsource-variable/inter'
 import './styles/index.css'
 import './styles/home.css'
 import './styles/detail.css'
+import './styles/contact.css'
 import './styles/responsive.css'
 import App from './App.jsx'
 
