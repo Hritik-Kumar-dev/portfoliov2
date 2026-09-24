@@ -28,7 +28,8 @@
     row-gap: 8px;
     margin-left: 0;
   }
-  .gh-heatmap,
+  /* Only the wrapper: .gh-heatmap keeps its own gap below the total. */
+  .gh,
   .heatmap {
     margin-top: 38px;
   }
@@ -231,7 +232,7 @@
   .experience {
     margin-top: 22px;
   }
-  .gh-heatmap,
+  .gh,
   .heatmap {
     margin-top: 28px;
   }

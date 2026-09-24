@@ -124,6 +124,19 @@ a {
   outline-offset: 2px;
 }
 
+/* Every glyph in src/assets is exported as a white silhouette, so on the light
+   theme the ones sitting on themed chrome would vanish. Inverting them turns
+   them black; the ones that sit over a screenshot — the card chips — keep their
+   white, because the scrim behind them is dark in both themes. */
+html[data-theme='light'] .btn img,
+html[data-theme='light'] .cert img,
+html[data-theme='light'] .ibm,
+html[data-theme='light'] .tech-track img,
+html[data-theme='light'] .chip--solid img,
+html[data-theme='light'] .contact-schedule img {
+  filter: invert(1);
+}
+
 /* Pinned to the very top corner, in the gutter the page layout already leaves
    free (sidebar border on the left, right column padding on the right). */
 .theme-toggle {

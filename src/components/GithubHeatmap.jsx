@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import fallbackHeatmap from '../assets/img/heatmap.png'
 
 // Free, no-auth contribution data: per-day { date, count, level } for the last 12 months.
@@ -8,9 +8,13 @@ const CACHE_KEY = 'gh-contrib-cache'
 const CACHE_TTL = 6 * 60 * 60 * 1000 // 6 hours
 
 // Only the most recent weeks are drawn, which is what lets each day cell be
-// large enough to read at a glance (~4 months).
-const VISIBLE_WEEKS = 17
+// large enough to read at a glance (~4.5 months).
+const VISIBLE_WEEKS = 20
 const VISIBLE_MONTHS = Math.round(VISIBLE_WEEKS / 4.345) // weeks per average month
+
+// Half of .gh-tip's max-width. Keeps the tooltip inside the graph on the first
+// and last column of a row; the two values have to agree.
+const TOOLTIP_HALF = 66
 
 function readCache(username) {
   try {
@@ -58,9 +62,23 @@ function toWeeks(days) {
 
 const levelClass = (level) => `gh-cell gh-cell--${Math.min(4, Math.max(0, Number(level) || 0))}`
 
+const dayLabel = (date) =>
+  new Date(`${date}T00:00:00`).toLocaleDateString(undefined, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
+
+const countLabel = (count) =>
+  count === 0
+    ? 'No contributions'
+    : `${count.toLocaleString()} ${count === 1 ? 'contribution' : 'contributions'}`
+
 export default function GithubHeatmap({ username }) {
   const [days, setDays] = useState(() => readCache(username))
   const [failed, setFailed] = useState(false)
+  const [tip, setTip] = useState(null)
+  const graphRef = useRef(null)
 
   useEffect(() => {
     if (days) return undefined
@@ -103,28 +121,65 @@ export default function GithubHeatmap({ username }) {
   // Total only the days actually on screen, so the label matches the graph.
   const total = weeks ? weeks.flat().reduce((sum, day) => sum + (day?.count ?? 0), 0) : null
 
+  // Cells are laid out inside .gh-heatmap (position: relative), so their offset*
+  // values are already measured against it — no measuring pass needed.
+  const showDay = (event, day) => {
+    const cell = event.currentTarget
+    const width = graphRef.current?.clientWidth ?? 0
+    const centre = cell.offsetLeft + cell.offsetWidth / 2
+
+    setTip({
+      ...day,
+      left: width ? Math.min(Math.max(centre, TOOLTIP_HALF), width - TOOLTIP_HALF) : centre,
+      top: cell.offsetTop,
+    })
+  }
+
   return (
-    <div
-      className={`gh-heatmap${weeks ? '' : ' gh-heatmap--loading'}`}
-      role="group"
-      aria-busy={weeks ? undefined : true}
-      aria-label={
-        total === null
-          ? 'Loading recent GitHub contributions'
-          : `GitHub contributions in the last ${VISIBLE_MONTHS} months: ${total}`
-      }
-    >
-      {columns.map((week, w) => (
-        <div className="gh-week" key={week[0]?.date ?? `week-${w}`}>
-          {week.map((day, d) => (
-            <span
-              key={day?.date ?? `day-${w}-${d}`}
-              className={weeks ? (day ? levelClass(day.level) : 'gh-cell gh-cell--blank') : 'gh-cell gh-cell--0'}
-              title={day ? `${day.date}: ${day.count} contributions` : undefined}
-            />
-          ))}
-        </div>
-      ))}
+    <div className="gh">
+      {/* The headline number, so the total is readable without hovering. */}
+      <p className="gh-total">
+        {total === null ? (
+          'Reading recent activity…'
+        ) : (
+          <>
+            <b>{total.toLocaleString()}</b> contributions in the last {VISIBLE_MONTHS} months
+          </>
+        )}
+      </p>
+
+      <div
+        ref={graphRef}
+        className={`gh-heatmap${weeks ? '' : ' gh-heatmap--loading'}`}
+        role="img"
+        aria-busy={weeks ? undefined : true}
+        aria-label={
+          total === null
+            ? 'Loading recent GitHub contributions'
+            : `GitHub contributions per day over the last ${VISIBLE_MONTHS} months`
+        }
+        onMouseLeave={() => setTip(null)}
+      >
+        {columns.map((week, w) => (
+          <div className="gh-week" key={week[0]?.date ?? `week-${w}`}>
+            {week.map((day, d) => (
+              <span
+                key={day?.date ?? `day-${w}-${d}`}
+                className={weeks ? (day ? levelClass(day.level) : 'gh-cell gh-cell--blank') : 'gh-cell gh-cell--0'}
+                // Blank cells clear the tip too, or it would linger across them.
+                onMouseEnter={day ? (event) => showDay(event, day) : () => setTip(null)}
+              />
+            ))}
+          </div>
+        ))}
+
+        {tip && (
+          <span className="gh-tip" style={{ left: `${tip.left}px`, top: `${tip.top}px` }}>
+            {countLabel(tip.count)}
+            <em>{dayLabel(tip.date)}</em>
+          </span>
+        )}
+      </div>
     </div>
   )
 }
