@@ -7,7 +7,7 @@ import { embedSrc } from '../lib/media'
 // `motionProps` is optional: the grid card passes its shared-layout props so the
 // screenshot itself is what grows into the detail view. Without it the plain
 // element is rendered, which is what the gallery wants.
-export default function ProjectMedia({ item, motionProps, controls = true, alt = '' }) {
+export default function ProjectMedia({ item, motionProps, controls = true, alt = '', eager = false }) {
   // Choosing the element this way keeps the animated and plain paths identical.
   const tag = (name) => (motionProps ? motion[name] : name)
 
@@ -45,5 +45,7 @@ export default function ProjectMedia({ item, motionProps, controls = true, alt =
   }
 
   const Img = tag('img')
-  return <Img {...motionProps} src={item.src} alt={label} loading="lazy" />
+  // The gallery asks for eager: its slides sit outside the viewport until the
+  // track moves, so a lazy one would only start loading as it slid in.
+  return <Img {...motionProps} src={item.src} alt={label} loading={eager ? 'eager' : 'lazy'} />
 }

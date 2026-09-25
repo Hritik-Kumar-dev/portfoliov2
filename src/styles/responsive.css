@@ -331,6 +331,21 @@
     font-size: 14px;
     line-height: 18px;
   }
+  /* Smaller and pushed out to the edge: on a phone the media is already narrow,
+     so a big button would cover a lot of it. */
+  .slider-arrow {
+    width: 32px;
+    height: 32px;
+  }
+  .slider-arrow--prev {
+    left: 8px;
+  }
+  .slider-arrow--next {
+    right: 8px;
+  }
+  .detail-pager {
+    gap: 10px;
+  }
 
   /* Top-aligned and scrollable, so a tall dialog never gets cut off. */
   .contact-overlay {

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { SPRING } from '../lib/transitions'
+import Chevron from './Chevron'
 import Splitter from './Splitter'
 import ProjectLinks from './ProjectLinks'
 import ProjectMedia from './ProjectMedia'
@@ -59,24 +60,6 @@ const HANDLES = {
 // declarations, so the responsive breakpoint can still switch the bento to its
 // stacked layout (an inline style would win over the stylesheet).
 const tracks = (value) => `${value}fr ${1 - value}fr`
-
-function Chevron({ dir }) {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d={dir === 'left' ? 'M15 5 8 12l7 7' : 'M9 5l7 7-7 7'} />
-    </svg>
-  )
-}
 
 export default function ProjectGrid({ items, page, pageCount, onPage, onOpen, onDetailed }) {
   const [sizes, setSizes] = useState(DEFAULT_SIZES)

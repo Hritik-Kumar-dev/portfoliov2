@@ -174,9 +174,8 @@ html[data-theme='light'] .heatmap {
 
 /* Pinned to the very top corner, in the gutter the page layout already leaves
    free (sidebar border on the left, right column padding on the right).
-   No ring or panel behind it: a lone icon reads fine in the empty gutter and
-   keeps the corner from looking like a second bordered card. Radius stays 50%
-   so the hover wash is still a soft circle rather than a square. */
+   A plain `--surface` disc with no ring: the outline was what made the corner
+   look like a second bordered card, and it is not needed to find the button. */
 .theme-toggle {
   position: fixed;
   top: 16px;
@@ -190,7 +189,7 @@ html[data-theme='light'] .heatmap {
   display: grid;
   place-items: center;
   color: var(--text-muted);
-  background: transparent;
+  background: var(--surface);
 }
 .theme-toggle:hover {
   color: var(--text);
@@ -206,6 +205,8 @@ html[data-theme='light'] .heatmap {
   .chip,
   .bento-split,
   .theme-toggle,
+  .slider-arrow,
+  .next-project,
   .pager button {
     transition: background-color 0.15s, color 0.15s, box-shadow 0.15s, opacity 0.15s,
       border-color 0.15s;
