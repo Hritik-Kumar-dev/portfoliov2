@@ -8,10 +8,10 @@ import linkedinIcon from '../assets/icons/linkedin.svg'
 import xIcon from '../assets/icons/x.svg'
 import mailIcon from '../assets/icons/mail.svg'
 import downloadIcon from '../assets/icons/download.svg'
-import externalIcon from '../assets/icons/external.svg'
+import expandIcon from '../assets/icons/expand.svg'
 import ibmLogo from '../assets/icons/ibm.svg'
 
-export default function Sidebar({ onContact }) {
+export default function Sidebar({ onContact, onCertificate }) {
   const { name, photo, githubUsername, links, bio, experience } = profile
 
   return (
@@ -92,10 +92,19 @@ export default function Sidebar({ onContact }) {
       <div className="experience">
         <h2>{experience.label}</h2>
         <img className="ibm" src={ibmLogo} alt="IBM" width="48" height="20" />
-        <a className="cert" href={experience.certificateUrl} target="_blank" rel="noreferrer">
+        {/* Opens the certificate over the page rather than in a new tab, so the
+            icon is an expand glyph — the external-link arrow would misdescribe it. */}
+        <button
+          type="button"
+          className="cert"
+          onClick={(event) => {
+            event.currentTarget.focus({ preventScroll: true })
+            onCertificate()
+          }}
+        >
           view certificate
-          <img src={externalIcon} alt="" width="10" height="10" />
-        </a>
+          <img src={expandIcon} alt="" width="10" height="10" />
+        </button>
       </div>
 
       <GithubHeatmap username={githubUsername} />

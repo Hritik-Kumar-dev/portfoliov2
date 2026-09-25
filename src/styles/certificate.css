@@ -1,0 +1,73 @@
+/* ---------- Certificate popup (opened from the experience block) ---------- */
+.cert-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: var(--overlay);
+  backdrop-filter: blur(3px);
+  overflow-y: auto;
+}
+
+/* Shrink-wrapped around the image, so the frame is never wider than what it
+   holds — the image sizes itself (see below) and the panel follows it. */
+.cert-panel {
+  position: relative;
+  width: fit-content;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 40px);
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--panel-line);
+  background: var(--panel);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.6);
+  display: grid;
+  gap: 10px;
+}
+
+/* padding-right keeps a long title clear of the close button. */
+.cert-title {
+  padding-right: 34px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.cert-close {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--text-muted);
+  background: var(--surface);
+}
+.cert-close:hover {
+  background: var(--card);
+  color: var(--text);
+}
+
+/* Auto width and height with both caps set is the one case where a replaced
+   element scales down in proportion instead of stretching to its container, so
+   the certificate is never distorted or letterboxed — it just gets smaller.
+   The width cap is measured against the viewport rather than the panel: a
+   percentage would be resolved against a shrink-to-fit parent, which browsers
+   answer with a layout cycle. justify-self stops the grid stretching it back to
+   the panel's full width and undoing that. */
+.cert-image {
+  display: block;
+  justify-self: center;
+  width: auto;
+  height: auto;
+  max-width: min(1100px, calc(100vw - 64px));
+  max-height: calc(100dvh - 168px);
+  border-radius: 8px;
+}

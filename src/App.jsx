@@ -5,6 +5,7 @@ import ProjectsHeader from './components/ProjectsHeader'
 import ProjectGrid from './components/ProjectGrid'
 import ProjectDetail from './components/ProjectDetail'
 import ContactModal from './components/ContactModal'
+import CertificateModal from './components/CertificateModal'
 import ThemeToggle from './components/ThemeToggle'
 import { projects } from './data/projects'
 import { FADE } from './lib/transitions'
@@ -17,6 +18,7 @@ export default function App() {
   const [page, setPage] = useState(0)
   const [selectedId, setSelectedId] = useState(null)
   const [contactOpen, setContactOpen] = useState(false)
+  const [certificateOpen, setCertificateOpen] = useState(false)
 
   const prefersReducedMotion = useReducedMotion()
   const exitTransition = { duration: prefersReducedMotion ? 0 : FADE }
@@ -40,13 +42,13 @@ export default function App() {
     window.scrollTo(0, 0)
   }
 
-  // Skipped while the contact dialog is open, so one Escape only closes the top layer.
+  // Skipped while a dialog is open, so one Escape only closes the top layer.
   useEffect(() => {
-    if (view !== 'detail' || contactOpen) return
+    if (view !== 'detail' || contactOpen || certificateOpen) return
     const onKey = (e) => e.key === 'Escape' && setView('home')
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [view, contactOpen])
+  }, [view, contactOpen, certificateOpen])
 
   return (
     // reducedMotion="user" drops the layout/transform animation entirely for
@@ -68,7 +70,10 @@ export default function App() {
           />
         ) : (
           <motion.div key="home" className="home" exit={{ opacity: 0 }} transition={exitTransition}>
-            <Sidebar onContact={() => setContactOpen(true)} />
+            <Sidebar
+              onContact={() => setContactOpen(true)}
+              onCertificate={() => setCertificateOpen(true)}
+            />
             <main className="right">
               <ProjectsHeader filter={filter} onFilter={changeFilter} />
               <ProjectGrid
@@ -87,6 +92,7 @@ export default function App() {
       {/* Outside AnimatePresence: the sidebar animates with a transform, which
           would otherwise become the containing block for a fixed overlay. */}
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+      <CertificateModal open={certificateOpen} onClose={() => setCertificateOpen(false)} />
 
       {/* Fixed to the viewport corner, so it survives the home <-> detail swap. */}
       <ThemeToggle />

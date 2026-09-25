@@ -1,4 +1,5 @@
 import photo from '../assets/img/profile.webp'
+import certificate from '../assets/projectimages/interncertificate.png'
 
 // TODO: replace with your real inbox — used by the links and the contact form.
 const EMAIL = 'hello@example.com'
@@ -77,6 +78,10 @@ export const profile = {
   ],
   experience: {
     label: '2+ years Experience Includes:',
-    certificateUrl: '#', // TODO: link to the IBM certificate
+    // Shown in the popup behind "view certificate". A URL works here too, since
+    // the popup just renders it in an <img>.
+    certificate,
+    certificateTitle: 'IBM Internship Certificate',
+    certificateAlt: 'IBM internship certificate awarded to Hritik Kumar',
   },
 }

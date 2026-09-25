@@ -3,6 +3,7 @@ import { getCalApi } from '@calcom/embed-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { profile } from '../data/profile'
 import { SPRING } from '../lib/transitions'
+import { useDialog } from '../lib/useDialog'
 import externalIcon from '../assets/icons/external.svg'
 
 const { contact } = profile
@@ -122,48 +123,10 @@ export default function ContactModal({ open, onClose }) {
     }
   }, [open])
 
-  // Esc closes, Tab stays inside, and focus returns to whatever opened it.
-  useEffect(() => {
-    if (!open) return undefined
-
-    const opener = document.activeElement
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        event.preventDefault()
-        onClose()
-        return
-      }
-      if (event.key !== 'Tab') return
-
-      // The honeypot is excluded, or Tab would land on an off-screen field.
-      const focusable = panelRef.current?.querySelectorAll(
-        'a[href], button:not([disabled]), input:not([data-trap]), textarea',
-      )
-      if (!focusable?.length) return
-
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault()
-        last.focus()
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault()
-        first.focus()
-      }
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    panelRef.current?.querySelector('input')?.focus()
-
-    const { overflow } = document.body.style
-    document.body.style.overflow = 'hidden'
-
-    return () => {
-      window.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = overflow
-      opener?.focus?.()
-    }
-  }, [open, onClose])
+  // Esc, the focus trap, scroll lock and focus return — shared with the
+  // certificate dialog. Named explicitly: a bare 'input' would match the
+  // honeypot first, since it comes before the email field in the form.
+  useDialog({ open, onClose, panelRef, autofocus: 'input[name="email"]' })
 
   const onSubmit = async (event) => {
     event.preventDefault()
