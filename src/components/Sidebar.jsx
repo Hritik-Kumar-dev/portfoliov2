@@ -57,28 +57,17 @@ export default function Sidebar({ onContact, onCertificate }) {
               <img src={downloadIcon} alt="" width="18" height="15" />
               Download Resume
             </a>
-            {/* The paid instant-contact action. Shares its target with the
-                dialog's instant block; inert until links.instantContact is set. */}
-            {links.instantContact ? (
-              <a
-                className="btn btn-download btn-download-accent"
-                href={links.instantContact}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={mailIcon} alt="" width="12" height="9" />
-                Instant Contact ₹10
-              </a>
-            ) : (
-              <span
-                className="btn btn-download btn-download-accent is-pending"
-                aria-disabled="true"
-                title="Add links.instantContact in src/data/profile.js"
-              >
-                <img src={mailIcon} alt="" width="12" height="9" />
-                Instant Contact ₹10
-              </span>
-            )}
+            {/* GitHub renders the sponsor button itself, so it ships as an
+                iframe; the URL follows the same username as the heatmap. */}
+            <span className="sponsor">
+              <iframe
+                src={`https://github.com/sponsors/${githubUsername}/button`}
+                title={`Sponsor ${githubUsername}`}
+                height="32"
+                width="114"
+                style={{ border: 0, borderRadius: '6px' }}
+              />
+            </span>
           </div>
         </div>
       </div>

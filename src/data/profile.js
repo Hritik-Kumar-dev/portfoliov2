@@ -17,9 +17,6 @@ export const profile = {
     twitter: 'https://x.com/',
     email: `mailto:${EMAIL}`,
     resume: '/resume.pdf',
-    // TODO: the paid instant-contact target (payment/booking link). While it is
-    // null the "Instant Contact ₹10" buttons stay visible but inert everywhere.
-    instantContact: null,
   },
   // Powers the compact form behind the sidebar's "Contact" button, plus the
   // "Schedule a call" and instant-contact actions.

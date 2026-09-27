@@ -91,8 +91,12 @@
   border-color: var(--accent);
   outline: none;
 }
-.btn-download-accent {
-  border-color: var(--accent);
+
+/* The sponsor button is a fixed 114x32 iframe, so it only needs a full-width
+   cell to sit in — the grid would otherwise stretch it. */
+.sponsor {
+  grid-column: 1 / -1;
+  display: flex;
 }
 
 .bio {
