@@ -58,13 +58,15 @@ export default function Sidebar({ onContact, onCertificate }) {
               Download Resume
             </a>
             {/* GitHub renders the sponsor button itself, so it ships as an
-                iframe; the URL follows the same username as the heatmap. */}
+                iframe; the URL follows the same username as the heatmap. The
+                page inside is a full-width button, so letting the frame match
+                the row is what widens it — no scaling involved. */}
             <span className="sponsor">
               <iframe
                 src={`https://github.com/sponsors/${githubUsername}/button`}
                 title={`Sponsor ${githubUsername}`}
                 height="32"
-                width="114"
+                width="100%"
                 style={{ border: 0, borderRadius: '6px' }}
               />
             </span>

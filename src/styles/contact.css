@@ -110,7 +110,7 @@
 .contact-submit {
   flex: 1 1 150px;
   height: 42px;
-  border-radius: 21px;
+  border-radius: 6px;
   background: var(--invert-bg);
   color: var(--invert-text);
   font-size: 14px;
@@ -127,7 +127,7 @@
 .contact-schedule {
   flex: 1 1 150px;
   height: 42px;
-  border-radius: 21px;
+  border-radius: 6px;
   border: 1.25px solid var(--accent);
   display: inline-flex;
   align-items: center;
@@ -208,7 +208,7 @@
 /* Solid accent fill, so the paid action reads as the primary one. */
 .contact-instant-btn {
   height: 40px;
-  border-radius: 20px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;

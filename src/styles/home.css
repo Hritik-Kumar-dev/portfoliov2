@@ -60,7 +60,10 @@
 
 .btn {
   height: 30px;
-  border-radius: 15px;
+  /* 6px to match the sponsor button's frame, so the whole stack reads as one
+     set. Radius is absolute, not a ratio of height, so it survives the taller
+     pill heights in the mobile overrides without looking over-rounded. */
+  border-radius: 6px;
   background: var(--surface);
   border: 1.25px solid transparent;
   font-size: 10px;
@@ -83,7 +86,7 @@
 .btn-download {
   grid-column: 1 / -1;
   height: 39px;
-  border-radius: 19.5px;
+  border-radius: 6px;
   gap: 16px;
 }
 .btn-download:hover,
@@ -92,11 +95,14 @@
   outline: none;
 }
 
-/* The sponsor button is a fixed 114x32 iframe, so it only needs a full-width
-   cell to sit in — the grid would otherwise stretch it. */
+/* Spans the same full-width cell as .btn-download above, so the sponsor frame
+   lines up with it. */
 .sponsor {
   grid-column: 1 / -1;
   display: flex;
+}
+.sponsor iframe {
+  width: 100%;
 }
 
 .bio {
@@ -339,7 +345,7 @@
   height: 26px;
   padding: 0 3px;
   gap: 2px;
-  border-radius: 13px;
+  border-radius: 6px;
   background: var(--surface);
   display: flex;
   align-items: center;
@@ -347,7 +353,7 @@
 .filter-btn {
   height: 20px;
   padding: 0 11px;
-  border-radius: 10px;
+  border-radius: 4px;
   font-size: 11px;
   line-height: 20px;
   color: var(--text-muted);
@@ -689,7 +695,7 @@
 .detailed {
   width: 186px;
   height: 51px;
-  border-radius: 25.5px;
+  border-radius: 6px;
   background: var(--invert-bg);
   color: var(--invert-text);
   font-size: 18px;
