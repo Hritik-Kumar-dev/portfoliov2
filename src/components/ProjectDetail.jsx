@@ -1,15 +1,20 @@
-import { forwardRef, useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { forwardRef, useEffect, useRef, useState } from 'react'
+import { animate, motion, useMotionValue, useReducedMotion } from 'framer-motion'
 import Chevron from './Chevron'
 import ProjectsHeader from './ProjectsHeader'
 import ProjectLinks from './ProjectLinks'
 import ProjectMedia from './ProjectMedia'
-import { SLIDE, SPRING } from '../lib/transitions'
+import { PUSH_IN, PUSH_OUT, PUSH_ROTATE, SLIDE, SPRING } from '../lib/transitions'
+import { useMediaQuery } from '../lib/useMediaQuery'
 import { useSwipe } from '../lib/useSwipe'
 
 // Long enough to actually look at a screenshot, short enough not to feel stuck.
 // Any manual move restarts it, because the timer is keyed on the slide index.
 const AUTO_ADVANCE_MS = 4000
+
+// Where the detail view is a single column — phones, and tablets held upright.
+// Same breakpoint as the stacked layout in src/styles/responsive.css.
+const STACKED = '(max-width: 1000px)'
 
 function Gallery({ project, projects, onSelect }) {
   const media = project.media?.length ? project.media : [{ orientation: 'landscape' }]
@@ -228,8 +233,69 @@ const ProjectDetail = forwardRef(function ProjectDetail(
   { projects, selected, onSelect, onBack, filter, onFilter },
   ref,
 ) {
+  // Swiping between projects pushes the whole sheet sideways, which only reads
+  // as a push in the single-column layout; on a wide screen the detail view is
+  // a two-column sheet and sideways motion just looks like a glitch.
+  const stacked = useMediaQuery(STACKED)
+  const reduced = useReducedMotion()
+
+  // Two motion values rather than variants, because a push is not a mount: the
+  // sheet has to leave, the content has to be swapped behind it, and the next
+  // one has to arrive — the animation straddles a state change.
+  const x = useMotionValue(0)
+  const rotate = useMotionValue(0)
+  // One project at a time. A second swipe mid-push would swap the content out
+  // from under the sheet that is on its way in.
+  const pushing = useRef(false)
+
+  const select = (id) => {
+    // Mid-push there is nothing sensible to do: the sheet is on its way out of
+    // the screen, and swapping the content now would put the new project in a
+    // sheet that is still leaving.
+    if (pushing.current) return
+    if (!stacked || reduced || id === selected?.id) {
+      onSelect(id)
+      return
+    }
+
+    // +1 for the next project, -1 for the previous one: this sheet leaves
+    // towards the far edge and the next one arrives from the near one.
+    const here = projects.findIndex((p) => p.id === selected?.id)
+    const dir = projects.findIndex((p) => p.id === id) > here ? 1 : -1
+    // A full screen width, so the sheet is genuinely off-screen (and therefore
+    // genuinely unseen) at the moment the content changes.
+    const travel = window.innerWidth
+
+    pushing.current = true
+    Promise.all([
+      animate(x, -dir * travel, PUSH_OUT),
+      animate(rotate, -dir * PUSH_ROTATE, PUSH_OUT),
+    ])
+      .then(() => {
+        // Swapped out of sight, which is what turns two projects into a push
+        // instead of a cut.
+        onSelect(id)
+        x.set(dir * travel)
+        rotate.set(dir * PUSH_ROTATE)
+        return Promise.all([animate(x, 0, PUSH_IN), animate(rotate, 0, PUSH_IN)])
+      })
+      .finally(() => {
+        pushing.current = false
+      })
+  }
+
   return (
-    <motion.div className="detail" ref={ref} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+    <motion.div
+      className="detail"
+      ref={ref}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      // transform-box/transform-origin put the turn's pivot at the bottom
+      // centre of the *screen* rather than the bottom of the sheet, so the
+      // sheet swings like a card held at its base however far down the page
+      // you have scrolled.
+      style={{ x, rotate, transformBox: 'view-box', transformOrigin: '50% 100vh' }}
+    >
       <motion.button
         type="button"
         className="back"
@@ -260,7 +326,7 @@ const ProjectDetail = forwardRef(function ProjectDetail(
                 style={{ aspectRatio: project.thumbAspect }}
                 aria-label={project.title}
                 aria-current={isSelected}
-                onClick={() => onSelect(project.id)}
+                onClick={() => select(project.id)}
                 // The selected project already owns `project-<id>` on the big
                 // preview, so only the other thumbs morph into the rail.
                 layout
@@ -281,7 +347,7 @@ const ProjectDetail = forwardRef(function ProjectDetail(
             key={selected.id}
             project={selected}
             projects={projects}
-            onSelect={onSelect}
+            onSelect={select}
           />
         ) : (
           <p className="empty">No projects in this category yet.</p>

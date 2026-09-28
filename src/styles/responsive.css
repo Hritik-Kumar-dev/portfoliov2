@@ -185,6 +185,19 @@
   .dots {
     margin-left: 0;
   }
+
+  /* Opening a project pops the landing page out of flow (AnimatePresence's
+     popLayout) at its full height, which here is several screens — so the
+     detail view sits at the top of a long empty scroll until the hand-off
+     finishes. Clipping it to the first screen removes the gap and keeps the
+     hand-off itself, including the card-to-preview morph: the card that was
+     tapped is on that screen. The attribute is in the selector to outrank the
+     rule popLayout injects, which wins on order because it is added last. */
+  .home[data-motion-pop-id] {
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+  }
 }
 
 /* ---------- Mobile ---------- */

@@ -107,8 +107,18 @@ export default function App() {
   const openDetail = (id) => {
     setSelectedId(id ?? filtered[0]?.id ?? null)
     setView('detail')
-    window.scrollTo(0, 0)
   }
+
+  // Handing over to the detail view pops the landing page out of flow at its
+  // full height (AnimatePresence's popLayout), so for a frame after the switch
+  // the document is still as tall as the landing page was — several screens of
+  // it on a phone. Scrolling once the detail view has been laid out keeps the
+  // scroll from being parked in the space it briefly filled.
+  useEffect(() => {
+    if (view !== 'detail') return undefined
+    const frame = requestAnimationFrame(() => window.scrollTo(0, 0))
+    return () => cancelAnimationFrame(frame)
+  }, [view])
 
   // Skipped while a dialog is open, so one Escape only closes the top layer.
   useEffect(() => {
