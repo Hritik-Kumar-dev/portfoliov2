@@ -72,7 +72,9 @@ export default function App() {
         repo: `https://github.com/Hritik-Kumar-dev/${project.id}`, // Default repo URL
         live: null, // deployed URL; leave it null and the chip renders inert
         title: project.title,
-        description: project.description,
+        subtitle: project.subtitle ?? '',
+        description: project.description ?? '',
+        techStack: Array.isArray(project.techStack) ? project.techStack : [],
         category: project.category,
         thumb,
         thumbAspect: '16 / 9', // Default aspect ratio

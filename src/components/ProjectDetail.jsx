@@ -27,6 +27,7 @@ function Gallery({ project, projects, onSelect }) {
   const at = Math.max(0, projects.findIndex((p) => p.id === project.id))
   const previous = projects[at - 1]
   const next = projects[at + 1]
+  const techStack = project.techStack ?? []
 
   const go = (step) => setIndex((i) => (i + step + media.length) % media.length)
   const openProject = (target) => target && onSelect(target.id)
@@ -167,7 +168,14 @@ function Gallery({ project, projects, onSelect }) {
         transition={SPRING}
       >
         <h3>{project.title}</h3>
-        <p>{project.description}</p>
+        {project.subtitle && <p className="info-subtitle">{project.subtitle}</p>}
+        {project.description && <p>{project.description}</p>}
+        {techStack.length > 0 && (
+          <div className="info-tech">
+            <span className="info-tech-label">Tech Stack</span>
+            <p className="info-tech-list">{techStack.join(' · ')}</p>
+          </div>
+        )}
         <ProjectLinks project={project} solid className="info-links" />
 
         {/* The detail view's own prev/next, reusing the grid's pager so the two

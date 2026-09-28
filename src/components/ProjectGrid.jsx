@@ -125,7 +125,7 @@ export default function ProjectGrid({ items, page, pageCount, onPage, onOpen, on
         <div className="card-meta">
           <div className="card-text">
             <h3 className="card-title">{project.title}</h3>
-            <p className="card-desc">{project.description}</p>
+            {project.subtitle && <p className="card-desc">{project.subtitle}</p>}
           </div>
           <ProjectLinks project={project} className="card-actions" />
         </div>

@@ -1,8 +1,15 @@
 [
   {
     "id": "veltrix",
-    "title": "veltrix",
-    "description": "hello heitik kuma helo hritik iumar",
+    "title": "Veltrix",
+    "subtitle": "Local Image Processing & Editing Platform",
+    "description": "A browser-based image processing tool built for fast, privacy-focused batch editing. Import multiple images, crop, rotate, resize, compress, rename, and export them directly in the browser without uploading files to a server.",
+    "techStack": [
+      "React.js",
+      "JavaScript",
+      "Canvas API",
+      "Tailwind CSS"
+    ],
     "videoUrl": "https://res.cloudinary.com/dwe509utd/video/upload/v1781295759/sample_awtffr.mp4",
     "images": [
       "https://res.cloudinary.com/dwe509utd/image/upload/v1781293995/main-sample.png",
@@ -15,7 +22,12 @@
   {
     "id": "project-02",
     "title": "Project 02",
+    "subtitle": "Short tagline of this project.",
     "description": "Short description of this project.",
+    "techStack": [
+      "React.js",
+      "Tailwind CSS"
+    ],
     "videoUrl": "https://res.cloudinary.com/dwe509utd/video/upload/v1781295759/sample_awtffr.mp4",
     "images": [
       "https://res.cloudinary.com/dwe509utd/image/upload/v1781293994/cld-sample.jpg",
@@ -27,7 +39,12 @@
   {
     "id": "project-03",
     "title": "Project 03",
+    "subtitle": "Short tagline of this project.",
     "description": "Short description of this project.",
+    "techStack": [
+      "React.js",
+      "JavaScript"
+    ],
     "videoUrl": "",
     "images": [
       "https://res.cloudinary.com/dwe509utd/image/upload/v1781293983/samples/animals/three-dogs.jpg"
@@ -38,7 +55,12 @@
   {
     "id": "project-04",
     "title": "Project 04",
+    "subtitle": "Short tagline of this project.",
     "description": "Short description of this project.",
+    "techStack": [
+      "Figma",
+      "Tailwind CSS"
+    ],
     "videoUrl": "",
     "images": [
       "src/assets/projectimages/project-04.png"
@@ -49,7 +71,12 @@
   {
     "id": "project-05",
     "title": "Project 05",
+    "subtitle": "Short tagline of this project.",
     "description": "Short description of this project.",
+    "techStack": [
+      "React.js",
+      "Tailwind CSS"
+    ],
     "videoUrl": "",
     "images": [],
     "category": "Full Stack",
@@ -58,7 +85,12 @@
   {
     "id": "project-06",
     "title": "Project 06",
+    "subtitle": "Short tagline of this project.",
     "description": "Short description of this project.",
+    "techStack": [
+      "React.js",
+      "Tailwind CSS"
+    ],
     "videoUrl": "",
     "images": [],
     "category": "Full Stack",

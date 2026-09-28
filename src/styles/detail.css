@@ -169,6 +169,33 @@
   font-size: 15px;
   line-height: 18px;
 }
+/* The subtitle sits directly under the title, so it keeps the title's centred
+   axis and only steps down in weight/size. Scoped with the element so it wins
+   over the .info p rule above. */
+.info p.info-subtitle {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--text-dim);
+}
+.info-tech {
+  margin: 20px 0 0 4px;
+}
+.info-tech-label {
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-ghost);
+}
+.info p.info-tech-list {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--text-muted);
+}
 .info-links {
   margin-top: 24px;
   display: flex;

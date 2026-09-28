@@ -331,6 +331,17 @@
     font-size: 14px;
     line-height: 18px;
   }
+  .info p.info-subtitle {
+    margin: 6px 0 0;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .info-tech {
+    margin-top: 14px;
+  }
+  .info p.info-tech-list {
+    font-size: 13px;
+  }
   /* Smaller and pushed out to the edge: on a phone the media is already narrow,
      so a big button would cover a lot of it. */
   .slider-arrow {
