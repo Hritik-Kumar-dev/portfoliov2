@@ -10,11 +10,13 @@
       "Canvas API",
       "Tailwind CSS"
     ],
-    "videoUrl": "https://res.cloudinary.com/dwe509utd/video/upload/v1781295759/sample_awtffr.mp4",
+    "videoUrl": "https://res.cloudinary.com/dwe509utd/video/upload/v1790630551/Rapid_Aurora_tzscan.mp4",
     "images": [
-      "https://res.cloudinary.com/dwe509utd/image/upload/v1781293995/main-sample.png",
-      "https://res.cloudinary.com/dwe509utd/image/upload/v1781293995/main-sample.png",
-      "https://res.cloudinary.com/dwe509utd/image/upload/v1781293995/main-sample.png"
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790496545/Screenshot_From_2026-09-12_22-33-55_clxehx.png",
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790496541/Screenshot_From_2026-09-12_17-23-10_xkywgu.png",
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790496542/Screenshot_From_2026-09-12_17-23-58_v773he.png",
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790496539/Screenshot_From_2026-09-12_17-28-54_dr69wl.png",
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790496541/Screenshot_From_2026-08-19_22-29-18_dpyllw.png"
     ],
     "category": "Full Stack",
     "order": 0
@@ -32,8 +34,8 @@
     ],
     "videoUrl": "https://res.cloudinary.com/dwe509utd/video/upload/v1781295759/sample_awtffr.mp4",
     "images": [
-      "https://res.cloudinary.com/dwe509utd/image/upload/v1781293994/cld-sample.jpg",
-      "https://res.cloudinary.com/dwe509utd/image/upload/v1781293994/cld-sample.jpg"
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790496548/Screenshot_From_2026-09-16_00-42-27_zvfjep.png",
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790496550/Screenshot_From_2026-09-16_00-43-15_fk1rsc.png"
     ],
     "category": "Full Stack",
     "order": 1
@@ -49,7 +51,7 @@
     ],
     "videoUrl": "",
     "images": [
-      "https://res.cloudinary.com/dwe509utd/image/upload/v1781293983/samples/animals/three-dogs.jpg"
+      "https://res.cloudinary.com/dwe509utd/image/upload/v1790630763/Screenshot_From_2026-09-29_02-55-11_hn8vpa.png","https://res.cloudinary.com/dwe509utd/image/upload/v1790630764/Screenshot_From_2026-09-29_02-55-36_tbtkff.png"
     ],
     "category": "Full Stack",
     "order": 2
@@ -69,7 +71,7 @@
     "images": [
       "src/assets/projectimages/project-04.png"
     ],
-    "category": "Full Stack",
+    "category": "Ui/UX",
     "order": 3
   },
   {
@@ -82,8 +84,10 @@
       "Tailwind CSS"
     ],
     "videoUrl": "",
-    "images": [],
-    "category": "Full Stack",
+    "images": ["https://res.cloudinary.com/dwe509utd/image/upload/v1790496549/Screenshot_From_2026-09-19_22-57-55_qxx5zp.png","https://res.cloudinary.com/dwe509utd/image/upload/v1790496547/Screenshot_From_2026-09-19_22-32-17_mzm86u.png",
+  "https://res.cloudinary.com/dwe509utd/image/upload/v1790496545/Screenshot_From_2026-09-19_17-55-40_vho2nr.png",
+"https://res.cloudinary.com/dwe509utd/image/upload/v1790496546/Screenshot_From_2026-09-17_08-37-21_dwhmfe.png","https://res.cloudinary.com/dwe509utd/image/upload/v1790496548/Screenshot_From_2026-09-23_20-53-41_gv7you.png"],
+    "category": "Ui/UX",
     "order": 4
   },
   {
