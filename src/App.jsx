@@ -1,15 +1,21 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion'
 import Sidebar from './components/Sidebar'
 import ProjectsHeader from './components/ProjectsHeader'
 import ProjectGrid from './components/ProjectGrid'
 import ProjectDetail from './components/ProjectDetail'
-import ContactModal from './components/ContactModal'
-import CertificateModal from './components/CertificateModal'
 import ThemeToggle from './components/ThemeToggle'
 import { toMedia } from './lib/media'
 import { FADE } from './lib/transitions'
 import projectsData from './data/projects.json'
+
+// Both dialogs carry weight the landing page never uses — the contact one pulls
+// in the cal.com embed, and the certificate one a 180kB screenshot — so they are
+// split out of the initial bundle and fetched the first time they are opened.
+// Suspense has nothing to show while that happens, and the dialogs are overlays
+// on top of a page that is already there.
+const ContactModal = lazy(() => import('./components/ContactModal'))
+const CertificateModal = lazy(() => import('./components/CertificateModal'))
 
 const PAGE_SIZE = 5
 
@@ -20,6 +26,11 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null)
   const [contactOpen, setContactOpen] = useState(false)
   const [certificateOpen, setCertificateOpen] = useState(false)
+  // Latches, so the dialog is mounted from the first open onwards: both animate
+  // their own exit, which needs the component that is animating to still be
+  // there when `open` goes false.
+  const [contactSeen, setContactSeen] = useState(false)
+  const [certificateSeen, setCertificateSeen] = useState(false)
 
   const prefersReducedMotion = useReducedMotion()
   const exitTransition = { duration: prefersReducedMotion ? 0 : FADE }
@@ -149,8 +160,14 @@ export default function App() {
         ) : (
           <motion.div key="home" className="home" exit={{ opacity: 0 }} transition={exitTransition}>
             <Sidebar
-              onContact={() => setContactOpen(true)}
-              onCertificate={() => setCertificateOpen(true)}
+              onContact={() => {
+                setContactSeen(true)
+                setContactOpen(true)
+              }}
+              onCertificate={() => {
+                setCertificateSeen(true)
+                setCertificateOpen(true)
+              }}
             />
             <main className="right">
               <ProjectsHeader 
@@ -173,8 +190,12 @@ export default function App() {
 
       {/* Outside AnimatePresence: the sidebar animates with a transform, which
           would otherwise become the containing block for a fixed overlay. */}
-      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
-      <CertificateModal open={certificateOpen} onClose={() => setCertificateOpen(false)} />
+      <Suspense fallback={null}>
+        {contactSeen && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />}
+        {certificateSeen && (
+          <CertificateModal open={certificateOpen} onClose={() => setCertificateOpen(false)} />
+        )}
+      </Suspense>
 
       {/* Fixed to the viewport corner, so it survives the home <-> detail swap. */}
       <ThemeToggle />

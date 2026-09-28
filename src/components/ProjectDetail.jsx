@@ -5,6 +5,7 @@ import ProjectsHeader from './ProjectsHeader'
 import ProjectLinks from './ProjectLinks'
 import ProjectMedia from './ProjectMedia'
 import { PUSH_IN, PUSH_OUT, PUSH_ROTATE, SLIDE, SPRING } from '../lib/transitions'
+import { MAX_IMAGE_WIDTH, optimised, srcSetFor } from '../lib/media'
 import { useMediaQuery } from '../lib/useMediaQuery'
 import { useSwipe } from '../lib/useSwipe'
 
@@ -15,6 +16,16 @@ const AUTO_ADVANCE_MS = 4000
 // Where the detail view is a single column — phones, and tablets held upright.
 // Same breakpoint as the stacked layout in src/styles/responsive.css.
 const STACKED = '(max-width: 1000px)'
+
+// Gallery media, at the sizes the 660px frame is painted at (full width once
+// the layout stacks), and the rail thumbnails at theirs.
+const GALLERY_WIDTHS = [700, 1400]
+const GALLERY_SIZES = '(max-width: 1000px) calc(100vw - 40px), 660px'
+const THUMB_WIDTHS = [200, 420, 840]
+const THUMB_SIZES = '(max-width: 640px) 150px, (max-width: 1000px) 220px, 420px'
+// The gallery is the one place a video is watched rather than glanced at, so it
+// gets the bigger encode.
+const GALLERY_VIDEO_WIDTH = 1400
 
 function Gallery({ project, projects, onSelect }) {
   const media = project.media?.length ? project.media : [{ orientation: 'landscape' }]
@@ -109,7 +120,11 @@ function Gallery({ project, projects, onSelect }) {
               <ProjectMedia
                 item={item}
                 eager
+                active={i === index}
                 alt={item.alt ?? `${project.title} screenshot ${i + 1}`}
+                widths={GALLERY_WIDTHS}
+                sizes={GALLERY_SIZES}
+                videoWidth={GALLERY_VIDEO_WIDTH}
               />
             </div>
           ))}
@@ -333,7 +348,16 @@ const ProjectDetail = forwardRef(function ProjectDetail(
                 layoutId={isSelected ? undefined : `project-${project.id}`}
                 transition={SPRING}
               >
-                {project.thumb && <img src={project.thumb} alt="" loading="lazy" />}
+                {project.thumb && (
+                  <img
+                    src={optimised(project.thumb, { width: MAX_IMAGE_WIDTH })}
+                    srcSet={srcSetFor(project.thumb, THUMB_WIDTHS)}
+                    sizes={THUMB_SIZES}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
               </motion.button>
             </motion.li>
           )

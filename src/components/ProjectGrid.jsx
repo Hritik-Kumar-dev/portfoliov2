@@ -61,6 +61,15 @@ const HANDLES = {
 // stacked layout (an inline style would win over the stylesheet).
 const tracks = (value) => `${value}fr ${1 - value}fr`
 
+// Card media, at the sizes the bento actually paints it: one column on a phone,
+// two on a tablet, and the bento's own track width from 1001px up. Feeds the
+// srcset, so a card never downloads a gallery-sized file. A card video gets the
+// same treatment at 2x its own width, which is what a retina card is painted at.
+const CARD_WIDTHS = [480, 960, 1400]
+const CARD_SIZES =
+  '(max-width: 640px) calc(100vw - 32px), (max-width: 1000px) calc(50vw - 26px), 420px'
+const CARD_VIDEO_WIDTH = 960
+
 export default function ProjectGrid({ items, page, pageCount, onPage, onOpen, onDetailed }) {
   const [sizes, setSizes] = useState(DEFAULT_SIZES)
   const [resizing, setResizing] = useState(false)
@@ -118,7 +127,16 @@ export default function ProjectGrid({ items, page, pageCount, onPage, onOpen, on
         transition={cardTransition}
       >
         {/* Handles a still, a CDN video file, or a YouTube/Vimeo link alike. */}
-        <ProjectMedia item={project.cardMedia} motionProps={mediaProps} controls={false} />
+        <ProjectMedia
+          item={project.cardMedia}
+          motionProps={mediaProps}
+          controls={false}
+          widths={CARD_WIDTHS}
+          sizes={CARD_SIZES}
+          videoWidth={CARD_VIDEO_WIDTH}
+          // The first card is the biggest thing in the first screen.
+          priority={i === 0}
+        />
 
         <div className="card-scrim" aria-hidden="true" />
 

@@ -97,6 +97,72 @@ export function toMedia(entry, defaults = {}) {
   }
 }
 
+// ─── Delivery ──────────────────────────────────────────────────────────────
+// The data file points at whatever was uploaded, which is full-size originals:
+// a PNG screenshot several times wider than the 660px gallery, and the same
+// file again for a 150px thumbnail in the rail. Cloudinary re-encodes and
+// resizes on the fly, so the same URL is asked for a modern format at the size
+// it is actually going to be painted at.
+
+const CLOUDINARY_IMAGE = /^(https?:\/\/[^/]+\.cloudinary\.com\/[^/]+\/image\/upload\/)(.+)$/
+
+// Largest an image is ever painted: the 660px gallery at 2x, plus a little
+// slack. Caps the fallback for a browser that ignores srcset entirely.
+export const MAX_IMAGE_WIDTH = 1400
+
+// One transformation set for an image URL, or the URL untouched — anything that
+// is not a Cloudinary image (a bundled import, another CDN) has to keep working
+// exactly as it is.
+export function optimised(src, { width } = {}) {
+  if (typeof src !== 'string') return src
+  const match = src.match(CLOUDINARY_IMAGE)
+  if (!match) return src
+
+  const [, prefix, rest] = match
+  // An underscore in the first path segment is a transformation that is
+  // already there (or a folder that happens to contain one). Either way,
+  // leave the URL alone rather than transform it twice.
+  if (rest.split('/')[0].includes('_')) return src
+
+  const transforms = ['f_auto', 'q_auto']
+  if (width) transforms.push('c_limit', `w_${width}`)
+
+  return `${prefix}${transforms.join(',')}/${rest}`
+}
+
+// A srcset for the widths an image is really rendered at, so a 150px
+// thumbnail never downloads the 660px gallery's file. Returns undefined when
+// the URL cannot be resized, because a srcset of one repeated URL is worse than
+// no srcset at all.
+export function srcSetFor(src, widths) {
+  if (typeof src !== 'string' || !widths?.length) return undefined
+  if (optimised(src, { width: widths[0] }) === src) return undefined
+  return widths.map((width) => `${optimised(src, { width })} ${width}w`).join(', ')
+}
+
+const CLOUDINARY_VIDEO = /^(https?:\/\/[^/]+\.cloudinary\.com\/[^/]+\/video\/upload\/)(.+)$/
+
+// Video is by far the heaviest thing on the page: the card clip in the data
+// file is a 15MB upload, and the grid can have two of them going at once. The
+// same CDN re-encodes it on request — asking for H.264 at the width it is
+// painted at takes that to a couple of hundred kilobytes, and needs no
+// re-upload.
+export function optimisedVideo(src, { width } = {}) {
+  if (typeof src !== 'string') return src
+  const match = src.match(CLOUDINARY_VIDEO)
+  if (!match) return src
+
+  const [, prefix, rest] = match
+  if (rest.split('/')[0].includes('_')) return src
+
+  const transforms = ['q_auto', 'vc_h264']
+  // c_scale, not c_limit: a video is scaled to the width asked for, and the
+  // letterboxing c_limit would add is not wanted on a full-bleed card.
+  if (width) transforms.push('c_scale', `w_${width}`)
+
+  return `${prefix}${transforms.join(',')}/${rest}`
+}
+
 // Dev-only guard rail for the hand-edited data file. Silently wrong media is the
 // expensive kind of mistake to find in a browser, so say it in the console.
 export function warnAboutMedia(project, where) {
